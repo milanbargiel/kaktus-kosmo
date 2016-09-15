@@ -13,6 +13,7 @@ caching-html-compiler@1.0.6
 callback-hook@1.0.9
 casimcdaniels:breakpoint@1.1.1
 check@1.2.3
+d3js:d3@3.5.8
 ddp@1.2.5
 ddp-client@1.2.9
 ddp-common@1.2.6
@@ -39,7 +40,7 @@ logging@1.1.15
 meta:susy@2.3.3
 meteor@1.2.17
 meteor-base@1.0.4
-minifier-css@1.2.14
+minifier-css@1.1.13
 minifier-js@1.2.14
 minimongo@1.0.17
 mobile-experience@1.0.4
@@ -57,10 +58,10 @@ reactive-var@1.0.10
 reload@1.1.10
 retry@1.0.8
 routepolicy@1.0.11
+seba:minifiers-autoprefixer@1.0.1
 shell-server@0.2.1
 spacebars@1.0.12
 spacebars-compiler@1.0.12
-standard-minifier-css@1.2.0
 standard-minifier-js@1.2.0
 templating@1.1.14
 templating-tools@1.0.4

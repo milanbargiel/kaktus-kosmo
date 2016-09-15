@@ -24,6 +24,8 @@ env:
 
 rules:
   # eslint
+  no-param-reassign: 0
+  no-use-before-define: [2, {functions: false, classes: true}]
   no-underscore-dangle: [2, {allowAfterThis: true}]
 
   # eslint-plugin-import
@@ -39,3 +41,4 @@ globals:
   FlowRouter: false # kadira:flow-router
   GoogleMaps: false # dburles:google-maps
   moment: false # momentjs:moment
+  d3: false #d3js:js
