@@ -1,0 +1,41 @@
+# enable ES6
+parserOptions:
+  ecmaVersion: 6
+  sourceType: "module"
+  ecmaFeatures:
+    jsx: true # enable React's JSX
+
+# register plugins
+plugins:
+  - meteor
+
+# use the rules of eslint-config-airbnb
+# and the recommended rules of eslint-plugin-meteor
+extends:
+  - airbnb/base
+  - plugin:meteor/recommended
+
+# registerenvironments
+env:
+  meteor: true
+  browser: true
+  node: true
+  
+
+rules:
+  # eslint
+  no-underscore-dangle: [2, {allowAfterThis: true}]
+
+  # eslint-plugin-import
+  import/no-unresolved: 0
+  import/no-extraneous-dependencies: 0
+
+globals:
+  # collections
+  Foo: false
+  Bar: false
+
+  # packages
+  FlowRouter: false # kadira:flow-router
+  GoogleMaps: false # dburles:google-maps
+  moment: false # momentjs:moment
