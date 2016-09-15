@@ -1,0 +1,54 @@
+// Base
+
+// Load Sass environment
+@import "{francocatena:compass}/compass";
+@import "{francocatena:compass}/compass/reset";
+@import "vendor/boilerplate";
+@import "/{casimcdaniels:breakpoint}/_breakpoint";
+@import "/{meta:susy}/susy";
+
+// Breakpoints
+$bp-tablet: 800px;
+$bp-mobile: 450px;
+
+// Colors
+$background-color: rgb(242, 242, 242);
+$overlay-color: rgba(0, 0, 0, 0.5);
+$font-color: rgb(0, 0, 0);
+$highlight-color: rgb(33, 192, 255);
+$grey-lighter: rgb(230, 230, 230); // used for .tag
+$grey-light: rgb(194, 194, 194); // used for .planet, .dropdown__content, .dropdown__divider
+$grey: rgb(128, 128, 128); 	  // used for dropdown__link, btn--white:hover
+$grey-dark: rgb(74, 74, 74);  // used for .btn--white, .link, .dropdown__link:hover
+$grey-darker: rgb(60, 60, 60); // used for .btn--grey:hover
+$crimson: rgb(220, 20, 60);    // used for .link:hover
+$white: rgb(255, 255, 255);		  // used for .dropdown__content, .dialogue
+$black: rgb(0, 0, 0); // used for .planet__header
+// Node Colors
+$node-color: rgb(216, 226, 239);
+$node-hover-color: rgb(176, 196, 222);
+$node-border-color: rgb(70, 130, 180);
+$node-selected-color: rgb(144, 224, 255);
+$node-selected-border-color: $highlight-color;
+// Content Color
+$content-background-color: rgb(222, 246, 255);
+
+
+// Baseline
+$font-size: 1.5rem;
+$line-height: 1.6;
+$baseline: $font-size * $line-height;
+
+// Spaces
+$base-sixth: $baseline / 6; // used for .dropdown, .dialogue
+$base-third: $baseline / 3; // used for input
+$base-half: $baseline / 2; // used for .dialogue
+
+// Background-color
+body {
+  background-color: $background-color;
+
+  @include breakpoint($bp-tablet) {
+    background-color: $white;
+  }
+}

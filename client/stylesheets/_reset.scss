@@ -1,0 +1,24 @@
+// Reset (own reset styles)
+
+// global border box sizing
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+input,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+

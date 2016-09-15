@@ -1,0 +1,54 @@
+// Forms
+
+.input {
+  display: block;
+  width: 100%;
+  padding: $base-sixth $base-half;
+  border: 1px solid $grey-light;
+  border-radius: 4px;
+  margin-bottom: $base-third;
+
+  &--text {
+    height: 4rem;
+  }
+
+  &--textarea {
+    resize: none;
+  }
+
+  &--last {
+    margin-bottom: $base-half;
+  }
+}
+
+.input:focus {
+  outline: none;
+  border: 1px solid $highlight-color;
+}
+
+.signup {
+  width: span(12);
+  margin-left: auto;
+  margin-right: auto;
+
+  @include breakpoint($bp-mobile) {
+    width: span(8);
+  }
+
+  @include breakpoint($bp-tablet) {
+    width: span(4);
+  }
+
+  &__header {
+    padding-top: 2 * $baseline;
+    margin-bottom: $baseline;
+
+    @include breakpoint($bp-tablet) {
+      padding-top: 4 * $baseline;
+    }
+  }
+
+  &__text {
+    margin-bottom: $base-half;
+  }
+}

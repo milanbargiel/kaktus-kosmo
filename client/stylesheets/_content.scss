@@ -1,0 +1,46 @@
+// Content (thought view)
+
+.thought {
+  display: none;
+  margin-bottom: $base-half;
+
+  &__text {
+    background-color: $content-background-color;
+    display: inline;
+    padding: 4px $base-half;
+
+    //Needs prefixing
+    box-decoration-break: clone; // each box fragment is rendered independently
+  }
+
+  &__tag {
+    color: $grey;
+  }
+}
+
+.meta {
+  display: none;
+  color: $grey;
+
+  &__author::after {
+    content: "·";
+    display: inline-block;
+    margin-left: $base-sixth;
+    margin-right: $base-sixth;
+  }
+
+  &__timestamp {
+    margin-right: $base-sixth;
+  }
+
+  &__delete::after {
+    content: "\f014";
+    font-family: FontAwesome;
+    font-size: 1.3rem;
+  }
+
+  &__delete:hover {
+    cursor: pointer;
+    color: $crimson;
+  }
+}

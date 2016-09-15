@@ -1,0 +1,55 @@
+// Dropdowns
+
+.dropdown {
+  position: relative;
+
+  &__content {
+    display: none;
+    position: absolute;
+    width: 16rem;
+    padding: $base-sixth 0;
+    background-color: $white;
+    border: 1px solid $grey-light;
+    border-radius: 4px;
+    right: 0;
+
+    &--up {
+      bottom: 100%;
+    }
+
+    // css triangle
+    &--up::before {
+      bottom: -7px;
+      right: 15px;
+      @include triangle-border("up");
+    }
+
+    &--up::after {
+      bottom: -6px;
+      right: 16px;
+      @include triangle("up");
+    }
+  }
+
+  &__link {
+    display: block; // makes anchor tag take full width of parent li
+    text-decoration: none;
+    color: $grey;
+    padding: 0 $baseline;
+  }
+
+  &__link:hover {
+    color: $white;
+    background-color: $grey-dark;
+  }
+
+  &__divider {
+    height: 1px;
+    margin: $base-sixth 1px;
+    background-color: $grey-light;
+  }
+}
+
+.dropdown:hover .dropdown__content {
+  display: block;
+}

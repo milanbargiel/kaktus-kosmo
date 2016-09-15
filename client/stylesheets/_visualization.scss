@@ -1,0 +1,72 @@
+// Visualization
+
+.visualization {
+  &__header {
+    margin-bottom: 3 * $baseline;
+    text-align: center;
+  }
+}
+
+// Universe
+
+.clear-rect {
+  opacity: 0;
+}
+
+// svg circles
+.planet {
+  fill: $white;
+  stroke: $grey-light;
+
+  &--hover {
+    stroke: $black;
+  }
+
+  &--selected {
+    stroke: $highlight-color;
+  }
+}
+
+// html labels
+.planet__label {
+  position: absolute;
+  left: 340px;
+  top: 296px;
+}
+
+.planet__header {
+  display: none;
+  text-decoration: none;
+  color: $black;
+
+  &--hover {
+    display: block;
+  }
+
+  &--selected {
+    display: block;
+    color: $highlight-color;
+  }
+
+  &--selected::after {
+    content: "\f0d7";
+    font-family: FontAwesome;
+    margin-left: 0.7rem;
+  }
+}
+
+// Planet
+
+.node {
+  fill: $node-color;
+  stroke: $node-border-color;
+
+  &--hover {
+    fill: $node-hover-color;
+  }
+
+  &--selected {
+    fill: $node-selected-color;
+    stroke: $node-selected-border-color;
+  }
+}

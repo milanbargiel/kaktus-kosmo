@@ -1,0 +1,70 @@
+// Buttons
+
+.link {
+  color: $grey-light;
+
+  &--active {
+    display: inline;
+    color: $grey-dark;
+    border-bottom: 2px solid $grey-dark;
+  }
+
+  &--highlight {
+    color: $highlight-color;
+  }
+
+  &--caret-up::after { // &: insert parent selector
+    content: "\f0d8";
+    font-family: FontAwesome;
+    margin-left: 0.7rem;
+  }
+}
+
+.link:hover {
+  color: $crimson;
+}
+
+.btn {
+  display: inline-block; // so anchor tag can have paddings
+  padding: 0 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 3rem;
+  letter-spacing: 0.1rem;
+  border-radius: 4px;
+
+  &--white {
+    color: $grey-dark;
+    border: 1px solid $grey-light;
+    margin-right: $base-half;
+  }
+
+  &--white:hover {
+    border-color: $grey;
+  }
+
+  &--grey {
+    color: $white;
+    border: 1px solid $grey-dark;
+    background-color: $grey-dark;
+  }
+
+  &--grey:hover {
+    background-color: $grey-darker;
+  }
+
+  &--planet {
+    color: $grey;
+    background-color: $white;
+    padding: 0 $baseline;
+    width: 100%;
+    height: 2 * $baseline;
+    line-height: 2 * $baseline;
+  }
+
+  &--planet::after {
+    float: right;
+    content: "\f105";
+    font-family: FontAwesome;
+  }
+}

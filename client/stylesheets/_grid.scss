@@ -1,0 +1,46 @@
+// Grid
+
+$susy: (
+	math: fluid,
+	global-box-sizing: border-box,
+	columns: 12,
+  column-width: 7.2rem,
+	// gutters: gutter-width / column-width
+	gutters: 2 / 3,
+  // debug: (
+  //   image: show,
+  // ),
+);
+
+.container {
+  padding: 0 $base-half;
+  @include container($susy);
+  @include clearfix;
+
+  @include breakpoint($bp-tablet) {
+    padding: 0 $baseline;
+  }
+}
+
+.filter {
+  padding-top: 6 * $baseline;
+  @include span(2);
+}
+
+.visualization {
+  display: none; // show vis only for bigger viewports
+
+  @include breakpoint($bp-tablet) {
+    display: block;
+    z-index: -10; // vis is -10 so main navigation is always in foreground
+
+    &--planet {
+      @include span(7);
+    }
+  }
+}
+
+.content {
+  padding-top: 12 * $baseline;
+  @include span(3 last);
+}

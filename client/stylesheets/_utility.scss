@@ -1,0 +1,39 @@
+// Utility
+// All utility (helper) classes have a prefix of u-
+
+.u-right {
+  float: right;
+}
+
+.u-full-width {
+  width: 100%;
+}
+
+.u-left-top {
+  position: absolute;
+  top: $base-sixth;
+  left: $baseline;
+}
+
+.u-right-top {
+  position: absolute;
+  top: $base-sixth;
+  right: $baseline;
+}
+
+.u-right-bottom {
+  position: absolute;
+  bottom: $base-sixth;
+  right: $baseline;
+}
+
+.u-relative {
+  // Helper class to vertically center .dialogue
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.u-clearfix {
+  @include clearfix;
+}

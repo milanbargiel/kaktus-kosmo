@@ -1,0 +1,48 @@
+// Filter (Tags and People)
+
+.horizontal-nav {
+  padding-bottom: $base-half;
+  margin-bottom: $base-half;
+  border-bottom: 1px solid $grey-light;
+
+  &__list-item {
+    display: inline;
+  }
+
+  &__link {
+    color: $grey;
+    margin-right: $base-third;
+
+    &--active {
+      color: $black;
+    }
+  }
+
+  &__link:hover {
+    color: $crimson;
+  }
+}
+
+.tag-list {
+
+  &__list-item {
+    display: inline;
+  }
+
+  &__tag {
+    display: inline-block;
+    background-color: $grey-lighter;
+    border-radius: 20px;
+    padding: 0 $base-third;
+    color: $grey;
+    font-weight: 300;
+    float: left;
+    margin-right: $base-third;
+    margin-bottom: $base-third;
+  }
+
+  &__tag:hover {
+    background-color: $grey;
+    color: $white;
+  }
+}

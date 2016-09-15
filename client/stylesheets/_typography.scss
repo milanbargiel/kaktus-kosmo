@@ -1,0 +1,21 @@
+// Typography
+
+// Html is set to 62.5% so all REM measurements are based on 10px sizing (1.0rem = 10px)
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: 400;
+  font-family: "Open Sans", sans-serif;
+  color: $font-color;
+}
+
+h1 {
+  font-size: 4rem;
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+}

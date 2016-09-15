@@ -1,0 +1,31 @@
+// Mixins
+
+@mixin triangle($dropdown-type) {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  @if $dropdown-type == "up" {
+    border-top: 6px solid $white;
+  }
+  @if $dropdown-type == "down" {
+    border-bottom: 6px solid $white;
+  }
+}
+
+@mixin triangle-border($dropdown-type) {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  @if $dropdown-type == "up" {
+    border-top: 7px solid $grey-light;
+    border-top-color: $grey-light;
+  }
+  @if $dropdown-type == "down" {
+    border-bottom: 7px solid $grey-light;
+    border-bottom-color: $grey-light;
+  }
+}
