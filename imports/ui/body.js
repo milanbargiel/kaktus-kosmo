@@ -1,5 +1,14 @@
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
+import Posts from '../api/posts/posts.js'; // Default import
+
 import './body.html';
+
+Template.body.onCreated(function () {
+  this.autorun(() => { // this refers to TemplateInstance
+    this.subscribe('posts');
+  });
+});
 
 Template.body.onRendered(() => {
   /* Planet definition
@@ -161,4 +170,10 @@ Template.body.onRendered(() => {
   });
   /* Instantiate object with new */
   const planet = new Planet('.visualization--planet', dataset);
+
+  /* Rerun when data changes */
+  Tracker.autorun(() => {
+    const dataset = Posts.find({}).fetch();
+    console.log(dataset);
+  });
 });

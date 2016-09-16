@@ -1,2 +1,5 @@
-// only available to the server
-// server entry point - imports all server code
+/* Server entry point
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* only available to the server, imports all server code */
+
+import '../imports/startup/server/index.js';

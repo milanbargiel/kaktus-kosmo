@@ -32,6 +32,9 @@
         <div class="content">
             <div class="thought">
                 <p class="thought__text">I had a dream about an green elephant. It asked me to travel on his back to India. When I accepted his offer he laughed at me and said that I am much to heavy. The elephant would rather go alone. <span class="thought__tag">#dream</span> <span class="thought__tag">#elephant</span></p>
+                {{#each posts}}
+                    {{>post}}
+                {{/each}}
             </div>
             <div class="meta">
                 <span class="meta__author">by Olenko</span>
