@@ -26,3 +26,5 @@ aldeed:simple-schema
 mdg:validated-method
 kadira:flow-router
 kadira:blaze-layout
+reywood:publish-composite
+sacha:spin

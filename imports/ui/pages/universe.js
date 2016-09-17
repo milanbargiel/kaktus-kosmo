@@ -1,12 +1,25 @@
 import { Template } from 'meteor/templating';
 import Projects from '../../api/projects/projects.js'; // Projects Collection
-import Posts from '../../api/posts/posts.js'; // Posts Collection
 
 /* Import template */
 import './universe.html';
 
-/* Subscribe to Planets and Posts Collections */
+/* Subscribe to Projects Collection */
 Template.Universe.onCreated(function () {
   this.subscribe('projects');
-  this.subscribe('posts');
+});
+
+Template.Universe.helpers({
+  projects() {
+    return Projects.find({});
+  },
+  pathForProject() {
+    const project = this;
+    const params = { projectId: project._id };
+    const routeName = 'Planet'; // route '/projects/:projectId'
+    /* Generate path */
+    const path = FlowRouter.path(routeName, params);
+
+    return path;
+  },
 });

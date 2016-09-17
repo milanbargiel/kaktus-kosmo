@@ -1,3 +1,8 @@
 <template name="Universe">
   <h1>UNIVERSE</h1>
+  {{#each projects}}
+    <ul>
+      <li><a href={{pathForProject}} class="link">{{name}}</a></li>
+    </ul>
+  {{/each}}
 </template>

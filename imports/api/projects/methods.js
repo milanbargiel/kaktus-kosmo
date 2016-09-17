@@ -13,10 +13,11 @@ export const insert = new ValidatedMethod({
   name: 'projects.insert',
   /* Check that passed values match Schema */
   validate: new SimpleSchema({
+    name: { type: String },
     author: { type: String },
   }).validator(),
-  run({ author }) {
-    Projects.insert({ author });
+  run({ name, author }) {
+    Projects.insert({ name, author });
   },
 });
 

@@ -10,6 +10,7 @@ import Posts from '../../api/posts/posts.js'; // Import Posts Collection
 Meteor.startup(() => {
   if (Projects.find().count() === 0) {
     const project = Projects.insert({
+      name: 'Elephant Dreams',
       author: 'Bengel',
     });
 
