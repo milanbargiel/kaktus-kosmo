@@ -1,16 +1,10 @@
 import { Template } from 'meteor/templating';
-import { Tracker } from 'meteor/tracker';
+// import { Tracker } from 'meteor/tracker';
 import Posts from '../api/posts/posts.js'; // Default import
 
 import './body.html';
 
-Template.body.onCreated(function () {
-  this.autorun(() => { // this refers to TemplateInstance
-    this.subscribe('posts');
-  });
-});
-
-Template.body.onRendered(() => {
+Template.body.onRendered(function () {
   /* Planet definition
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   /**
@@ -19,7 +13,7 @@ Template.body.onRendered(() => {
     * An object can act as a class, containing a constructor and a set of related methods (this).
   */
 
-  function Planet(selector, dataset) {
+  function Planet(selector) {
     let w = $(selector).innerWidth();
     let h = w;
     let center = { x: w / 2, y: h / 2 };
@@ -49,10 +43,6 @@ Template.body.onRendered(() => {
     const nodes = force.nodes();  // force dataset
     let circles = null;           // holding dom elements
 
-    /* Insert existing data */
-    nodes.push(...dataset);
-    update();
-
   /* Functions
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -79,7 +69,7 @@ Template.body.onRendered(() => {
     function update() {
       /* Join selection to data array -> results in three new selections enter, update and exit */
       circles = svg.selectAll('.node')
-        .data(nodes, d => d.id); // uniquely bind data to the node selection
+        .data(nodes, d => d._id); // uniquely bind data to the node selection
 
       /* Add missing elements by calling append on enter selection */
       circles.enter()
@@ -117,21 +107,16 @@ Template.body.onRendered(() => {
     }
     d3.select(window).on('resize', resize);
 
-  /* Add, remove
-  –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-    /* Placeholder function, later integrate shortid */
-    function createRandomId() {
-      return Math.random().toFixed(20).slice(2);
-    }
+/* Add, remove
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
     function findNodeIndex(id) {
-      return nodes.findIndex(node => node.id === id);
+      return nodes.findIndex(node => node._id === id);
     }
 
     /* Methods - accessible from outside the function */
-    this.addNode = (text) => {
-      nodes.push({ id: createRandomId(), thought: text });
+    this.addNode = (object) => {
+      nodes.push(object);
       update();
     };
 
@@ -142,38 +127,34 @@ Template.body.onRendered(() => {
         update();
       }
     };
+
+    this.initialize = (dataset) => {
+      nodes.push(...dataset);
+      update();
+    };
   }
+
 
   /* Instantiation
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-  const dataset = [];
-  dataset.push({
-    id: '22333',
-    thought: 'I had a dream about an green elephant. It asked me to travel on his back to India. When I accepted his offer he laughed at me and said that I am much to heavy. The elephant would rather go alone. #dream #elephant',
-    tags: ['#dream', '#elephant'],
-  });
-  dataset.push({
-    id: '222333',
-    thought: 'He told students to get their diplomas and shared his dream of escape. #freddiegray #dream',
-    tags: ['#freddiegray', '#dream'],
-  });
-  dataset.push({
-    id: '2223333',
-    thought: 'But they did not see any #trump Home mirrors or lotion dispensers',
-    tags: ['#trump'],
-  });
-  dataset.push({
-    id: '22233333',
-    thought: 'When Jobs returned, it was a dark time for Apple. It was forced to team up with its archrival Microsoft, and even took a $150 million stock investment from the company, which was then run by Bill Gates. #elephant #dream',
-    tags: ['#elephant', '#dream'],
-  });
-  /* Instantiate object with new */
-  const planet = new Planet('.visualization--planet', dataset);
+  /* Subscribe to posts -> callback when ready */
+  this.subscribe('posts', () => {
+    const posts = Posts.find({}).fetch();
 
-  /* Rerun when data changes */
-  Tracker.autorun(() => {
-    const dataset = Posts.find({}).fetch();
-    console.log(dataset);
+    /* Instantiate object with new */
+    const planet = new Planet('.visualization--planet');
+    planet.initialize(posts);
+
+    /* Listen for changes in Collection */
+    /* Establish a live query that invokes callbacks when the result of the query changes */
+    Posts.find().observe({
+      added(newDocument) {
+        planet.addNode(newDocument);
+      },
+      removed(oldDocument) {
+        planet.removeNode(oldDocument._id);
+      },
+    });
   });
 });

@@ -16,7 +16,7 @@ export const insertPost = new ValidatedMethod({
     text: { type: String },
   }).validator(),
   run({ text }) {
-    Posts.insert(text);
+    Posts.insert({ text });
   },
 });
 
