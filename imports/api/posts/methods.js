@@ -5,23 +5,37 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
-/* Import Posts Collection */
-import Posts from './posts';
+import Posts from './posts.js'; // Import posts collection
+import Projects from '../projects/projects.js'; // Import projects collection
 
-export const insertPost = new ValidatedMethod({
+export const insert = new ValidatedMethod({
   /* ValidatedMethod will use name to register method with Meteor */
-  name: 'Posts.methods.insert',
+  name: 'posts.insert',
   /* Check that passed values match Schema */
   validate: new SimpleSchema({
+    projectId: { type: String },
     text: { type: String },
   }).validator(),
-  run({ text }) {
-    Posts.insert({ text });
+  run({ projectId, text }) {
+    const project = Projects.findOne(projectId);
+
+    /* Check wether defined project exists */
+    if (!project) {
+      throw new Meteor.Error('posts.insert.accessDenied',
+        'A post must belong to a project');
+    }
+
+    const post = {
+      projectId,
+      text,
+    };
+
+    Posts.insert(post);
   },
 });
 
-export const removePost = new ValidatedMethod({
-  name: 'Posts.methods.remove',
+export const remove = new ValidatedMethod({
+  name: 'posts.remove',
   validate: new SimpleSchema({
     postId: { type: String },
   }).validator(),
