@@ -25,10 +25,23 @@ AccountsTemplates.configure({
     },
     button: {
       signIn: 'SIGN IN',
-      signUp: 'SIGN UP WITH YOUR EMAIL',
+      signUp: 'SIGN UP',
     },
   },
 });
+
+/* Use username and password for login and signup */
+const pwd = AccountsTemplates.removeField('password');
+AccountsTemplates.removeField('email');
+AccountsTemplates.addFields([
+  {
+    _id: 'username',
+    type: 'text',
+    required: true,
+    minLength: 5,
+  },
+  pwd,
+]);
 
 /* Passing predefined route with path */
 AccountsTemplates.configureRoute('signIn', {

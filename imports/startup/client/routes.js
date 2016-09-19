@@ -18,8 +18,6 @@ import '../../ui/navigations/nav-login.js';
 /* projectId is fetched in Template */
 FlowRouter.route('/projects/:projectId', {
   name: 'Planet',
-  /* Ensure that user is signed in */
-  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
     /* render(layout-template, { region: template }) */
     BlazeLayout.render('App_body', { main: 'Planet', navigation: 'Nav_app' });
@@ -28,6 +26,7 @@ FlowRouter.route('/projects/:projectId', {
 
 FlowRouter.route('/', {
   name: 'Universe',
+  /* Ensure that user is signed in */
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
     BlazeLayout.render('App_body', { main: 'Universe', navigation: 'Nav_app' });
