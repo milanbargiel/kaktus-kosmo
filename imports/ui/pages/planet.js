@@ -21,4 +21,8 @@ Template.Planet.helpers({
   posts() {
     return Posts.find({});
   },
+  projectName() {
+    const project = Projects.findOne();
+    return project.name;
+  },
 });

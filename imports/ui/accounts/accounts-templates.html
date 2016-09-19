@@ -1,0 +1,30 @@
+<template name="Auth_page">
+  <div class="authentication">
+    <h1 class="authentication__header">KOSMO</h1>
+    <p class="authentication__text">A place to lay down your thoughts to discover them later.</p>
+    {{> atForm}}    
+  </div>
+</template>
+
+<template name="override-atPwdFormBtn">
+  <button type="submit" class="btn btn--grey btn--auth u-full-width">
+    {{buttonText}}
+  </button>
+</template>
+
+<template name="override-atTextInput">
+  <div class="input {{#if isValidating}}validating{{/if}} {{#if hasError}}has-error{{/if}} {{#if hasSuccess}}has-success{{/if}} {{#if feedback}}has-feedback{{/if}}">
+    <input type="{{type}}" class="input__field input__field--text {{#if hasError}}input__field--error{{/if}}" id="at-field-{{_id}}" name="at-field-{{_id}}" placeholder="{{placeholder}}" autocapitalize="none" autocorrect="off">
+    {{#if hasError}}
+      <span class="input__error">{{errorText}}</span>
+    {{/if}}
+  </div>
+</template>
+
+<template name="override-atError">
+  <div class="at-error input">
+    {{#each error}}
+      <p class="input__error">{{errorText}}</p>
+    {{/each}}
+  </div>
+</template>

@@ -27,6 +27,10 @@ rules:
   no-param-reassign: 0
   no-use-before-define: [2, {functions: false, classes: true}]
   no-underscore-dangle: [2, {allow: ["_id"]}]
+  object-shorthand: 
+    - error
+    - always
+    - avoidQuotes: false
 
   # eslint-plugin-meteor
   meteor/template-names: 0
@@ -41,7 +45,4 @@ globals:
   Bar: false
 
   # packages
-  FlowRouter: false # kadira:flow-router
-  GoogleMaps: false # dburles:google-maps
-  moment: false # momentjs:moment
   d3: false #d3js:js

@@ -1,6 +1,9 @@
 <template name="App_body">
+  <nav class="main-navigation">
+    {{> Template.dynamic template=navigation}}
+  </nav>
   <div class="container">
-    <!-- routes.js defines which template to render into   main area -->
+    <!-- routes.js defines which template to render into main area -->
     {{> Template.dynamic template=main}}
   </div>
 </template>

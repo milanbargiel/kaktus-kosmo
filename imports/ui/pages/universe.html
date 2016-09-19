@@ -1,8 +1,12 @@
 <template name="Universe">
   <h1>UNIVERSE</h1>
-  {{#each projects}}
-    <ul>
-      <li><a href={{pathForProject}} class="link">{{name}}</a></li>
-    </ul>
-  {{/each}}
+  {{#if Template.subscriptionsReady}}
+    {{#each projects}}
+      <ul>
+        <li><a href={{pathForProject}} class="link">{{name}}</a></li>
+      </ul>
+    {{/each}}
+  {{else}}
+    {{> spinner}}
+  {{/if}}
 </template>

@@ -1,32 +1,39 @@
 // Forms
 
 .input {
-  display: block;
-  width: 100%;
-  padding: $base-sixth $base-half;
-  border: 1px solid $grey-light;
-  border-radius: 4px;
   margin-bottom: $base-third;
 
-  &--text {
-    height: 4rem;
-  }
+  &__field {
+    display: block;
+    width: 100%;
+    padding: $base-sixth $base-half;
+    border: 1px solid $grey-light;
+    border-radius: 4px;
 
-  &--textarea {
-    resize: none;
-  }
+    &:focus {
+      outline: none;
+      border: 1px solid $highlight-color;
+    }
 
-  &--last {
-    margin-bottom: $base-half;
+    &--text {
+      height: 4rem;
+    }
+
+    &--textarea {
+      resize: none;
+    }
+
+    &--error {
+      border: 1px solid $crimson;
+    }
+  }
+  
+  &__error {
+    color: $crimson;
   }
 }
 
-.input:focus {
-  outline: none;
-  border: 1px solid $highlight-color;
-}
-
-.signup {
+.authentication {
   width: span(12);
   margin-left: auto;
   margin-right: auto;

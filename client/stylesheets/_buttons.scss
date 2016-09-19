@@ -2,6 +2,7 @@
 
 .link {
   color: $grey-light;
+  cursor: pointer;
 
   &--active {
     display: inline;
@@ -53,6 +54,10 @@
     background-color: $grey-darker;
   }
 
+  &--auth {
+    margin-top: $base-third;
+  }
+
   &--planet {
     color: $grey;
     background-color: $white;
@@ -67,4 +72,8 @@
     content: "\f105";
     font-family: FontAwesome;
   }
+}
+
+.btn:focus {
+  outline: none;
 }
