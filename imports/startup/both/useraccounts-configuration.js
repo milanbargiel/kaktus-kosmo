@@ -46,14 +46,8 @@ AccountsTemplates.addFields([
 /* Passing predefined route with path */
 AccountsTemplates.configureRoute('signIn', {
   path: '/login',
-  layoutRegions: {
-    navigation: 'Nav_login',
-  },
 });
 
 AccountsTemplates.configureRoute('signUp', {
   path: '/join',
-  layoutRegions: {
-    navigation: 'Nav_login',
-  },
 });

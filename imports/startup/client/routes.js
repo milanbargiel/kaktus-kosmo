@@ -7,8 +7,6 @@ import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 /* Import to load these templates */
 import '../../ui/layouts/app-body.js';
-import '../../ui/navigations/nav-app.js';
-import '../../ui/navigations/nav-secondary.js';
 import '../../ui/pages/planet.js';
 import '../../ui/pages/universe.js';
 import '../../ui/pages/app-not-found.js';
@@ -21,7 +19,7 @@ FlowRouter.route('/projects/:projectId', {
   name: 'planet',
   action() {
     /* render(layout-template, { region: template }) */
-    BlazeLayout.render('App_body', { main: 'Planet', navigation: 'Nav_app' });
+    BlazeLayout.render('App_body', { main: 'Planet' });
   },
 });
 
@@ -30,7 +28,7 @@ FlowRouter.route('/', {
   /* Ensure that user is signed in */
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-    BlazeLayout.render('App_body', { main: 'Universe', navigation: 'Nav_app' });
+    BlazeLayout.render('App_body', { main: 'Universe' });
   },
 });
 
@@ -38,6 +36,6 @@ FlowRouter.route('/', {
 FlowRouter.notFound = {
   name: 'notFound',
   action() {
-    BlazeLayout.render('App_body', { main: 'App_notFound', navigation: 'Nav_notFound' });
+    BlazeLayout.render('App_body', { main: 'App_notFound' });
   },
 };

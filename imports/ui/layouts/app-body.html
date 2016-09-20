@@ -1,6 +1,22 @@
 <template name="App_body">
   <nav class="main-navigation">
-    {{> Template.dynamic template=navigation}}
+    {{#if currentUser}}
+      <a class="link u-left-top" href="/">KOSMO</a>
+      <a class="link u-right-top">CREATE A PLANET</a>
+      <div class="u-right-bottom">
+        <div class="dropdown">
+          <a class="link link--caret-up">palermo</a>
+          <ul class="dropdown__content dropdown__content--up">
+            <li>
+              <a class="js-logout dropdown__link">Logout</a>
+            </li>
+          </ul>    
+        </div>
+      </div>
+    {{else}}
+      <a class="link u-left-top {{isActivePath class='link--active' path='/login'}}" href="/login">SIGN IN</a>
+      <a class="link u-right-top {{isActivePath class='link--active' path='/join'}}" href="/join">SIGN UP</a>
+    {{/if}}
   </nav>
   <div class="container">
     <!-- routes.js defines which template to render into main area -->
