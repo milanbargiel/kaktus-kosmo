@@ -15,9 +15,9 @@ Template.Universe.helpers({
     return Projects.find({});
   },
   pathForProject() {
-    const project = this;
+    const project = this; // this references Document
     const params = { projectId: project._id };
-    const routeName = 'Planet'; // route '/projects/:projectId'
+    const routeName = 'planet'; // route '/projects/:projectId'
     /* Generate path */
     const path = FlowRouter.path(routeName, params);
 

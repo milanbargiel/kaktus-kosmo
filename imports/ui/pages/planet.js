@@ -13,7 +13,12 @@ Template.Planet.onCreated(function () {
   /* Subscribe to posts.inProject publication based on projectId FlowRouter param */
   this.autorun(() => {
     /* this.subscribe instead of Meteor.subscribe -> enables {{Template.subscriptionsReady}} */
-    this.subscribe('posts.inProject', this.getProjectId());
+    this.subscribe('posts.inProject', this.getProjectId(), () => {
+      /* When project does not exists or is private */
+      if (Projects.find().count() === 0) {
+        FlowRouter.go('/notfound');
+      }
+    });
   });
 });
 

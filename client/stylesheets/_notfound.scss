@@ -1,0 +1,25 @@
+.notfound {
+  width: span(12);
+  margin-left: auto;
+  margin-right: auto;
+
+  @include breakpoint($bp-mobile) {
+    width: span(8);
+  }
+
+  @include breakpoint($bp-tablet) {
+    width: span(4);
+  }
+
+  &__header {
+    margin-top: $baseline;
+  }
+
+  &__text {
+    margin-bottom: $baseline;
+  }
+
+  &__img {
+    max-width: 100%;
+  }
+}
