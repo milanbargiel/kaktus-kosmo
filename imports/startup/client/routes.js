@@ -14,6 +14,9 @@ import '../../ui/pages/app-not-found.js';
 /* Import to override accounts templates */
 import '../../ui/accounts/accounts-templates.js';
 
+/* Import useraccounts-configuration to define AccountsTemplates.configureRoute */
+import '../both/useraccounts-configuration.js';
+
 /* pathForProject is defined in template Universe with projectId */
 FlowRouter.route('/projects/:projectId', {
   name: 'planet',
@@ -39,3 +42,13 @@ FlowRouter.notFound = {
     BlazeLayout.render('App_body', { main: 'App_notFound' });
   },
 };
+
+AccountsTemplates.configureRoute('signIn', {
+  name: 'auth', // 'auth' is a group name used in template helper 'isActiveRoute'
+  path: '/login',
+});
+
+AccountsTemplates.configureRoute('signUp', {
+  name: 'auth',
+  path: '/join',
+});

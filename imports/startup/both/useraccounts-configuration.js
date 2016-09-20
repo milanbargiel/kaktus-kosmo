@@ -42,12 +42,3 @@ AccountsTemplates.addFields([
   },
   pwd,
 ]);
-
-/* Passing predefined route with path */
-AccountsTemplates.configureRoute('signIn', {
-  path: '/login',
-});
-
-AccountsTemplates.configureRoute('signUp', {
-  path: '/join',
-});

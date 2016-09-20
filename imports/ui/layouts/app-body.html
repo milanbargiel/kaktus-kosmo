@@ -1,11 +1,27 @@
 <template name="App_body">
   <nav class="main-navigation">
-    {{#if currentUser}}
+
+<!--  1. User ist eingeloggt
+        - Universe -> KOSMO, Create a planet, Username
+        - Planet -> KOSMO, Inject a thought, Username
+        - Page not Found -> KOSMO, Username
+      2. User ist nicht eingeloggt
+        - Login -> Sign Up, Sign In 
+        - Public Planet -> KOSMO, Inject a thought
+        - Page not Found -> KOSMO -->
+
+    {{#if isActiveRoute 'auth'}}
+      <a class="link u-left-top {{isActivePath class='link--active' path='/login'}}" href="/login">SIGN IN</a>
+      <a class="link u-right-top {{isActivePath class='link--active' path='/join'}}" href="/join">SIGN UP</a>
+    {{else}}
       <a class="link u-left-top" href="/">KOSMO</a>
-      <a class="link u-right-top">CREATE A PLANET</a>
+      <a class="link u-right-top">{{insertDocument}}</a>
+    {{/if}}
+      
+    {{#if currentUser}}
       <div class="u-right-bottom">
         <div class="dropdown">
-          <a class="link link--caret-up">palermo</a>
+          <a class="link link--caret-up">{{currentUser.username}}</a>
           <ul class="dropdown__content dropdown__content--up">
             <li>
               <a class="js-logout dropdown__link">Logout</a>
@@ -13,9 +29,6 @@
           </ul>    
         </div>
       </div>
-    {{else}}
-      <a class="link u-left-top {{isActivePath class='link--active' path='/login'}}" href="/login">SIGN IN</a>
-      <a class="link u-right-top {{isActivePath class='link--active' path='/join'}}" href="/join">SIGN UP</a>
     {{/if}}
   </nav>
   <div class="container">
