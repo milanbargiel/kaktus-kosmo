@@ -16,9 +16,10 @@ Meteor.startup(() => {
     });
 
     const publicProject = Projects.insert({
+      userId,
       name: 'Elephant Dreams',
       public: true,
-      userId,
+      createdAt: new Date(),
     });
 
     Posts.insert({
@@ -42,10 +43,10 @@ Meteor.startup(() => {
     });
 
     const privateProject = Projects.insert({
+      userId,
       name: 'My Secret Planet',
       public: false,
-      username: 'kaktus',
-      userId,
+      createdAt: new Date(),
     });
 
     Posts.insert({

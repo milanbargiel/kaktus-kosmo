@@ -20,7 +20,7 @@ Template.createProject.onRendered(function () {
       /* Clear input field */
       templateInstance.find('input[name="name"]').value = '';
       /* Insert document into collection */
-      Meteor.call('projects.insert', { name, userId: Meteor.userId() });
+      Meteor.call('projects.insert', { name });
       /* Hide form */
       Session.set('showCreateProject', false);
     },
