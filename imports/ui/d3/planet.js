@@ -100,7 +100,7 @@ export default function (selector) {
 
   d3.select(window).on('resize', resize);
 
-  /* Add, remove
+  /* Add, remove, initialize
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
   function findNodeIndex(id) {

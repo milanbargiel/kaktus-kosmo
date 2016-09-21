@@ -3,14 +3,10 @@
   {{#if showCreateProject}}
     {{> createProject}}
   {{/if}}
-  <h1>UNIVERSE</h1>
-  {{#if Template.subscriptionsReady}}
-    {{#each projects}}
-      <ul>
-        <li><a href={{pathForProject}} class="link">{{name}}</a></li>
-      </ul>
-    {{/each}}
+  <!-- Show spinner as long as we are waiting for subscription to be ready -->
+  {{#if initVis}}
   {{else}}
     {{> spinner}}
   {{/if}}
+  <div class="visualization"></div>
 </template>
