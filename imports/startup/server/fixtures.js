@@ -18,7 +18,6 @@ Meteor.startup(() => {
     const publicProject = Projects.insert({
       name: 'Elephant Dreams',
       public: true,
-      username: 'kaktus',
       userId,
     });
 

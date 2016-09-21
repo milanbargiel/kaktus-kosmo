@@ -22,7 +22,7 @@ FlowRouter.route('/projects/:projectId', {
   name: 'planet',
   action() {
     /* render(layout-template, { region: template }) */
-    BlazeLayout.render('App_body', { main: 'Planet' });
+    BlazeLayout.render('App_body', { main: 'Planet_page' });
   },
 });
 
@@ -31,7 +31,7 @@ FlowRouter.route('/', {
   /* Ensure that user is signed in */
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-    BlazeLayout.render('App_body', { main: 'Universe' });
+    BlazeLayout.render('App_body', { main: 'Universe_page' });
   },
 });
 

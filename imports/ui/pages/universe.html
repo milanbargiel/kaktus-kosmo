@@ -1,4 +1,8 @@
-<template name="Universe">
+<template name="Universe_page">
+  <a class="js-createProject link u-right-top">CREATE A PLANET</a>
+  {{#if showCreateProject}}
+    {{> createProject}}
+  {{/if}}
   <h1>UNIVERSE</h1>
   {{#if Template.subscriptionsReady}}
     {{#each projects}}

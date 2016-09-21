@@ -1,7 +1,6 @@
 // Dialogues
 
 .overlay {
-  display: none;
   background-color: $overlay-color;
   position: fixed;
   width: 100%;
@@ -12,7 +11,6 @@
 }
 
 .dialogue {
-  display: none;
   width: 43rem;
   background-color: $white;
   padding: $base-half $baseline;

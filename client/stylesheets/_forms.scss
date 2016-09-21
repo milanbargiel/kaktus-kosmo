@@ -33,6 +33,21 @@
   }
 }
 
+// Jquery Validation Errors
+label.error {
+  display: block;
+  color: $crimson;
+  margin-bottom: $base-third;
+}
+
+input.error {
+  border: 1px solid $crimson;
+
+  &:focus {
+    border: 1px solid $crimson;
+  }
+}
+
 .authentication {
   width: span(12);
   margin-left: auto;

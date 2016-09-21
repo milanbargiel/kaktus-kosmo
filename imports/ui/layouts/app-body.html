@@ -1,6 +1,4 @@
 <template name="App_body">
-  <nav class="main-navigation">
-
 <!--  1. User ist eingeloggt
         - Universe -> KOSMO, Create a planet, Username
         - Planet -> KOSMO, Inject a thought, Username
@@ -10,13 +8,14 @@
         - Public Planet -> KOSMO, Inject a thought
         - Page not Found -> KOSMO -->
 
-    {{#if isActiveRoute 'auth'}}
+  <nav class="main-navigation">
+    <!-- Show main navigation unless we are in authentication process (login, signup) -->
+    {{#unless isActiveRoute 'auth'}}
+      <a class="link u-left-top" href="/">KOSMO</a>
+    {{else}}
       <a class="link u-left-top {{isActivePath class='link--active' path='/login'}}" href="/login">SIGN IN</a>
       <a class="link u-right-top {{isActivePath class='link--active' path='/join'}}" href="/join">SIGN UP</a>
-    {{else}}
-      <a class="link u-left-top" href="/">KOSMO</a>
-      <a class="link u-right-top">{{insertDocument}}</a>
-    {{/if}}
+    {{/unless}}
       
     {{#if currentUser}}
       <div class="u-right-bottom">
@@ -31,6 +30,7 @@
       </div>
     {{/if}}
   </nav>
+
   <div class="container">
     <!-- routes.js defines which template to render into main area -->
     {{> Template.dynamic template=main}}

@@ -7,7 +7,7 @@ import Posts from '../../api/posts/posts.js'; // Posts Collection
 import './planet.html';
 
 /* Subscribe to Posts Collections */
-Template.Planet.onCreated(function () {
+Template.Planet_page.onCreated(function () {
   this.getProjectId = () => FlowRouter.getParam('projectId');
 
   /* Subscribe to posts.inProject publication based on projectId FlowRouter param */
@@ -22,7 +22,7 @@ Template.Planet.onCreated(function () {
   });
 });
 
-Template.Planet.helpers({
+Template.Planet_page.helpers({
   posts() {
     return Posts.find({});
   },

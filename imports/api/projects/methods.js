@@ -14,10 +14,10 @@ export const insert = new ValidatedMethod({
   /* Check that passed values match Schema */
   validate: new SimpleSchema({
     name: { type: String },
-    author: { type: String },
+    userId: { type: String },
   }).validator(),
-  run({ name, author }) {
-    Projects.insert({ name, author });
+  run({ name, userId }) {
+    Projects.insert({ name, userId });
   },
 });
 
