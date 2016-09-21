@@ -2,8 +2,7 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 import { Meteor } from 'meteor/meteor';
 
-/* Import SimpleSchema and ValidatedMethod */
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+/* Import ValidatedMethod */
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 /* Import Projects Collection */
@@ -29,9 +28,7 @@ export const insert = new ValidatedMethod({
 
 export const remove = new ValidatedMethod({
   name: 'projects.remove',
-  validate: new SimpleSchema({
-    projectId: { type: String },
-  }).validator(),
+  validate: Projects.simpleSchema().pick('_id').validator(),
   run({ projectId }) {
     Projects.remove(projectId);
   },

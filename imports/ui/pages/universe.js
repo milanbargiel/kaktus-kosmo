@@ -25,7 +25,7 @@ Template.Universe_page.onRendered(function () {
     const universe = new Universe('.visualization');
     universe.initialize(projects);
 
-    /* Listen for changes in Collection */
+    /* Listen reactively for changes in Collection */
     /* Establish a live query that invokes callbacks when the result of the query changes */
     Projects.find().observe({
       added(newDocument) {
