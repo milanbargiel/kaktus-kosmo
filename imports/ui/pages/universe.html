@@ -4,7 +4,7 @@
     {{> createProject}}
   {{/if}}
   <!-- Show spinner as long as we are waiting for subscription to be ready -->
-  {{#if initVis}}
+  {{#if Template.subscriptionsReady}}
   {{else}}
     {{> spinner}}
   {{/if}}

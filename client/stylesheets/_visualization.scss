@@ -17,6 +17,7 @@
 .planet {
   fill: $white;
   stroke: $grey-light;
+  cursor: default;
 
   &--hover {
     stroke: $black;

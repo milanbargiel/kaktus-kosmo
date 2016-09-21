@@ -1,7 +1,6 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Session } from 'meteor/session';
-import { ReactiveVar } from 'meteor/reactive-var';
 import Projects from '../../api/projects/projects.js'; // Projects Collection
 
 /* Import templates */
@@ -12,9 +11,7 @@ import '../components/project-forms.js';
 import Universe from '../d3/universe.js';
 
 /* Subscribe to Projects Collection */
-Template.Universe_page.onCreated(function () {
-  this.rendered = new ReactiveVar(false); // this refers to Template instance
-  this.subscribe('projects');
+Template.Universe_page.onCreated(() => {
   /* Store temporary UI states in Session (globally) */
   Session.set({
     showCreateProject: false,
@@ -22,21 +19,26 @@ Template.Universe_page.onCreated(function () {
 });
 
 Template.Universe_page.onRendered(function () {
-  /* When all DOM elements are rendered set reactive var to true -> initVis() */
-  this.rendered.set(true);
+  /* Subscribe -> Callback */
+  this.subscribe('projects', () => {
+    const projects = Projects.find({}).fetch();
+    const universe = new Universe('.visualization');
+    universe.initialize(projects);
+
+    /* Listen for changes in Collection */
+    /* Establish a live query that invokes callbacks when the result of the query changes */
+    Projects.find().observe({
+      added(newDocument) {
+        universe.addNode(newDocument);
+      },
+      removed(oldDocument) {
+        universe.removeNode(oldDocument._id);
+      },
+    });
+  });
 });
 
 Template.Universe_page.helpers({
-  initVis() {
-    const projects = Projects.find({}).fetch();
-    /* When subscription is ready and DOM is rendered */
-    if (projects.length && Template.instance().rendered) {
-      const universe = new Universe('.visualization');
-      universe.initialize(projects);
-      return true;
-    }
-    return false;
-  },
   pathForProject() {
     const project = this; // this references Document
     const params = { projectId: project._id };
