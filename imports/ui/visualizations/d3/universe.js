@@ -1,3 +1,16 @@
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+/* Helpers */
+
+/* Generating a string with path to project for anchor tags */
+function pathForProject(projectId) {
+  const routeName = 'planet'; // route '/projects/:projectId'
+  /* Generate path */
+  const path = FlowRouter.path(routeName, { projectId });
+  return path;
+}
+
+
 /* Universe definition
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /**
@@ -18,8 +31,8 @@ export default function Universe(selector) {
       .attr('width', w)
       .attr('height', h);
 
-  /* Create div container to hold menus */
-  const menuContainer = d3.select(selector)
+  /* Create div container to hold labels */
+  const labelContainer = d3.select(selector)
     .append('div')
     .attr('class', 'labels');
 
@@ -74,15 +87,17 @@ export default function Universe(selector) {
 
   function updateLabels() {
     /* Join selection to data array -> results in three new selections enter, update and exit */
-    labels = menuContainer.selectAll('.planet__label')
+    labels = labelContainer.selectAll('.planet__label')
       .data(nodes, d => d._id); // uniquely bind data to the node selection
 
+    /* Enter Selection */
     const labelsEnter = labels.enter()
       .append('div')
       .attr('class', 'planet__label')
       .append('div')
       .attr('class', 'dropdown');
 
+    /* Planet header */
     labelsEnter.append('a')
       .attr('class', 'planet__header')
       .text(d => d.name)
@@ -94,11 +109,29 @@ export default function Universe(selector) {
         d.dy = elemMeasures.height;
       });
 
-    /* Create Menu Navigation */
-    const menuNavigation = '<li><a class="dropdown__link">ENTER</a></li><li class="dropdown__divider"></li><li><a class="dropdown__link">Rename</a></li><li><a class="dropdown__link">Delete</a></li>';
-    labelsEnter.append('ul')
-      .attr('class', 'dropdown__content')
-      .html(menuNavigation);
+    /* Create dropdown navigation links */
+    const dropdown = labelsEnter.append('ul')
+      .attr('class', 'dropdown__content');
+
+    /* Enter */
+    dropdown.append('a')
+      .attr('class', 'dropdown__link')
+      .attr('href', d => pathForProject(d._id))
+      .text('ENTER');
+
+    /* Divider */
+    dropdown.append('div')
+      .attr('class', 'dropdown__divider');
+
+    /* Rename */
+    dropdown.append('a')
+      .attr('class', 'dropdown__link')
+      .text('Rename');
+
+    /* Delete */
+    dropdown.append('a')
+      .attr('class', 'dropdown__link')
+      .text('Delete');
 
     labels.exit()
       .remove();

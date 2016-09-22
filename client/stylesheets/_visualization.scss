@@ -36,18 +36,18 @@
 }
 
 .planet__header {
-  // Use opacity instead of display so getBoundingClientRect() can calculate width
-  opacity: 0;
+  // Use visibility instead of display so getBoundingClientRect() can calculate dimensions
+  visibility: hidden;
   text-decoration: none;
   color: $black;
   cursor: pointer;
 
   &--hover {
-    opacity: 1;
+    visibility: visible;
   }
 
   &--selected {
-    opacity: 1;
+    visibility: visible;
     color: $highlight-color;
   }
 

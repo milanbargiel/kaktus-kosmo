@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Session } from 'meteor/session';
 
 /* Import templates */
@@ -16,15 +15,6 @@ Template.Universe_page.onCreated(() => {
 });
 
 Template.Universe_page.helpers({
-  pathForProject() {
-    const project = this; // this references Document
-    const params = { projectId: project._id };
-    const routeName = 'planet'; // route '/projects/:projectId'
-    /* Generate path */
-    const path = FlowRouter.path(routeName, params);
-
-    return path;
-  },
   showCreateProject() {
     return Session.get('showCreateProject');
   },

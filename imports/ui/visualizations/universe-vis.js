@@ -26,3 +26,14 @@ Template.Universe_vis.onRendered(function () {
     });
   });
 });
+
+// Template.Universe_vis.events({
+//   'click .planet__header'(event) {
+//     console.log('clicked');
+//     $(event.currentTarget).addClass('Mofucka');
+//   },
+//   'click .planet'(event) {
+//     console.log('clicked');
+//     $(event.currentTarget).attr('class', 'Mofucka');
+//   },
+// });

@@ -51,6 +51,16 @@
   }
 }
 
-.dropdown:hover .dropdown__content {
+/* Modified because of getBoundingClientRect function */
+
+a {
+  display: block;
+}
+
+.dropdown > a:hover + .dropdown__content {
+  display: block;
+}
+
+.dropdown__content:hover {
   display: block;
 }
