@@ -1,8 +1,14 @@
 <template name="Auth_page">
-  <div class="authentication">
-    <h1 class="authentication__header">KOSMO</h1>
-    <p class="authentication__text">A place to lay down your thoughts to discover them later.</p>
-    {{> atForm}}    
+  <nav class="main-navigation">
+    {{> Nav_auth}}
+  </nav>
+  
+  <div class="container">
+    <div class="authentication">
+      <h1 class="authentication__header">KOSMO</h1>
+      <p class="authentication__text">A place to lay down your thoughts to discover them later.</p>
+      {{> atForm}}    
+    </div>
   </div>
 </template>
 

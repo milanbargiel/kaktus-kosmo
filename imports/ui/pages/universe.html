@@ -1,12 +1,14 @@
 <template name="Universe_page">
-  <a class="js-createProject link u-right-top">CREATE A PLANET</a>
+  <nav class="main-navigation">
+    <a class="js-createProject link u-right-top">CREATE A PLANET</a>
+    {{> Nav_main}}
+  </nav>
+  
+  <!-- dialogues -->
   {{#if showCreateProject}}
     {{> createProject}}
   {{/if}}
-  <!-- Show spinner as long as we are waiting for subscription to be ready -->
-  {{#if Template.subscriptionsReady}}
-  {{else}}
-    {{> spinner}}
-  {{/if}}
-  <div class="visualization"></div>
+  
+  <!-- visualization -->
+  {{> Universe_vis}}
 </template>
