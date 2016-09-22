@@ -15,9 +15,9 @@
 
 // svg circles
 .planet {
+  cursor: default;
   fill: $white;
   stroke: $grey-light;
-  cursor: default;
 
   &--hover {
     stroke: $black;
@@ -36,16 +36,18 @@
 }
 
 .planet__header {
-  display: none;
+  // Use opacity instead of display so getBoundingClientRect() can calculate width
+  opacity: 0;
   text-decoration: none;
   color: $black;
+  cursor: pointer;
 
   &--hover {
-    display: block;
+    opacity: 1;
   }
 
   &--selected {
-    display: block;
+    opacity: 1;
     color: $highlight-color;
   }
 

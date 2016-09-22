@@ -27,7 +27,8 @@ export default function Universe(selector) {
   const backgroundRect = svg.append('rect')
     .attr('width', w)
     .attr('height', h)
-    .attr('class', 'clear-rect');
+    .attr('class', 'clear-rect')
+    .on('click', clear);
 
 
   /* Create d3 force layout */
@@ -63,6 +64,8 @@ export default function Universe(selector) {
       .append('circle')
       .attr('r', circleRadius)
       .attr('class', 'planet')
+      /* Bind connectEvents method to elements */
+      .call(connectEvents)
       .call(force.drag);
 
     /* Remove surplus elements from exit selection */
@@ -92,7 +95,7 @@ export default function Universe(selector) {
       });
 
     /* Create Menu Navigation */
-    const menuNavigation = '<li><a class="dropdown__link">ENTER</a></li><li><a class="dropdown__link">Rename</a></li><li><a class="dropdown__link">Delete</a></li>';
+    const menuNavigation = '<li><a class="dropdown__link">ENTER</a></li><li class="dropdown__divider"></li><li><a class="dropdown__link">Rename</a></li><li><a class="dropdown__link">Delete</a></li>';
     labelsEnter.append('ul')
       .attr('class', 'dropdown__content')
       .html(menuNavigation);
@@ -134,6 +137,38 @@ export default function Universe(selector) {
   }
 
   d3.select(window).on('resize', resize);
+
+/* Interactions
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+  /* Reference: http://vallandingham.me/building_a_bubble_cloud.html */
+  function click(object) { // object is selected nodes object
+    /* iterates over nodes, if callback returns true, class is given */
+    circles.classed('planet--selected', node => object._id === node._id);
+    labels.selectAll('.planet__header').classed('planet__header--selected', node => object._id === node._id);
+  }
+
+  /* Click on background rect triggers clear function */
+  function clear() {
+    circles.classed('planet--selected', false);
+    labels.selectAll('.planet__header').classed('planet__header--selected', false);
+  }
+
+  function mouseover(object) {
+    circles.classed('planet--hover', node => object._id === node._id);
+    labels.selectAll('.planet__header').classed('planet__header--hover', node => object._id === node._id);
+  }
+
+  function mouseout() {
+    circles.classed('planet--hover', false);
+    labels.selectAll('.planet__header').classed('planet__header--hover', false);
+  }
+
+  function connectEvents(selection) {
+    selection.on('mouseup', click);
+    selection.on('mouseover', mouseover);
+    selection.on('mouseout', mouseout);
+  }
 
 /* Add, remove, initialize
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
