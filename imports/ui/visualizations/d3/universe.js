@@ -66,6 +66,18 @@ export default function Universe(selector) {
     };
   }
 
+  /* Assign measure properties to node object -> calculation of planet__header position */
+  function setMeasures() {
+    /* Returns a function which works on data of a single node */
+    return function (d) {
+      const elemMeasures = this.getBoundingClientRect(); // this refers to dom element
+      /* Add dx (half width of menu div) and dy property (height of menu div) to each node object */
+      /* Use values to center and position menu div on circle in tick function */
+      d.dx = elemMeasures.width / 2;
+      d.dy = elemMeasures.height;
+    };
+  }
+
   /* Reference: http://vallandingham.me/building_a_bubble_cloud.html */
   function updateNodes() {
     /* Join selection to data array -> results in three new selections enter, update and exit */
@@ -90,6 +102,12 @@ export default function Universe(selector) {
     labels = labelContainer.selectAll('.planet__label')
       .data(nodes, d => d._id); // uniquely bind data to the node selection
 
+    /* Update Selection */
+    /* Update old elements */
+    labels.select('.planet__header')
+      .text(d => d.name)
+      .each(setMeasures());
+
     /* Enter Selection */
     const labelsEnter = labels.enter()
       .append('div')
@@ -101,13 +119,7 @@ export default function Universe(selector) {
     labelsEnter.append('a')
       .attr('class', 'planet__header')
       .text(d => d.name)
-      /* Add dx (half width of menu div) and dy property (height of menu div) to each node object */
-      /* Use values to center and position menu div on circle in tick function */
-      .each(function setMeasures(d) { // use function so this refers to dom element (menu__header)
-        const elemMeasures = this.getBoundingClientRect();
-        d.dx = elemMeasures.width / 2;
-        d.dy = elemMeasures.height;
-      });
+      .each(setMeasures());
 
     /* Create dropdown navigation links */
     const dropdown = labelsEnter.append('ul')
@@ -125,12 +137,12 @@ export default function Universe(selector) {
 
     /* Rename */
     dropdown.append('a')
-      .attr('class', 'dropdown__link')
+      .attr('class', 'js-renameProject dropdown__link')
       .text('Rename');
 
     /* Delete */
     dropdown.append('a')
-      .attr('class', 'dropdown__link')
+      .attr('class', 'js-deleteProject dropdown__link')
       .text('Delete');
 
     labels.exit()
@@ -222,6 +234,12 @@ export default function Universe(selector) {
       nodes.splice(i, 1);
       update();
     }
+  };
+
+  this.renameNode = (id, newName) => {
+    const i = findNodeIndex(id);
+    nodes[i].name = newName;
+    update();
   };
 
   this.initialize = (dataset) => {

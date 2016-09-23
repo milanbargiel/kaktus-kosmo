@@ -34,6 +34,7 @@ aldeed:collection2
 mdg:validated-method
 reywood:publish-composite
 themeteorchef:jquery-validation
+reactive-dict
 
 # Accounts
 accounts-password

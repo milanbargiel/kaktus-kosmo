@@ -20,6 +20,9 @@ Template.Universe_vis.onRendered(function () {
       added(newDocument) {
         universe.addNode(newDocument);
       },
+      changed(newDocument) {
+        universe.renameNode(newDocument._id, newDocument.name);
+      },
       removed(oldDocument) {
         universe.removeNode(oldDocument._id);
       },

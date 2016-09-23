@@ -8,6 +8,9 @@
   {{#if showCreateProject}}
     {{> createProject}}
   {{/if}}
+  {{#if showRenameProject}}
+    {{> renameProject data=getProjectData}}
+  {{/if}}
   
   <!-- visualization -->
   {{> Universe_vis}}
