@@ -40,7 +40,9 @@ export const rename = new ValidatedMethod({
 
 export const remove = new ValidatedMethod({
   name: 'projects.remove',
-  validate: Projects.simpleSchema().pick('_id').validator(),
+  validate: new SimpleSchema({
+    projectId: Projects.simpleSchema().schema('_id'),
+  }).validator(),
   run({ projectId }) {
     Projects.remove(projectId);
   },

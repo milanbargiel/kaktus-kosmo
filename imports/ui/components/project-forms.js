@@ -30,13 +30,6 @@ Template.createProject.onRendered(function () {
   });
 });
 
-Template.createProject.events({
-  'click .js-createProject-cancel'() {
-    // Hide form, Sessions defined in Universe_page
-    Session.set('showCreateProject', false);
-  },
-});
-
 /* renameProject template
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 Template.renameProject.onRendered(function () {
@@ -58,8 +51,13 @@ Template.renameProject.onRendered(function () {
   });
 });
 
-Template.renameProject.events({
-  'click .js-renameProject-cancel'() {
-    Session.set('showRenameProject', false);
+/* deleteProject template
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+Template.removeProject.events({
+  'submit .js-removeProject-form'(event, templateInstance) {
+    event.preventDefault();
+    Meteor.call('projects.remove', { projectId: templateInstance.data.data.projectId });
+    Session.set('showRemoveProject', false);
   },
 });
+

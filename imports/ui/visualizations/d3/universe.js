@@ -95,6 +95,7 @@ export default function Universe(selector) {
 
     /* Remove surplus elements from exit selection */
     circles.exit().remove();
+    console.log(nodes);
   }
 
   function updateLabels() {
@@ -142,7 +143,7 @@ export default function Universe(selector) {
 
     /* Delete */
     dropdown.append('a')
-      .attr('class', 'js-deleteProject dropdown__link')
+      .attr('class', 'js-removeProject dropdown__link')
       .text('Delete');
 
     labels.exit()
@@ -239,11 +240,6 @@ export default function Universe(selector) {
   this.renameNode = (id, newName) => {
     const i = findNodeIndex(id);
     nodes[i].name = newName;
-    update();
-  };
-
-  this.initialize = (dataset) => {
-    nodes.push(...dataset);
     update();
   };
 }

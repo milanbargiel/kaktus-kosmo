@@ -9,7 +9,11 @@
     {{> createProject}}
   {{/if}}
   {{#if showRenameProject}}
+    <!-- data of Project is passed to template -->
     {{> renameProject data=getProjectData}}
+  {{/if}}
+  {{#if showRemoveProject}}
+    {{> removeProject data=getProjectData}}
   {{/if}}
   
   <!-- visualization -->

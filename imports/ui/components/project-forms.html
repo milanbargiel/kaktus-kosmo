@@ -30,3 +30,19 @@
     </div>
   </div>
 </template>
+
+<template name="removeProject">
+  <div class="overlay">
+    <div class="u-relative">
+      <form class="dialogue js-removeProject-form">
+      <p class="dialogue__header">Delete planet</p>
+        <!-- {{data.projectName}} is the data context defined in Universe_page template -->
+        <p class="dialogue__message">Do you want to delete '{{data.projectName}}'?</p>
+        <div class="u-right">
+          <a class="js-removeProject-cancel btn btn--white">Cancel</a>
+          <input type="submit" class="btn btn--grey" value="DELETE">
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
