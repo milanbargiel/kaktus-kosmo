@@ -1,0 +1,8 @@
+<template name="Planet_vis">
+  <!-- Show spinner as long as we are waiting for subscription to be ready -->
+  {{#if Template.subscriptionsReady}}
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+  <div class="visualization"></div>
+</template>

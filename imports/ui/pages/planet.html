@@ -1,16 +1,44 @@
 <template name="Planet_page">
-  {{#if Template.subscriptionsReady}}
-  <h1>{{projectName}}</h1>
-    {{#each posts}}
-    <ul>
-      <li>
-        <div class="thought">
-        <p class="thought__text">{{text}}</p>
-        </div>
-      </li>
-    </ul>
-    {{/each}}
-  {{else}}
-    {{> spinner}}
-  {{/if}}
+  <nav class="main-navigation">
+    <a class="js-createPost link u-right-top">INSERT A THOUGHT</a>
+    {{> Nav_main}}
+  </nav>
+
+  <div class="container">
+    <div class="filter">
+      <ul class="horizontal-nav">
+        <li class="horizontal-nav__list-item">
+          <a class="horizontal-nav__link horizontal-nav__link--active">TAGS</a>
+        </li>
+        <li class="horizontal-nav__list-item">
+          <a class="horizontal-nav__link">PEOPLE</a>
+        </li>
+      </ul>
+      <ul class="tag-list u-clearfix">
+      </ul>
+    </div>
+
+    
+      <div class="visualization visualization--planet">
+      {{#if Template.subscriptionsReady}}
+        <h1 class="visualization__header">{{getProjectName}}</h1>
+        {{initVis}}
+      {{else}}
+        {{> spinner}}
+      {{/if}}
+      </div> 
+
+    <div class="content">
+      <div class="thought">
+        <p class="thought__text">
+
+        </p>
+      </div>
+      <div class="meta">
+        <span class="meta__author">by Olenko</span>
+        <span class="meta__timestamp">June 30, 2016</span>
+        <span class="meta__delete"></span>
+      </div>
+    </div>
+  </div>
 </template>

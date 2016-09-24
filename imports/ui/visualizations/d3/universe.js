@@ -95,7 +95,6 @@ export default function Universe(selector) {
 
     /* Remove surplus elements from exit selection */
     circles.exit().remove();
-    console.log(nodes);
   }
 
   function updateLabels() {

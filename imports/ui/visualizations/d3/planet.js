@@ -6,7 +6,7 @@
   * An object can act as a class, containing a constructor and a set of related methods (this).
 */
 
-export default function (selector) {
+export default function Planet(selector) {
   let w = $(selector).innerWidth();
   let h = w;
   let center = { x: w / 2, y: h / 2 };
@@ -119,10 +119,5 @@ export default function (selector) {
       nodes.splice(i, 1);
       update();
     }
-  };
-
-  this.initialize = (dataset) => {
-    nodes.push(...dataset);
-    update();
   };
 }
