@@ -136,6 +136,11 @@ export default function Universe(selector) {
     dropdown.append('div')
       .attr('class', 'dropdown__divider');
 
+    /* Share project*/
+    dropdown.append('a')
+      .attr('class', 'js-shareProject dropdown__link')
+      .text('Share');
+
     /* Rename */
     dropdown.append('a')
       .attr('class', 'js-renameProject dropdown__link')

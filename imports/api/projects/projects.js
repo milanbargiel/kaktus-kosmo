@@ -37,6 +37,14 @@ Projects.schema = new SimpleSchema({
 
 Projects.attachSchema(Projects.schema);
 
+// dburles:collection-helpers
+Projects.helpers({
+  editableBy(userId) {
+    // if userId of project is equal to userId param
+    return this.userId === userId;
+  },
+});
+
 /* When in development attach variable to window object (debugging) */
 if (Meteor.isDevelopment) {
   exportClient({ Projects });

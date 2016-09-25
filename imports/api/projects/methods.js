@@ -47,3 +47,27 @@ export const remove = new ValidatedMethod({
     Projects.remove(projectId);
   },
 });
+
+export const makePublic = new ValidatedMethod({
+  name: 'projects.makePublic',
+  validate: new SimpleSchema({
+    projectId: Projects.simpleSchema().schema('_id'),
+    bool: Projects.simpleSchema().schema('public'),
+  }).validator(),
+  run({ projectId, bool }) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error('projects.makePublic.notLoggedIn',
+        'Must be logged in.');
+    }
+
+    const project = Projects.findOne(projectId);
+
+    // editableBy is a collection helper function defined in projects.js
+    if (!project.editableBy(Meteor.userId())) {
+      throw new Meteor.Error('projects.makePublic.accessDenied',
+        'You don\'t have permission to edit this project.');
+    }
+
+    Projects.update(projectId, { $set: { public: bool } });
+  },
+});

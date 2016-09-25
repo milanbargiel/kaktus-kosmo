@@ -3,15 +3,20 @@
     <a class="js-createProject link u-right-top">CREATE A PLANET</a>
     {{> Nav_main}}
   </nav>
-  
   <!-- dialogues -->
   {{#if showCreateProject}}
     {{> createProject}}
   {{/if}}
+
+  {{#if showShareProject}}
+    {{> shareProject data=getProjectData}}
+  {{/if}}
+
   {{#if showRenameProject}}
     <!-- data of Project is passed to template -->
     {{> renameProject data=getProjectData}}
   {{/if}}
+
   {{#if showRemoveProject}}
     {{> removeProject data=getProjectData}}
   {{/if}}

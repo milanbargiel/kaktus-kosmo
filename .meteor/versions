@@ -23,6 +23,7 @@ casimcdaniels:breakpoint@1.1.1
 check@1.2.3
 coffeescript@1.0.17
 d3js:d3@3.5.8
+dburles:collection-helpers@1.0.4
 ddp@1.2.5
 ddp-client@1.2.9
 ddp-common@1.2.6

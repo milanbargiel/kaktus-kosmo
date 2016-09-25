@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import Projects from '../../api/projects/projects.js'; // Subscription is in universe-vis template
 
 // Import templates
 import './project-forms.html';
@@ -28,6 +32,47 @@ Template.createProject.onRendered(function () {
       Session.set('showCreateProject', false);
     },
   });
+});
+
+/* shareProject template
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+Template.shareProject.onCreated(function () {
+  const projectIsPublic = Projects.findOne(this.data.data.projectId).public;
+  this.public = new ReactiveVar(projectIsPublic);
+});
+
+Template.shareProject.helpers({
+  isPrivate() {
+    return !Template.instance().public.get();
+  },
+  isPublic() {
+    return Template.instance().public.get();
+  },
+  urlForProject() {
+    const routeName = 'planet'; // route '/projects/:projectId'
+    const projectId = Template.instance().data.data.projectId;
+    /* Generate url */
+    const url = FlowRouter.url(routeName, { projectId });
+    return url;
+  },
+});
+
+Template.shareProject.events({
+  'change .js-shareProject-radio'(event, templateInstance) {
+    const val = $(event.target).val();
+    if (val === 'public') {
+      templateInstance.public.set(true);
+    } else {
+      templateInstance.public.set(false);
+    }
+  },
+  'submit .js-shareProject-form'(event, templateInstance) {
+    event.preventDefault();
+    const projectId = templateInstance.data.data.projectId;
+    const bool = templateInstance.public.get();
+    Meteor.call('projects.makePublic', { projectId, bool });
+    Session.set('showShareProject', false);
+  },
 });
 
 /* renameProject template

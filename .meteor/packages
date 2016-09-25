@@ -31,6 +31,7 @@ zimme:active-route
 # Data
 aldeed:simple-schema
 aldeed:collection2
+dburles:collection-helpers
 mdg:validated-method
 reywood:publish-composite
 themeteorchef:jquery-validation
