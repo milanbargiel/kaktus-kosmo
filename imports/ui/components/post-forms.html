@@ -1,0 +1,24 @@
+<template name="createPost">
+  <form class="js-createPost-form">
+    <textarea class="input input__field input__field--textarea" placeholder="What are you thinking? Use #tag to index your thoughts." name="text" rows="6"></textarea>
+    <div class="u-right">
+      <a class="js-createPost-cancel btn btn--white">Cancel</a>
+      <input type="submit" class="btn btn--grey" value="SUBMIT">
+    </div>
+  </form>
+</template>
+
+<template name="removePost">
+  <div class="overlay">
+    <div class="u-relative">
+      <form class="dialogue js-removePost-form">
+        <p class="dialogue__header">Delete thought</p>
+        <p class="dialogue__message">Do you want to delete this thought?</p>
+        <div class="u-right">
+          <a class="js-removePost-cancel btn btn--white">Cancel</a>
+          <input type="submit" class="btn btn--grey" value="DELETE">
+        </div>
+      </form>
+    </div>
+  </div>
+</template>

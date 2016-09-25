@@ -1,5 +1,11 @@
 // Visualization
 
+svg, 
+circle, 
+rect {
+  pointer: default;
+}
+
 .visualization {
   &__header {
     margin-bottom: 3 * $baseline;
@@ -61,6 +67,7 @@
 // Planet
 
 .node {
+  cursor: default;
   fill: $node-color;
   stroke: $node-border-color;
 

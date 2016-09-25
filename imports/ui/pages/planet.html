@@ -4,6 +4,11 @@
     {{> Nav_main}}
   </nav>
 
+  <!-- dialogues -->
+  {{#if showRemovePost}}
+    {{> removePost data=getPostObject}}
+  {{/if}}
+
   <div class="container">
     <div class="filter">
       <ul class="horizontal-nav">
@@ -19,26 +24,25 @@
     </div>
 
     
-      <div class="visualization visualization--planet">
-      {{#if Template.subscriptionsReady}}
-        <h1 class="visualization__header">{{getProjectName}}</h1>
-        {{initVis}}
-      {{else}}
-        {{> spinner}}
-      {{/if}}
-      </div> 
-
-    <div class="content">
-      <div class="thought">
-        <p class="thought__text">
-
-        </p>
-      </div>
-      <div class="meta">
-        <span class="meta__author">by Olenko</span>
-        <span class="meta__timestamp">June 30, 2016</span>
-        <span class="meta__delete"></span>
-      </div>
+    <div class="visualization visualization--planet">
+    {{#if Template.subscriptionsReady}}
+      <h1 class="visualization__header">{{getProjectName}}</h1>
+      {{initVis}}
+    {{else}}
+      {{> spinner}}
+    {{/if}}
     </div>
+    
+    {{#if Template.subscriptionsReady}}
+      <div class="content">
+        {{#if showCreatePost}}
+          {{> createPost projectId=getProjectId}}
+        {{else}}
+          {{#if showContent}}
+            {{> Post_content data=getPostObject}}
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/if}}
   </div>
 </template>

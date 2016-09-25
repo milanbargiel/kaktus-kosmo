@@ -35,6 +35,8 @@ mdg:validated-method
 reywood:publish-composite
 themeteorchef:jquery-validation
 reactive-dict
+reactive-var
+momentjs:moment
 
 # Accounts
 accounts-password

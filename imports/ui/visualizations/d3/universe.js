@@ -46,8 +46,9 @@ export default function Universe(selector) {
 
   /* Create d3 force layout */
   const force = d3.layout.force()
-    .gravity(0)
-    .charge(0)
+    .gravity(0.01)
+    .friction(0.9)
+    .charge(-800)
     .size([w, h]);
 
   const nodes = force.nodes();  // force dataset

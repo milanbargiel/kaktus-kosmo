@@ -1,0 +1,12 @@
+<template name="Post_content">
+  <div class="thought">
+    <p class="thought__text">
+      {{data.text}}
+    </p>
+  </div>
+  <div class="meta">
+    <span class="meta__author">by {{data.author}}</span>
+    <span class="meta__timestamp">{{date data.createdAt}}</span>
+    <span class="js-removePost meta__delete"></span>
+  </div>
+</template>

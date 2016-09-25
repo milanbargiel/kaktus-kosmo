@@ -47,3 +47,4 @@ globals:
 
   # packages
   d3: false #d3js:js
+  moment: false
