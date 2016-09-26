@@ -8,19 +8,7 @@
   {{> dialogue post=postArgs}}
 
   <div class="container">
-    <div class="filter">
-      <ul class="horizontal-nav">
-        <li class="horizontal-nav__list-item">
-          <a class="horizontal-nav__link horizontal-nav__link--active">TAGS</a>
-        </li>
-        <li class="horizontal-nav__list-item">
-          <a class="horizontal-nav__link">PEOPLE</a>
-        </li>
-      </ul>
-      <ul class="tag-list u-clearfix">
-      </ul>
-    </div>
-
+    {{> filter filterArgs}}
     
     <div class="visualization visualization--planet">
       <h1 class="visualization__header">{{projectArgs.name}}</h1>

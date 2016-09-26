@@ -29,6 +29,9 @@ Posts.schema = new SimpleSchema({
     type: String,
     max: 512,
   },
+  tags: {
+    type: [String],
+  },
   createdAt: {
     type: Date,
   },

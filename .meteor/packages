@@ -38,6 +38,7 @@ themeteorchef:jquery-validation
 reactive-dict
 reactive-var
 momentjs:moment
+underscore
 
 # Accounts
 accounts-password

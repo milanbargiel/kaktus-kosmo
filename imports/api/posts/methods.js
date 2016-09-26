@@ -25,6 +25,7 @@ export const insert = new ValidatedMethod({
       projectId,
       author: Meteor.user().username,
       text,
+      tags: ['#fishbobe'],
       createdAt: new Date(),
     };
 

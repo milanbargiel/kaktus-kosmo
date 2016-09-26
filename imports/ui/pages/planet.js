@@ -7,6 +7,9 @@ import Posts from '../../api/posts/posts.js'; // Posts Collection
 
 // Import templates
 import './planet.html';
+import '../components/nav-main.js';
+import '../components/dialogue.js';
+import '../components/filter.js';
 import '../components/post-contentview.js';
 import '../components/post-create.js';
 
@@ -48,6 +51,12 @@ Template.Planet_page.onCreated(function () {
       this.urlContainsState.set(true);
     });
   });
+
+  // helper function to generate one dimensional distinct array
+  this.distinct = (array, field) => {
+    const arr = _.flatten(_.pluck(array, field));
+    return _.uniq(arr, false);
+  };
 });
 
 Template.Planet_page.onRendered(function () {
@@ -82,6 +91,15 @@ Template.Planet_page.helpers({
     const projectId = Template.instance().projectId;
     const project = Projects.findOne(projectId);
     return project;
+  },
+  filterArgs() {
+    const instance = Template.instance();
+    const posts = Posts.find().fetch(); // fetch returns array
+    return {
+      // generate one dimensional distinct array
+      authors: Template.instance().distinct(posts, 'author'),
+      tags: Template.instance().distinct(posts, 'tags'),
+    };
   },
   showCreatePost() {
     return Session.get('showCreatePost');
