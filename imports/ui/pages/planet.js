@@ -7,89 +7,81 @@ import Posts from '../../api/posts/posts.js'; // Posts Collection
 
 // Import templates
 import './planet.html';
-import '../components/post-content.js';
-import '../components/post-forms.js';
+import '../components/post-contentview.js';
+import '../components/post-create.js';
 
 // Import d3js function Planet
-import Planet from '../visualizations/d3/planet.js';
+import Planet from '../d3/planet.js';
 
 Template.Planet_page.onCreated(function () {
   // Store temporary UI states in Session (globally)
   Session.set({
-    showContent: false,
     showCreatePost: false,
     showRemovePost: false,
   });
 
-  // Store currently referenced post object in reactive var
-  this.postObject = new ReactiveVar(null);
+  // Selected post id
+  this.postId = new ReactiveVar();
+  // Indicates wether state of ui is pushed into url
+  this.urlContainsState = new ReactiveVar();
 
+  this.projectId = FlowRouter.getParam('projectId');
   // Subscribe to posts.inProject publication based on projectId FlowRouter param
   // this.subscribe instead of Meteor.subscribe -> enables {{Template.subscriptionsReady}}
-  const projectId = FlowRouter.getParam('projectId');
-  this.subscribe('posts.inProject', projectId, () => {
+  this.subscribe('posts.inProject', this.projectId, () => {
     // When project does not exists or is private
     if (Projects.find().count() === 0) {
       FlowRouter.go('/notfound');
     }
 
-    Tracker.autorun(() => {
+    // Listen for changes in query param 'thought' -> update Post_contentView
+    this.autorun(() => {
       FlowRouter.watchPathChange();
       const post = Posts.findOne(FlowRouter.getQueryParam('thought'));
-      // if post does not exitss
+      // if post does not exists
       if (!post) {
-        Session.set('showContent', false);
+        this.postId.set('');
+        this.urlContainsState.set(false);
         return;
       }
-      this.postObject.set(post);
-      Session.set('showContent', true);
+      this.postId.set(post._id);
+      this.urlContainsState.set(true);
     });
   });
+});
 
-  // Checks wether node was selected (indicator: id in queryparams of url)
-  this.nodeIsSelected = () => {
-    const postId = FlowRouter.getQueryParam('thought');
-    if (postId) {
-      return postId;
+Template.Planet_page.onRendered(function () {
+  this.autorun(() => {
+    if (this.subscriptionsReady()) {
+      const planet = new Planet('.visualization');
+      // Listen reactively for changes in Collection
+      // Establish a live query that invokes callbacks when the result of the query changes
+      Posts.find().observe({
+        added(newDocument) {
+          planet.addNode(newDocument);
+        },
+        removed(oldDocument) {
+          planet.removeNode(oldDocument._id);
+          FlowRouter.setQueryParams({ thought: null });
+        },
+      });
     }
-    return false;
-  };
+  });
 });
 
 Template.Planet_page.helpers({
-  initVis() {
-    const planet = new Planet('.visualization');
-    // Listen reactively for changes in Collection
-    // Establish a live query that invokes callbacks when the result of the query changes
-    Posts.find().observe({
-      added(newDocument) {
-        planet.addNode(newDocument);
-      },
-      removed(oldDocument) {
-        planet.removeNode(oldDocument._id);
-        FlowRouter.setQueryParams({ thought: null });
-      },
-    });
-
-    // const postId = Template.instance().nodeIsSelected();
-    // if (postId) {
-    //   planet.selectNode(postId);
-    // }
+  postArgs() {
+    // pass document to Post_remove and Post_contentView
+    const postId = Template.instance().postId.get();
+    const post = Posts.findOne(postId);
+    return post;
   },
-  getProjectName() {
-    const project = Projects.findOne();
-    return project.name;
-  },
-  getProjectId() {
-    const project = Projects.findOne();
-    return project._id;
-  },
-  getPostObject() {
-    return Template.instance().postObject.get();
-  },
-
-  showContent() {
-    return Session.get('showContent');
+  // projectArgs are static because Template.instance().projectId is static
+  projectArgs() {
+    // pass fields of document to vis header and Post_create
+    const projectId = Template.instance().projectId;
+    const project = Projects.findOne(projectId);
+    return project;
   },
   showCreatePost() {
     return Session.get('showCreatePost');
@@ -102,39 +94,45 @@ Template.Planet_page.helpers({
 Template.Planet_page.events({
   // Interactions with d3 force simulation
   'click .node'(event) {
+    // Post_create form is open -> close it
+    Session.set('showCreatePost', false);
     // Save state of visualization -> push postId into the url as query parameter
     const postId = event.currentTarget.__data__._id;
     FlowRouter.setQueryParams({ thought: postId });
   },
   'click .planet'() {
-    // Clear query parameters
+    // Clean UI state in URL -> update contentView
     FlowRouter.setQueryParams({ thought: null });
   },
   'mouseover .node'(event, templateInstance) {
-    if (!templateInstance.nodeIsSelected()) {
+    // if url contains state of vis ignore hover events
+    if (!templateInstance.urlContainsState.get()) {
       const postId = event.currentTarget.__data__._id;
-      const post = Posts.findOne(postId);
-      templateInstance.postObject.set(post);
-      Session.set('showContent', true);
+      templateInstance.postId.set(postId);
     }
   },
   'mouseout .node'(event, templateInstance) {
-    if (!templateInstance.nodeIsSelected()) {
-      Session.set('showContent', false);
+    if (!templateInstance.urlContainsState.get()) {
+      templateInstance.postId.set('');
     }
   },
 
   // Interactions with post-forms
-  'click .js-createPost'() {
+  'click .js-post-create'() {
+    // Clean UI state in URL -> update contentView
+    FlowRouter.setQueryParams({ thought: null });
     Session.set('showCreatePost', true);
   },
-  'click .js-createPost-cancel'() {
+  'click .js-post-create-cancel'() {
     Session.set('showCreatePost', false);
   },
-  'click .js-removePost'() {
-    Session.set('showRemovePost', true);
+  // Remove post
+  'click .js-dialogue'(event, templateInstance) {
+    const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
+    Session.set('activeDialogue', dialogueTemplate);
   },
-  'click .js-removePost-cancel'() {
-    Session.set('showRemovePost', false);
+  'click .js-dialogue-cancel'() {
+    // Hide form
+    Session.set('activeDialogue', false);
   },
 });

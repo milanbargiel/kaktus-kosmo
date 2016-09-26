@@ -1,26 +1,17 @@
 <template name="Universe_page">
   <nav class="main-navigation">
-    <a class="js-createProject link u-right-top">CREATE A PLANET</a>
+    <!-- data-dialogue-template: custom html data attribute -->
+    <a class="js-dialogue link u-right-top" data-dialogue-template="Project_create">CREATE A PLANET</a>
     {{> Nav_main}}
   </nav>
-  <!-- dialogues -->
-  {{#if showCreateProject}}
-    {{> createProject}}
-  {{/if}}
-
-  {{#if showShareProject}}
-    {{> shareProject data=getProjectData}}
-  {{/if}}
-
-  {{#if showRenameProject}}
-    <!-- data of Project is passed to template -->
-    {{> renameProject data=getProjectData}}
-  {{/if}}
-
-  {{#if showRemoveProject}}
-    {{> removeProject data=getProjectData}}
-  {{/if}}
   
-  <!-- visualization -->
-  {{> Universe_vis}}
+  <!-- data of Project is passed to template -->
+  {{> dialogue project=projectArgs}}
+  
+  <!-- Show spinner as long as we are waiting for subscription to be ready -->
+  <div class="visualization"></div>
+  {{#if Template.subscriptionsReady}}
+  {{else}}
+    {{> spinner}}
+  {{/if}}
 </template>

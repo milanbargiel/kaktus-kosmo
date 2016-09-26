@@ -1,90 +1,72 @@
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
-import { ReactiveDict } from 'meteor/reactive-dict';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 // Import templates
 import './universe.html';
-import '../components/project-forms.js';
-import '../visualizations/universe-vis.js';
+import '../components/nav-main.js';
+import '../components/dialogue.js';
 
+// Import d3js Universe function
+import Universe from '../d3/universe.js';
+
+// Import Projects Collection
+import Projects from '../../api/projects/projects.js';
 
 Template.Universe_page.onCreated(function () {
-  // Store data of project in ReactiveDict on templateInstance -> pass it to project-form templates.
-  // Data is needed there to perform rename, deletion on Projects Collection.
-  this.projectData = new ReactiveDict();
-  // Set projectData to data of project referenced from click event
-  this.projectData.save = (event) => {
-    console.log(event.currentTarget.__data__.public);
-    this.projectData.set({
-      projectId: event.currentTarget.__data__._id,
-      projectName: event.currentTarget.__data__.name,
-      public: event.currentTarget.__data__.public,
+  // Selected project id
+  this.projectId = new ReactiveVar();
+  // Save state of UI (dialogues) globally in Session
+  Session.set('activeDialogue', false);
+  Tracker.autorun(() => {
+    // Whenever dialogue is hidden set referenced projectId to null
+    if (Session.get('activeDialogue') === false) {
+      this.projectId.set(null);
+    }
+  });
+});
+
+Template.Universe_page.onRendered(function () {
+  this.subscribe('projects', () => {
+    const universe = new Universe('.visualization');
+
+    // Listen reactively for changes in Collection
+    // Establish a live query that invokes callbacks when the result of the query changes
+    Projects.find().observe({
+      added(newDocument) {
+        universe.addNode(newDocument);
+      },
+      changed(newDocument) {
+        universe.renameNode(newDocument._id, newDocument.name);
+      },
+      removed(oldDocument) {
+        universe.removeNode(oldDocument._id);
+      },
     });
-  };
-  // Store temporary UI states in Session (globally)
-  Session.set({
-    showCreateProject: false,
-    showShareProject: false,
-    showRenameProject: false,
-    showRemoveProject: false,
   });
 });
 
 Template.Universe_page.helpers({
-  showCreateProject() {
-    return Session.get('showCreateProject');
-  },
-  showShareProject() {
-    return Session.get('showShareProject');
-  },
-  showRenameProject() {
-    return Session.get('showRenameProject');
-  },
-  showRemoveProject() {
-    return Session.get('showRemoveProject');
-  },
-  getProjectData() {
-    return {
-      projectId: Template.instance().projectData.get('projectId'),
-      projectName: Template.instance().projectData.get('projectName'),
-      public: Template.instance().projectData.get('public'),
-    };
+  projectArgs() {
+    // pass document to dialogues
+    const projectId = Template.instance().projectId.get();
+    const project = Projects.findOne(projectId);
+    return project;
   },
 });
 
 Template.Universe_page.events({
-  'click .js-createProject'() {
-    Session.set('showCreateProject', true);
+  'click .js-dialogue'(event, templateInstance) {
+    // __data__ property only exists on a d3 element
+    if (typeof event !== 'undefined' && event.currentTarget && event.currentTarget.__data__) {
+      const projectId = event.currentTarget.__data__._id;
+      templateInstance.projectId.set(projectId);
+    }
+    const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
+    Session.set('activeDialogue', dialogueTemplate);
   },
-  // .js-createProject-cancel is defined in components/project-forms.html
-  'click .js-createProject-cancel'() {
-    Session.set('showCreateProject', false);
-  },
-
-  'click .js-shareProject'(event, templateInstance) {
-    // save project data to template instance
-    templateInstance.projectData.save(event);
-    Session.set('showShareProject', true);
-  },
-  // .js-createProject is defined in d3/universe.js
-  'click .js-shareProject-cancel'() {
-    Session.set('showShareProject', false);
-  },
-
-  'click .js-renameProject'(event, templateInstance) {
-    // event holds properties of Project
-    templateInstance.projectData.save(event);
-    Session.set('showRenameProject', true);
-  },
-  'click .js-renameProject-cancel'() {
-    Session.set('showRenameProject', false);
-  },
-
-  'click .js-removeProject'(event, templateInstance) {
-    templateInstance.projectData.save(event);
-    Session.set('showRemoveProject', true);
-  },
-  'click .js-removeProject-cancel'() {
-    Session.set('showRemoveProject', false);
+  'click .js-dialogue-cancel'() {
+    // Hide form
+    Session.set('activeDialogue', false);
   },
 });

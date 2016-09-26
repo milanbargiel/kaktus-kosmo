@@ -138,17 +138,20 @@ export default function Universe(selector) {
 
     /* Share project*/
     dropdown.append('a')
-      .attr('class', 'js-shareProject dropdown__link')
+      .attr('class', 'js-dialogue dropdown__link')
+      .attr('data-dialogue-template', 'Project_share')
       .text('Share');
 
     /* Rename */
     dropdown.append('a')
-      .attr('class', 'js-renameProject dropdown__link')
+      .attr('class', 'js-dialogue dropdown__link')
+      .attr('data-dialogue-template', 'Project_rename')
       .text('Rename');
 
     /* Delete */
     dropdown.append('a')
-      .attr('class', 'js-removeProject dropdown__link')
+      .attr('class', 'js-dialogue dropdown__link')
+      .attr('data-dialogue-template', 'Project_remove')
       .text('Delete');
 
     labels.exit()

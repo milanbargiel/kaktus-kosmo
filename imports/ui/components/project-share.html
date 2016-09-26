@@ -1,0 +1,22 @@
+<template name="Project_share">
+<form class="dialogue js-project-share-form">
+    <p class="dialogue__header">Share with others</p>
+    <fieldset>
+      <div class="input">
+        <input class="js-project-share-radio" type="radio" id="project-private" name="project-public" value="private" checked="{{isPrivate}}">
+        <label for="project-private">Private</label>
+      </div>
+      <div class="input">
+        <input class="js-project-share-radio" type="radio" id="project-public" name="project-public" value="public" checked="{{isPublic}}">
+        <label for="project-public">Public</label>
+      </div> 
+    </fieldset>
+    {{#if isPublic}}
+      <span class="input input__field input__field--link">{{urlForProject}}</span>
+    {{/if}}
+    <div class="u-right">
+      <a class="js-dialogue-cancel btn btn--white">Cancel</a>
+      <input type="submit" class="btn btn--grey" value="DONE">
+    </div>
+  </form>
+</template>

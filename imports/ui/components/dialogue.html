@@ -1,0 +1,9 @@
+<template name="dialogue">
+  {{#if activeDialogue}}
+    <div class="overlay">
+      <div class="u-relative">
+        {{> Template.dynamic template=activeDialogue}}
+      </div>
+    </div>
+  {{/if}}
+</template>

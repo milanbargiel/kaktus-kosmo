@@ -1,13 +1,11 @@
 <template name="Planet_page">
   <nav class="main-navigation">
-    <a class="js-createPost link u-right-top">INSERT A THOUGHT</a>
+    <a class="js-post-create link u-right-top">INSERT A THOUGHT</a>
     {{> Nav_main}}
   </nav>
 
-  <!-- dialogues -->
-  {{#if showRemovePost}}
-    {{> removePost data=getPostObject}}
-  {{/if}}
+  <!-- data of Post is passed to template -->
+  {{> dialogue post=postArgs}}
 
   <div class="container">
     <div class="filter">
@@ -25,21 +23,20 @@
 
     
     <div class="visualization visualization--planet">
-    {{#if Template.subscriptionsReady}}
-      <h1 class="visualization__header">{{getProjectName}}</h1>
-      {{initVis}}
-    {{else}}
-      {{> spinner}}
-    {{/if}}
+      <h1 class="visualization__header">{{projectArgs.name}}</h1>
+      {{#if Template.subscriptionsReady}}
+      {{else}}
+        {{> spinner}}
+      {{/if}}
     </div>
     
     {{#if Template.subscriptionsReady}}
       <div class="content">
         {{#if showCreatePost}}
-          {{> createPost projectId=getProjectId}}
+          {{> Post_create projectId=projectArgs._id}}
         {{else}}
-          {{#if showContent}}
-            {{> Post_content data=getPostObject}}
+          {{#if postArgs}}
+            {{> Post_contentView post=postArgs}}
           {{/if}}
         {{/if}}
       </div>
