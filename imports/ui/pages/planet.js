@@ -28,7 +28,7 @@ Template.Planet_page.onCreated(function () {
   // Filter
   // Selected filter option (tags or people)
   this.filterCategory = new ReactiveVar('tags');
-  this.selectedFilterElement = new ReactiveVar(null);
+  this.selectedFilterElement = new ReactiveVar();
 
   // helper function to generate one dimensional distinct array
   this.distinct = (array, field) => {
@@ -55,7 +55,7 @@ Template.Planet_page.onCreated(function () {
     if (Projects.find().count() === 0) {
       FlowRouter.go('/notfound');
     }
-    this.fish = 'fisch';
+
     const planet = new Planet('.visualization');
 
     // Listen reactively for changes in Collection
@@ -70,44 +70,49 @@ Template.Planet_page.onCreated(function () {
       },
     });
 
-    // Listen for changes in query param 'thought', tags' and 'people' -> update vis
+    // Listen for changes in query param 'thought' -> update vis
     this.autorun(() => {
-      FlowRouter.watchPathChange();
-      const currentParams = FlowRouter.current().queryParams;
-      // if UI state is pushed into URL currentParams object is not empty
-      if (Object.keys(currentParams).length !== 0 && currentParams.constructor === Object) {
-        // if currentParams has property thought
-        if ({}.hasOwnProperty.call(currentParams, 'thought')) {
-          const post = Posts.findOne(currentParams.thought);
-          // if post does not exists (wrong url)
-          if (!post) {
-            return;
-          }
-          planet.selectNode(post._id);
-          this.postId.set(post._id);
-          this.urlContainsPostId.set(true);
-        } else {
-          planet.clearSelection();
-          this.postId.set('');
-          this.urlContainsPostId.set(false);
+      const postId = FlowRouter.getQueryParam('thought');
+      // if post id is undefined query param 'thought' is undefined
+      if (postId) {
+        const post = Posts.findOne(postId);
+        // if post does not exists (wrong url)
+        if (!post) {
+          return;
         }
-        if ({}.hasOwnProperty.call(currentParams, 'tags')) {
-          const posts = Posts.find().fetch();
-          // return array of ids which include tag from url
-          const ids = _.pluck(posts.filter(post => post.tags.includes(currentParams.tags)), '_id');
-          planet.selectNodes(ids);
-          this.filterCategory.set('tags');
-          this.selectedFilterElement.set(currentParams.tags);
-        }
-        if ({}.hasOwnProperty.call(currentParams, 'people')) {
-          const posts = Posts.find().fetch();
-          const ids = _.pluck(posts.filter(post => post.author === currentParams.people), '_id');
-          planet.selectNodes(ids);
-          this.filterCategory.set('people');
-          this.selectedFilterElement.set(currentParams.people);
-        }
+        planet.selectNode(post._id);
+        this.postId.set(post._id);
+        this.urlContainsPostId.set(true);
+      } else {
+        planet.clearSelection();
+        this.postId.set('');
+        this.urlContainsPostId.set(false);
       }
-      console.log(this.fish);
+    });
+
+    // Listen for changes in query param 'tags' and 'people' -> update vis
+    this.autorun(() => {
+      const selectedTag = FlowRouter.getQueryParam('tags');
+      const selectedAuthor = FlowRouter.getQueryParam('people');
+      if (!selectedTag && !selectedAuthor) {
+        this.selectedFilterElement.set('');
+        planet.clearSelection();
+        return;
+      }
+      const posts = Posts.find().fetch();
+      let ids = [];
+      if (selectedTag) {
+        // return array of ids which include tag from url
+        ids = _.pluck(posts.filter(post => post.tags.includes(selectedTag)), '_id');
+        this.filterCategory.set('tags');
+        this.selectedFilterElement.set(selectedTag);
+      }
+      if (selectedAuthor) {
+        ids = _.pluck(posts.filter(post => post.author === selectedAuthor), '_id');
+        this.filterCategory.set('people');
+        this.selectedFilterElement.set(selectedAuthor);
+      }
+      planet.selectNodes(ids);
     });
   });
 });
