@@ -79,4 +79,8 @@ rect {
     fill: $node-selected-color;
     stroke: $node-selected-border-color;
   }
+  // Zwischenlösung
+  &:hover {
+    opacity: .7;
+  }
 }

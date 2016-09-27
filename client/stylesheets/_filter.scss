@@ -41,6 +41,11 @@
     float: left;
     margin-right: $base-third;
     margin-bottom: $base-third;
+
+    &--active {
+      background-color: $node-selected-color;
+      color: $white;
+    }
   }
 
   &__tag:hover {

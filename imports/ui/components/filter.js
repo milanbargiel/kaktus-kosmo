@@ -1,30 +1,22 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-
 // import template
 import './filter.html';
 
-Template.filter.onCreated(function () {
-  this.state = new ReactiveVar('tags');
+Template.filter.onRendered(function () {
+  this.autorun(() => {
+    // Reactive data source indicating which filter (tags, people) has been selected
+    const filterCategory = this.data.filterCategory.get();
+    $('.horizontal-nav__link').removeClass('horizontal-nav__link--active');
+    $(`.horizontal-nav__link[data-current-filter="${filterCategory}"]`).addClass('horizontal-nav__link--active');
+  });
 });
 
 Template.filter.helpers({
-  filterData() {
-    if (Template.instance().state.get() === 'tags') {
-      return Template.instance().data.tags;
+  elementIsActive(elementName) {
+    const selectedElement = Template.instance().data.selectedElement.get();
+    if (elementName === selectedElement) {
+      return 'tag-list__tag--active';
     }
-    return Template.instance().data.authors;
-  },
-});
-
-Template.filter.events({
-  'click .horizontal-nav__link'(event, templateInstance) {
-    // Remove active class from elements
-    $('.horizontal-nav__link').removeClass('horizontal-nav__link--active');
-    // Set active class to clicked element
-    templateInstance.$(event.target).addClass('horizontal-nav__link--active');
-    // Set newState to reactiveDict -> filterData updates
-    const newState = templateInstance.$(event.target).data('current-filter');
-    templateInstance.state.set(newState);
+    return '';
   },
 });

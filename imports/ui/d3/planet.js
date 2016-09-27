@@ -24,8 +24,7 @@ export default function Planet(selector) {
     .attr('r', planetRadius)
     .attr('cx', w / 2)
     .attr('cy', w / 2)
-    .attr('class', 'planet')
-    .on('click', clear);
+    .attr('class', 'planet');
 
   /* Create d3 force layout */
   const force = d3.layout.force()
@@ -69,9 +68,7 @@ export default function Planet(selector) {
     circles.enter()
       .append('circle')
       .attr('r', circleRadius)
-      .attr('class', 'node')
-      /* Bind connectEvents method to elements */
-      .call(connectEvents);
+      .attr('class', 'node');
 
     /* Remove surplus elements from exit selection */
     circles.exit().remove();
@@ -102,37 +99,22 @@ export default function Planet(selector) {
 
   d3.select(window).on('resize', resize);
 
-  /* Interactions
-  –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  function click(object) { // object is selected nodes object
-    /* iterates over nodes, if callback returns true, class is given */
-    circles.classed('node--selected', node => object._id === node._id);
-  }
-
-  function mouseover(object) {
-    circles.classed('node--hover', node => object._id === node._id);
-  }
-
-  function mouseout() {
-    circles.classed('node--hover', false);
-  }
-
-  /* Click on svg planet triggers clear function */
-  function clear() {
-    circles.classed('node--selected', false);
-  }
-
-  function connectEvents(selection) {
-    selection.on('click', click);
-    selection.on('mouseover', mouseover);
-    selection.on('mouseout', mouseout);
-  }
-
   /* Highlight Nodes
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
   this.selectNode = (id) => {
+    /* iterates over nodes, if callback returns true, class is given */
     circles.classed('node--selected', node => node._id === id);
+  };
+
+  this.selectNodes = (ids) => {
+    /* assign class to all elements with specified ids */
+    /* iterates over nodes, if callback returns true, class is given */
+    circles.classed('node--selected', node => ids.includes(node._id));
+  };
+
+  this.clearSelection = () => {
+    circles.classed('node--selected', false);
   };
 
   /* Add, remove, initialize

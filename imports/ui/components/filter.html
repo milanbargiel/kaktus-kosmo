@@ -2,16 +2,16 @@
   <div class="filter">
     <ul class="horizontal-nav">
       <li class="horizontal-nav__list-item">
-        <a class="horizontal-nav__link horizontal-nav__link--active" data-current-filter="tags">TAGS</a>
+        <a class="horizontal-nav__link" data-current-filter="tags">TAGS</a>
       </li>
       <li class="horizontal-nav__list-item">
         <a class="horizontal-nav__link" data-current-filter="people">PEOPLE</a>
       </li>
     </ul>
     <ul class="tag-list u-clearfix">
-        {{#each filterData}}
-          <li class="tag-list__list-item"><a class="tag-list__tag">{{this}}</a></li>
-        {{/each}}
+      {{#each elements}}
+        <li class="tag-list__list-item"><a class="tag-list__tag {{elementIsActive this}}">{{this}}</a></li>
+      {{/each}}
     </ul>
   </div>
 </template>
