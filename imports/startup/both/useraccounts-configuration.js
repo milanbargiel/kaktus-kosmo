@@ -39,6 +39,21 @@ AccountsTemplates.addFields([
     type: 'text',
     required: true,
     minLength: 5,
+    func(username) {
+      if (Meteor.isClient) {
+        Meteor.call('users.exists', { username }, (err, userExists) => {
+          if (!userExists) {
+            this.setSuccess();
+          } else {
+            this.setError('Username is already taken.');
+          }
+          this.setValidating(false);
+        });
+        return;
+      }
+      // Server
+      return Meteor.call('users.exists', { username });
+    },
   },
   pwd,
 ]);

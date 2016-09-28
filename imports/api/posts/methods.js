@@ -54,6 +54,12 @@ export const remove = new ValidatedMethod({
     postId: Posts.simpleSchema().schema('_id'),
   }).validator(),
   run({ postId }) {
+    const post = Posts.findOne(postId);
+    const username = Meteor.user().username;
+
+    // if (userId !== )
+
+
     Posts.remove(postId);
   },
 });
