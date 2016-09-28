@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 // import template
 import './post-contentview.html';
@@ -12,6 +13,14 @@ Template.Post_contentView.helpers({
   date(date) {
     // moment js is globally declared so does not have to be imported
     return moment(date).format('L');
+  },
+  userAllowedToRemove() {
+    // Only project owner or post owner sees removal link 
+    const currentUser = Meteor.user();
+    if (currentUser.username === this.post.author || currentUser._id === this.projectUserId) {
+      return true;
+    }
+    return false;
   },
 });
 

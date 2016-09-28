@@ -29,7 +29,7 @@
           {{> Post_create projectId=projectArgs._id}}
         {{else}}
           {{#if postArgs}}
-            {{> Post_contentView post=postArgs}}
+            {{> Post_contentView post=postArgs projectUserId=projectArgs.userId}}
           {{/if}}
         {{/if}}
       </div>

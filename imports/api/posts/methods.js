@@ -55,10 +55,15 @@ export const remove = new ValidatedMethod({
   }).validator(),
   run({ postId }) {
     const post = Posts.findOne(postId);
-    const username = Meteor.user().username;
+    const project = Projects.findOne(post.projectId);
+    const user = Meteor.user();
 
-    // if (userId !== )
-
+    // if user is not owner of project or author of post
+    // -> dont allow to remove this post
+    if (user._id !== project.userId && user.username !== post.author) {
+      throw new Meteor.Error('posts.remove.accessDenied',
+        'Must be owner of project or author of post to delete it');
+    }
 
     Posts.remove(postId);
   },
