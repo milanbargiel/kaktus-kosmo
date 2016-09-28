@@ -24,6 +24,7 @@ env:
 
 rules:
   # eslint
+  no-cond-assign: 0
   no-param-reassign: 0
   no-use-before-define: [2, {functions: false, classes: true}]
   no-underscore-dangle: [2, {allow: ["_id", "__data__"]}]
@@ -48,3 +49,4 @@ globals:
   # packages
   d3: false #d3js:js
   moment: false
+  s: false #underscorestring

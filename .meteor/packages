@@ -39,6 +39,7 @@ reactive-dict
 reactive-var
 momentjs:moment
 underscore
+underscorestring:underscore.string
 
 # Accounts
 accounts-password

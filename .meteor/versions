@@ -99,6 +99,7 @@ themeteorchef:jquery-validation@1.14.0
 tracker@1.1.0
 ui@1.0.11
 underscore@1.0.9
+underscorestring:underscore.string@3.3.4
 url@1.0.10
 useraccounts:core@1.14.2
 useraccounts:flow-routing@1.14.2

@@ -21,11 +21,21 @@ export const insert = new ValidatedMethod({
         'A post must belong to a project');
     }
 
+    // Extract hashtags from text
+    // Reference: http://geekcoder.org/js-extract-hashtags-from-text/
+    const regex = /(?:^|\s)(#[a-zA-Z\d]+)/gm;
+    const matches = [];
+    let match;
+
+    while ((match = regex.exec(text))) {
+      matches.push(match[1]);
+    }
+
     const post = {
       projectId,
       author: Meteor.user().username,
       text,
-      tags: ['#fishbobe'],
+      tags: matches,
       createdAt: new Date(),
     };
 
