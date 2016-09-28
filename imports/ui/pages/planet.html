@@ -1,6 +1,11 @@
 <template name="Planet_page">
   <nav class="main-navigation">
-    <a class="js-post-create link u-right-top">INSERT A THOUGHT</a>
+    <!-- user needs to login to insert a thought -->
+    {{#if currentUser}}
+      <a class="js-post-create link u-right-top">INSERT A THOUGHT</a>
+    {{else}}
+      <a class="link u-right-top" href="/login">LOGIN TO INSERT A THOUGHT</a>
+    {{/if}}
     {{> Nav_main}}
   </nav>
 

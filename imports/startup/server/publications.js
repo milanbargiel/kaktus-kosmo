@@ -9,7 +9,10 @@ import Projects from '../../api/projects/projects.js'; // Projects Collection
 import Posts from '../../api/posts/posts.js'; // Posts Collection
 
 /* Publish Collections to client */
-Meteor.publish('projects', () => Projects.find({}));
+Meteor.publish('projects', function () {
+  // only publish projects from current user
+  return Projects.find({ userId: this.userId });
+});
 
 /* Publish posts containing projectId */
 Meteor.publishComposite('posts.inProject', function (projectId) {
@@ -19,13 +22,13 @@ Meteor.publishComposite('posts.inProject', function (projectId) {
   }).validate({ projectId });
 
   /* Security Check */
-  // const proj = Projects.findOne(projectId);
+  const proj = Projects.findOne(projectId);
 
   /* If current user is not owner of private project */
-  // if (this.userId !== proj.userId && proj.public === false) {
+  if (this.userId !== proj.userId && proj.public === false) {
     /* Declare that no data is being published */
-    // return this.ready();
-  // }
+    return this.ready();
+  }
 
   /* Return two cursors - relational data */
   return {

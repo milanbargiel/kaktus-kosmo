@@ -14,11 +14,16 @@ export const insert = new ValidatedMethod({
   validate: Posts.simpleSchema().pick(['projectId', 'text']).validator(),
   run({ projectId, text }) {
     const project = Projects.findOne(projectId);
+    const user = Meteor.user();
 
-    // Check wether defined project exists
     if (!project) {
+      // end execution of insert. Meteor.Error could be displayed on client
       throw new Meteor.Error('posts.insert.accessDenied',
         'A post must belong to a project');
+    }
+    if (!user) {
+      throw new Meteor.Error('posts.insert.notLoggedIn',
+        'Must be logged in to insert a post');
     }
 
     // Extract hashtags from text
@@ -33,7 +38,7 @@ export const insert = new ValidatedMethod({
 
     const post = {
       projectId,
-      author: Meteor.user().username,
+      author: user.username,
       text,
       tags: matches,
       createdAt: new Date(),
