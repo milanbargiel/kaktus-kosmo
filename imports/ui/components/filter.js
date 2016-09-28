@@ -4,10 +4,10 @@ import './filter.html';
 
 Template.filter.onRendered(function () {
   this.autorun(() => {
-    // Reactive data source indicating which filter (tags, people) has been selected
+    // Reactive data source indicating which filter category (tags, people) has been selected
     const filterCategory = this.data.filterCategory.get();
     $('.horizontal-nav__link').removeClass('horizontal-nav__link--active');
-    $(`.horizontal-nav__link[data-current-filter="${filterCategory}"]`).addClass('horizontal-nav__link--active');
+    $(`.horizontal-nav__link[data-filter-category="${filterCategory}"]`).addClass('horizontal-nav__link--active');
   });
 });
 

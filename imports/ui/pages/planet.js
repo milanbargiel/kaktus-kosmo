@@ -28,7 +28,7 @@ Template.Planet_page.onCreated(function () {
   // Filter
   // Selected filter option (tags or people)
   this.filterCategory = new ReactiveVar('tags');
-  this.selectedFilterElement = new ReactiveVar();
+  this.selectedFilter = new ReactiveVar();
 
   // helper function to generate one dimensional distinct array
   this.distinct = (array, field) => {
@@ -95,7 +95,7 @@ Template.Planet_page.onCreated(function () {
       const selectedTag = FlowRouter.getQueryParam('tags');
       const selectedAuthor = FlowRouter.getQueryParam('people');
       if (!selectedTag && !selectedAuthor) {
-        this.selectedFilterElement.set('');
+        this.selectedFilter.set(null);
         planet.clearSelection();
         return;
       }
@@ -105,12 +105,12 @@ Template.Planet_page.onCreated(function () {
         // return array of ids which include tag from url
         ids = _.pluck(posts.filter(post => post.tags.includes(selectedTag)), '_id');
         this.filterCategory.set('tags');
-        this.selectedFilterElement.set(selectedTag);
+        this.selectedFilter.set(selectedTag);
       }
       if (selectedAuthor) {
         ids = _.pluck(posts.filter(post => post.author === selectedAuthor), '_id');
         this.filterCategory.set('people');
-        this.selectedFilterElement.set(selectedAuthor);
+        this.selectedFilter.set(selectedAuthor);
       }
       planet.selectNodes(ids);
     });
@@ -138,13 +138,13 @@ Template.Planet_page.helpers({
       return {
         // generate one dimensional distinct array
         elements: ti.distinct(posts, 'tags'),
-        selectedElement: ti.selectedFilterElement,
+        selectedElement: ti.selectedFilter,
         filterCategory: ti.filterCategory,
       };
     }
     return {
       elements: ti.distinct(posts, 'author'),
-      selectedElement: ti.selectedFilterElement,
+      selectedElement: ti.selectedFilter,
       filterCategory: ti.filterCategory,
     };
   },
@@ -160,6 +160,7 @@ Template.Planet_page.events({
     Session.set('showCreatePost', false);
     // Save state of visualization -> push postId into the url as query parameter
     const postId = event.currentTarget.__data__._id;
+    // Clear selected filter from url
     FlowRouter.setQueryParams({ tags: null, people: null });
     FlowRouter.setQueryParams({ thought: postId });
   },
@@ -204,16 +205,17 @@ Template.Planet_page.events({
 
   // Interactions with Filter
   'click .horizontal-nav__link'(event, templateInstance) {
-    // Set selected filter to current filter -> update filter data
-    const selectedFilter = templateInstance.$(event.target).data('current-filter');
-    templateInstance.filterCategory.set(selectedFilter);
+    const selectedCategory = templateInstance.$(event.target).data('filter-category');
+    // higlight selected filter menu
+    templateInstance.filterCategory.set(selectedCategory);
   },
   'click .tag-list__tag'(event, templateInstance) {
     // Save state of visualization:
-    // -> push filter name into the url as named query parameter (tags, people)
+    // -> push selected filter element into url as named query parameter (tags, people)
+    // -> update vis on path change
     const filterCategory = templateInstance.filterCategory.get();
-    const filterName = templateInstance.$(event.target).text();
+    const selectedFilter = templateInstance.$(event.target).text();
     FlowRouter.setQueryParams({ thought: null, tags: null, people: null });
-    FlowRouter.setQueryParams({ [filterCategory]: filterName }); // ES6 computedPropertyName feature
+    FlowRouter.setQueryParams({ [filterCategory]: selectedFilter });
   },
 });
