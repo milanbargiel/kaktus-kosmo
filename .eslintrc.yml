@@ -36,6 +36,7 @@ rules:
   # eslint-plugin-meteor
   meteor/template-names: 0
   meteor/no-session: 0
+  meteor/audit-argument-checks: 0
 
   # eslint-plugin-import
   import/no-unresolved: 0

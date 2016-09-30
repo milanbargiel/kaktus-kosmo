@@ -14,9 +14,6 @@ Template.Nav_mobile.helpers({
   showMenu() {
     return Template.instance().showMenu.get();
   },
-  pathForCreate() {
-    return FlowRouter.path('create');
-  },
 });
 
 Template.Nav_mobile.events({
@@ -27,8 +24,5 @@ Template.Nav_mobile.events({
     Meteor.logout(() => {
       FlowRouter.go('/login');
     });
-  },
-  'click .js-create'(event, templateInstance) {
-    templateInstance.showMenu.set(false);
   },
 });

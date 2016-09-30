@@ -45,9 +45,12 @@ Projects.attachSchema(Projects.schema);
 
 // dburles:collection-helpers
 Projects.helpers({
-  editableBy(userId) {
+  belongsTo(userId) {
     // if userId of project is equal to userId param
     return this.userId === userId;
+  },
+  isPrivate() {
+    return !this.public;
   },
 });
 

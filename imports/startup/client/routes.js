@@ -10,11 +10,10 @@ import { AccountsTemplates } from 'meteor/useraccounts:core';
 import '../../ui/layouts/app-body.js';
 import '../../ui/layouts/mobile-body.js';
 import '../../ui/pages/planet.js';
-import '../../ui/pages/universe-mobile.js';
+import '../../ui/pages/planet-mobile.js';
 import '../../ui/pages/universe.js';
+import '../../ui/pages/universe-mobile.js';
 import '../../ui/pages/app-not-found.js';
-import '../../ui/components/project-create.js';
-import '../../ui/components/nav-mobile.js';
 
 /* Import to override accounts templates */
 import '../../ui/accounts/accounts-templates.js';
@@ -32,29 +31,12 @@ FlowRouter.route('/:username/:projectSlug', {
   action() {
     if (Session.get('mobile')) {
       /* render(layout-template, { region: template }) */
-      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Post_create' });
+      BlazeLayout.render('Mobile_body', { main: 'Planet_mobile_page' });
     } else {
       BlazeLayout.render('App_body', { main: 'Planet_page' });
     }
   },
 });
-
-// mobile only routes
-if (Session.get('mobile')) {
-  FlowRouter.route('/create', {
-    name: 'createProject',
-    action() {
-      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Project_create' });
-    },
-  });
-
-  FlowRouter.route('/create', {
-    name: 'createPost',
-    action() {
-      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Project_create' });
-    },
-  });
-}
 
 FlowRouter.route('/', {
   name: 'universe',
@@ -62,7 +44,7 @@ FlowRouter.route('/', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
     if (Session.get('mobile')) {
-      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Universe_mobile_page' });
+      BlazeLayout.render('Mobile_body', { main: 'Universe_mobile_page' });
     } else {
       BlazeLayout.render('App_body', { main: 'Universe_page' });
     }
@@ -73,7 +55,11 @@ FlowRouter.route('/', {
 FlowRouter.notFound = {
   name: 'notFound',
   action() {
-    BlazeLayout.render('App_body', { main: 'App_notFound' });
+    if (Session.get('mobile')) {
+      BlazeLayout.render('Mobile_body', { main: 'App_notFound' });
+    } else {
+      BlazeLayout.render('App_body', { main: 'App_notFound' });
+    }
   },
 };
 

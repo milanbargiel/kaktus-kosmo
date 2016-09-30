@@ -1,16 +1,15 @@
 <template name="Nav_mobile">
   <nav class="mobile-navigation">
     <a class="btn-home" href="/"></a>
-    <a class="js-show-menu btn-menu"></a>
+    {{#if currentUser}}
+      <a class="js-show-menu btn-menu"></a>
+    {{/if}}
     <!-- simple reveal animation from momentum package -->
     {{#momentum plugin="slide-height"}}
       {{#if showMenu}}
         <ul class="menu">
           <li>
             <a class="js-logout menu__link">LOGOUT</a>
-          </li>
-          <li>
-            <a href="{{pathForCreate}}" class="js-create menu__btn btn btn--grey u-full-width">CREATE A PLANET</a>
           </li>
         </ul>
       {{/if}}

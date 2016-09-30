@@ -128,10 +128,7 @@ Template.Planet_page.helpers({
   },
   // projectArgs are static because Template.instance().projectId is static
   projectArgs() {
-    // pass fields of document to vis header and Post_create
-    const projectId = Template.instance().projectId;
-    const project = Projects.findOne(projectId);
-    return project;
+    return Projects.findOne();
   },
   filterArgs() {
     const ti = Template.instance();

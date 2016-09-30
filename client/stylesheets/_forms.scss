@@ -52,6 +52,11 @@ input.error {
   }
 }
 
+.success {
+  display: none;
+  margin-top: $base-half;
+}
+
 .authentication {
   width: span(12);
   margin-left: auto;

@@ -18,6 +18,7 @@ Template.Post_create.onRendered(() => {
 
 Template.Post_create.events({
   'submit .js-post-create-form'(event, templateInstance) {
+    event.preventDefault();
     // Retrieve value
     const text = templateInstance.find('textarea[name="text"]').value;
     // Clear input field

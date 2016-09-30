@@ -38,7 +38,18 @@ export const rename = new ValidatedMethod({
     newName: Projects.simpleSchema().schema('name'),
   }).validator(),
   run({ projectId, newName }) {
-    // validation is missing here, does user have the rights to do so?
+    if (!Meteor.userId()) {
+      throw new Meteor.Error('projects.rename.notLoggedIn',
+        'Must be logged in.');
+    }
+
+    const project = Projects.findOne(projectId);
+
+    if (!project.belongsTo(Meteor.userId())) {
+      throw new Meteor.Error('projects.rename.accessDenied',
+        'You don\'t have permission to rename this project.');
+    }
+
     Projects.update(projectId, { $set: { name: newName } });
   },
 });
@@ -49,6 +60,18 @@ export const remove = new ValidatedMethod({
     projectId: Projects.simpleSchema().schema('_id'),
   }).validator(),
   run({ projectId }) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error('projects.remove.notLoggedIn',
+        'Must be logged in.');
+    }
+
+    const project = Projects.findOne(projectId);
+
+    if (!project.belongsTo(Meteor.userId())) {
+      throw new Meteor.Error('projects.remove.accessDenied',
+        'You don\'t have permission to remove this project.');
+    }
+
     Projects.remove(projectId);
   },
 });
@@ -67,8 +90,8 @@ export const makePublic = new ValidatedMethod({
 
     const project = Projects.findOne(projectId);
 
-    // editableBy is a collection helper function defined in projects.js
-    if (!project.editableBy(Meteor.userId())) {
+    // belongsTo is a collection helper function defined in projects.js
+    if (!project.belongsTo(Meteor.userId())) {
       throw new Meteor.Error('projects.makePublic.accessDenied',
         'You don\'t have permission to edit this project.');
     }

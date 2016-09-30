@@ -1,15 +1,17 @@
 <template name="Universe_mobile_page">
-  {{#if projects}}
-  <div class="container">
-    <div class="planet-select">
-      <p class="planet-select__header">Planets</p>
-      {{#each projects}}
-      <a href="{{pathForProject author slug}}" class="planet-select__btn btn btn--planet">{{name}}</a>
-      {{/each}}
-    </div>
-  </div>
+  {{#unless showCreateProject}}
+    {{#if Template.subscriptionsReady}}
+      <div class="planet-select">
+        <p class="planet-select__header">Planets</p>
+        {{#each projects}}
+          <a href="{{pathForProject author slug}}" class="planet-select__btn btn btn--planet">{{name}}</a>
+        {{/each}}
+      </div>
+      <a class="js-dialogue link link--highlight">Create another planet</a>
+    {{else}}
+      {{> spinner}}
+    {{/if}}
   {{else}}
-    <!-- if no projects exists go to Project_create form -->
-    {{redirectToCreate}}
-  {{/if}}
+    {{> Project_create}}
+  {{/unless}}
 </template>
