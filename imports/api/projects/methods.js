@@ -3,6 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { urlifier } from '../../lib/common-functions.js';
 
 // Import Projects Collection
 import Projects from './projects.js';
@@ -14,9 +15,13 @@ export const insert = new ValidatedMethod({
   validate: Projects.simpleSchema().pick('name').validator(),
   // run insertion with name attribute
   run({ name }) {
+    const user = Meteor.user();
+
     const project = {
-      userId: Meteor.userId(),
+      userId: user._id,
+      author: user.username,
       name,
+      slug: urlifier(name),
       public: false,
       createdAt: new Date(),
     };

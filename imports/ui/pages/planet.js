@@ -21,9 +21,9 @@ Template.Planet_page.onCreated(function () {
   // A global var is used because the submit handler in the form template
   // needs to have access to it in order to hide submitted form.
   Session.set({
-    showCreatePost: false,
     activeDialogue: false,
   });
+  this.showCreatePost = new ReactiveVar(false);
 
   // Filter
   // Selected filter option (tags or people)
@@ -47,10 +47,12 @@ Template.Planet_page.onCreated(function () {
   // Therefore all hover events on other nodes are ignored
   this.urlContainsPostId = new ReactiveVar();
 
-  this.projectId = FlowRouter.getParam('projectId');
-  // Subscribe to posts.inProject publication based on projectId FlowRouter param
+  // Subscribe to posts.inProject publication based on FlowRouter params
+  // username and projectSlut (unique combination)
+  const author = FlowRouter.getParam('username');
+  const slug = FlowRouter.getParam('projectSlug');
   // this.subscribe instead of Meteor.subscribe -> enables {{Template.subscriptionsReady}}
-  this.subscribe('posts.inProject', this.projectId, () => {
+  this.subscribe('posts.inProject', { author, slug }, () => {
     // When project does not exists or is private
     if (Projects.find().count() === 0) {
       FlowRouter.go('/notfound');
@@ -149,15 +151,15 @@ Template.Planet_page.helpers({
     };
   },
   showCreatePost() {
-    return Session.get('showCreatePost');
+    return Template.instance().showCreatePost.get();
   },
 });
 
 Template.Planet_page.events({
   // Interactions with d3 force simulation
-  'click .node'(event) {
+  'click .node'(event, templateInstance) {
     // Post_create form is open -> close it
-    Session.set('showCreatePost', false);
+    templateInstance.showCreatePost.set(false);
     // Save state of visualization -> push postId into the url as query parameter
     const postId = event.currentTarget.__data__._id;
     // Clear selected filter from url
@@ -185,13 +187,18 @@ Template.Planet_page.events({
   },
 
   // Interactions with Forms
-  'click .js-post-create'() {
+  'click .js-post-create'(event, templateInstance) {
     // Clean UI state in URL -> update contentView
     FlowRouter.setQueryParams({ thought: null });
-    Session.set('showCreatePost', true);
+    templateInstance.showCreatePost.set(true);
   },
-  'click .js-post-create-cancel'() {
-    Session.set('showCreatePost', false);
+  'click .js-post-create-cancel'(event, templateInstance) {
+    event.preventDefault();
+    // Hide form
+    templateInstance.showCreatePost.set(false);
+  },
+  'submit .js-post-create-form'(event, templateInstance) {
+    templateInstance.showCreatePost.set(false);
   },
   // Remove post
   'click .js-dialogue'(event, templateInstance) {

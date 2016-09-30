@@ -15,7 +15,7 @@ Template.Post_contentView.helpers({
     return moment(date).format('L');
   },
   userAllowedToRemove() {
-    // Only project owner or post owner sees removal link 
+    // Only project owner or post owner sees removal link
     const currentUser = Meteor.user();
     if (currentUser.username === this.post.author || currentUser._id === this.projectUserId) {
       return true;

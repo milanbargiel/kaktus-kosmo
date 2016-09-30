@@ -1,0 +1,13 @@
+.menu {
+  background-color: $white;
+
+  &__link {
+    color: $font-color;
+    display: block;
+    padding: $base-half 0;
+  }
+
+  &__btn {
+    margin: $base-third 0 $base-half;
+  }
+}

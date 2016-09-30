@@ -2,8 +2,9 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 import { Meteor } from 'meteor/meteor';
-
 import { Accounts } from 'meteor/accounts-base'; // Import Accounts Collection
+import { urlifier } from '../../lib/common-functions.js';
+
 import Projects from '../../api/projects/projects.js'; // Import Projects Collection
 import Posts from '../../api/posts/posts.js'; // Import Posts Collection
 
@@ -27,7 +28,9 @@ Meteor.startup(() => {
 
     const publicProject = Projects.insert({
       userId: userOne,
+      author: Meteor.users.findOne(userOne).username,
       name: 'Elephant Dreams',
+      slug: urlifier('Elephant Dreams'),
       public: true,
       createdAt: new Date(),
     });
@@ -66,7 +69,9 @@ Meteor.startup(() => {
 
     const privateProject = Projects.insert({
       userId: userOne,
+      author: Meteor.users.findOne(userOne).username,
       name: 'My Secret Planet',
+      slug: urlifier('My Secret Planet'),
       public: false,
       createdAt: new Date(),
     });

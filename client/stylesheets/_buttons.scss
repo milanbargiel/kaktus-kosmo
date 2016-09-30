@@ -19,6 +19,12 @@
     font-family: FontAwesome;
     margin-left: 0.7rem;
   }
+  
+  &--caret-down::after { // &: insert parent selector
+    content: "\f0d7";
+    font-family: FontAwesome;
+    margin-left: 0.7rem;
+  }
 }
 
 .link:hover {
@@ -34,6 +40,7 @@
   letter-spacing: 0.1rem;
   border-radius: 4px;
   cursor: pointer;
+  text-align: center;
 
   &--white {
     color: $grey-dark;
@@ -77,4 +84,15 @@
 
 .btn:focus {
   outline: none;
+}
+// mobile navigation
+.btn-home::before {
+  content: url("../img/logo.svg");
+}
+
+.btn-menu::after {
+  color: $grey;
+  content: "\f0c9";
+  font-family: FontAwesome;
+  float: right;
 }

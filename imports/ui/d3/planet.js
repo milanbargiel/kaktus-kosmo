@@ -34,7 +34,7 @@ export default function Planet(selector) {
     .size([w, h]);
 
   const nodes = force.nodes();  // force dataset
-  let circles = null;           // holding dom elements
+  let circles = [];           // holding dom elements
 
   /* Functions
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -114,7 +114,9 @@ export default function Planet(selector) {
   };
 
   this.clearSelection = () => {
-    circles.classed('node--selected', false);
+    if (circles.length) {
+      circles.classed('node--selected', false);
+    }
   };
 
   /* Add, remove, initialize

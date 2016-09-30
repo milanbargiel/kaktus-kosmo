@@ -14,3 +14,15 @@ Template.dialogue.helpers({
     return Session.get('activeDialogue');
   },
 });
+
+Template.dialogue.events({
+  'submit form'() {
+    // Close dialogue on successfull submit
+    Session.set('activeDialogue', false);
+  },
+  'click .js-dialogue-cancel'(event) {
+    event.preventDefault();
+    // Hide form
+    Session.set('activeDialogue', false);
+  },
+});

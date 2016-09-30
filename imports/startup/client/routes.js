@@ -1,15 +1,20 @@
 /* Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+import { Session } from 'meteor/session';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 /* Import to load these templates */
 import '../../ui/layouts/app-body.js';
+import '../../ui/layouts/mobile-body.js';
 import '../../ui/pages/planet.js';
+import '../../ui/pages/universe-mobile.js';
 import '../../ui/pages/universe.js';
 import '../../ui/pages/app-not-found.js';
+import '../../ui/components/project-create.js';
+import '../../ui/components/nav-mobile.js';
 
 /* Import to override accounts templates */
 import '../../ui/accounts/accounts-templates.js';
@@ -17,21 +22,50 @@ import '../../ui/accounts/accounts-templates.js';
 /* Import useraccounts-configuration to define AccountsTemplates.configureRoute */
 import '../both/useraccounts-configuration.js';
 
-/* pathForProject is defined in template Universe with projectId */
-FlowRouter.route('/projects/:projectId', {
+// Indicate wether we have a mobile viewport
+const mobile = () => $(window).width() < 450;
+Session.set('mobile', mobile());
+
+/* pathForProject is defined in template Universe with username and projectName */
+FlowRouter.route('/:username/:projectSlug', {
   name: 'planet',
   action() {
-    /* render(layout-template, { region: template }) */
-    BlazeLayout.render('App_body', { main: 'Planet_page' });
+    if (Session.get('mobile')) {
+      /* render(layout-template, { region: template }) */
+      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Post_create' });
+    } else {
+      BlazeLayout.render('App_body', { main: 'Planet_page' });
+    }
   },
 });
+
+// mobile only routes
+if (Session.get('mobile')) {
+  FlowRouter.route('/create', {
+    name: 'createProject',
+    action() {
+      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Project_create' });
+    },
+  });
+
+  FlowRouter.route('/create', {
+    name: 'createPost',
+    action() {
+      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Project_create' });
+    },
+  });
+}
 
 FlowRouter.route('/', {
   name: 'universe',
   /* Ensure that user is signed in */
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-    BlazeLayout.render('App_body', { main: 'Universe_page' });
+    if (Session.get('mobile')) {
+      BlazeLayout.render('Mobile_body', { navigation: 'Nav_mobile', main: 'Universe_mobile_page' });
+    } else {
+      BlazeLayout.render('App_body', { main: 'Universe_page' });
+    }
   },
 });
 

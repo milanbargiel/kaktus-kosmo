@@ -1,33 +1,16 @@
 // Mobile
-
-.mobile-navigation {
-  padding-top: 6px;
-  background-color: $white;
-
-  &__home::before {
-    content: url("../img/logo.svg");
-    margin-left: $base-third;
-  }
-
-  &__menu::after {
-    color: $grey;
-    content: "\f0c9";
-    font-family: FontAwesome;
-    float: right;
-    margin-right: $base-third;
-  }
-}
-
 .planet-select {
-  display: none;
-  margin-top: $baseline + $base-half;
-
   &__header {
     margin-bottom: $baseline;
   }
 
   &__btn {
-    margin-bottom: 2 * $baseline;
+    margin-bottom: $base-half;
+  }
+
+  &__create {
+    display: block;
+    margin-top: $base-half;
   }
 }
 

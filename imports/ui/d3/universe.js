@@ -1,15 +1,4 @@
-import { FlowRouter } from 'meteor/kadira:flow-router';
-
-/* Helpers */
-
-/* Generating a string with path to project for anchor tags */
-function pathForProject(projectId) {
-  const routeName = 'planet'; // route '/projects/:projectId'
-  /* Generate path */
-  const path = FlowRouter.path(routeName, { projectId });
-  return path;
-}
-
+import { pathForProject } from '../../lib/common-functions.js';
 
 /* Universe definition
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -129,7 +118,7 @@ export default function Universe(selector) {
     /* Enter */
     dropdown.append('a')
       .attr('class', 'dropdown__link')
-      .attr('href', d => pathForProject(d._id))
+      .attr('href', d => pathForProject(d.author, d.slug))
       .text('ENTER');
 
     /* Divider */

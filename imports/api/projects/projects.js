@@ -22,9 +22,15 @@ Projects.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
+  author: {
+    type: String,
+  },
   name: {
     type: String,
     max: 32,
+  },
+  slug: {
+    type: String,
   },
   public: {
     type: Boolean,

@@ -65,8 +65,4 @@ Template.Universe_page.events({
     const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
     Session.set('activeDialogue', dialogueTemplate);
   },
-  'click .js-dialogue-cancel'() {
-    // Hide form
-    Session.set('activeDialogue', false);
-  },
 });

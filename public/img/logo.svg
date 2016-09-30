@@ -1,0 +1,25 @@
+<svg width="24px" height="24px" viewBox="15 6 24 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="12" cy="12" rx="12" ry="12"></ellipse>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="24" height="24" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(15.000000, 6.000000)">
+        <use id="planet_2" stroke-opacity="0.2" stroke="#000000" mask="url(#mask-2)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-1"></use>
+        <g id="molecules_2" transform="translate(3.344262, 2.557377)" fill="#B0C4DE" opacity="0.5">
+            <ellipse id="Oval-6" cx="6.98360656" cy="0.885245902" rx="0.885245902" ry="0.885245902"></ellipse>
+            <ellipse id="Oval-6" cx="4.42622951" cy="18" rx="0.885245902" ry="0.885245902"></ellipse>
+            <ellipse id="Oval-6" cx="15.442623" cy="9.54098361" rx="0.885245902" ry="0.885245902"></ellipse>
+            <ellipse id="Oval-6" cx="5.21311475" cy="5.21311475" rx="0.885245902" ry="0.885245902"></ellipse>
+            <ellipse id="Oval-6" cx="14.4590164" cy="4.42622951" rx="0.885245902" ry="0.885245902"></ellipse>
+            <ellipse id="Oval-6" cx="10.5245902" cy="18.7868852" rx="0.885245902" ry="0.885245902"></ellipse>
+            <ellipse id="Oval-6" cx="9.54098361" cy="8.75409836" rx="0.885245902" ry="0.885245902"></ellipse>
+            <circle id="Oval-6" cx="0.885245902" cy="13.8688525" r="0.885245902"></circle>
+            <circle id="Oval-6" cx="0.885245902" cy="7.96721311" r="0.885245902"></circle>
+            <ellipse id="Oval-6" cx="6.98360656" cy="13.8688525" rx="0.885245902" ry="0.885245902"></ellipse>
+        </g>
+    </g>
+</svg>

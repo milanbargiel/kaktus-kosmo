@@ -12,6 +12,12 @@ $susy: (
   // ),
 );
 
+.mobile-navigation {
+  background-color: $white;
+  padding: 6px $base-half 0;
+  margin-bottom: $baseline + $base-half;
+}
+
 .container {
   padding: 0 $base-half;
   @include container($susy);

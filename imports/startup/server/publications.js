@@ -15,14 +15,14 @@ Meteor.publish('projects', function () {
 });
 
 /* Publish posts containing projectId */
-Meteor.publishComposite('posts.inProject', function (projectId) {
-  /* Check if projectId is of type String */
+Meteor.publishComposite('posts.inProject', function (object) {
+  /* Check if parameters are of type String */
   new SimpleSchema({
-    projectId: { type: String },
-  }).validate({ projectId });
+    author: { type: String },
+    slug: { type: String },
+  }).validate(object);
 
-  /* Security Check */
-  const proj = Projects.findOne(projectId);
+  const proj = Projects.findOne(object);
 
   /* If current user is not owner of private project */
   if (this.userId !== proj.userId && proj.public === false) {
@@ -34,7 +34,7 @@ Meteor.publishComposite('posts.inProject', function (projectId) {
   return {
     find() {
       /* return cursor of top level document */
-      return Projects.find({ _id: projectId });
+      return Projects.find({ _id: proj._id });
     },
 
     children: [
