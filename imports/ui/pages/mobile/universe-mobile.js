@@ -1,13 +1,13 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { pathForProject } from '../../lib/common-functions.js';
+import { pathForProject } from '../../../lib/common-functions.js';
+
+// Import Projects Collection
+import Projects from '../../../api/projects/projects.js';
 
 // import template
 import './universe-mobile.html';
-
-// Import Projects Collection
-import Projects from '../../api/projects/projects.js';
 
 Template.Universe_mobile_page.onCreated(function () {
   this.showCreateProject = new ReactiveVar(false);

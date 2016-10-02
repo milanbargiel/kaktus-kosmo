@@ -3,10 +3,10 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // import template
 import './planet-mobile.html';
-import '../components/post-create.js';
+import '../../components/planet/post-create.js';
 
 // Import Projects Collection
-import Projects from '../../api/projects/projects.js';
+import Projects from '../../../api/projects/projects.js';
 
 Template.Planet_mobile_page.onCreated(function () {
   const author = FlowRouter.getParam('username');

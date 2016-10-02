@@ -2,11 +2,11 @@ import { Template } from 'meteor/templating';
 
 // import templates
 import './dialogue.html';
-import './project-create.js';
-import './project-share.js';
-import './project-rename.js';
-import './project-remove.js';
-import './post-remove.js';
+import './dialogues/project-create.js';
+import './dialogues/project-share.js';
+import './dialogues/project-rename.js';
+import './dialogues/project-remove.js';
+import './dialogues/post-remove.js';
 
 Template.dialogue.helpers({
   activeDialogue() {

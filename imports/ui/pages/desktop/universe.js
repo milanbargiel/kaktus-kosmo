@@ -1,16 +1,16 @@
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+// Import Projects Collection
+import Projects from '../../../api/projects/projects.js';
+
 // Import templates
 import './universe.html';
-import '../components/nav-main.js';
-import '../components/dialogue.js';
+import '../../components/navigations/nav-main.js';
+import '../../components/dialogue.js';
 
 // Import d3js Universe function
-import Universe from '../d3/universe.js';
-
-// Import Projects Collection
-import Projects from '../../api/projects/projects.js';
+import Universe from '../../d3/universe.js';
 
 Template.Universe_page.onCreated(function () {
   this.dialogue = new ReactiveDict();

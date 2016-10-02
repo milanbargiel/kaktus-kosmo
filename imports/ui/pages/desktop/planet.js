@@ -1,19 +1,21 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
-import Projects from '../../api/projects/projects.js'; // Posts Collection
-import Posts from '../../api/posts/posts.js'; // Posts Collection
+
+// Import collections
+import Projects from '../../../api/projects/projects.js';
+import Posts from '../../../api/posts/posts.js';
 
 // Import templates
 import './planet.html';
-import '../components/nav-main.js';
-import '../components/dialogue.js';
-import '../components/filter.js';
-import '../components/post-contentview.js';
-import '../components/post-create.js';
+import '../../components/navigations/nav-main.js';
+import '../../components/dialogue.js';
+import '../../components/planet/filter.js';
+import '../../components/planet/post-contentview.js';
+import '../../components/planet/post-create.js';
 
 // Import d3js function Planet
-import Planet from '../d3/planet.js';
+import Planet from '../../d3/planet.js';
 
 Template.Planet_page.onCreated(function () {
   /* Thought selection

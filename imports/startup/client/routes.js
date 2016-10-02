@@ -8,10 +8,10 @@ import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 /* Import to load these templates */
 import '../../ui/layouts/app-body.js';
-import '../../ui/pages/planet.js';
-import '../../ui/pages/planet-mobile.js';
-import '../../ui/pages/universe.js';
-import '../../ui/pages/universe-mobile.js';
+import '../../ui/pages/desktop/planet.js';
+import '../../ui/pages/desktop/universe.js';
+import '../../ui/pages/mobile/planet-mobile.js';
+import '../../ui/pages/mobile/universe-mobile.js';
 import '../../ui/pages/app-not-found.js';
 
 /* Import to override accounts templates */
