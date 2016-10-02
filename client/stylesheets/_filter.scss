@@ -10,7 +10,7 @@
   }
 
   &__link {
-    color: $grey;
+    color: $grey-light;
     margin-right: $base-third;
     cursor: pointer;
 
@@ -25,6 +25,7 @@
 }
 
 .tag-list {
+  color: $grey-light;
 
   &__list-item {
     display: inline;

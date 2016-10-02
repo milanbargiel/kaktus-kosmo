@@ -42,6 +42,7 @@ rect {
 }
 
 .planet__header {
+  display: inline-block;
   // Use visibility instead of display so getBoundingClientRect() can calculate dimensions
   visibility: hidden;
   text-decoration: none;

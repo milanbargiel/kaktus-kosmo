@@ -186,8 +186,16 @@ export default function Universe(selector) {
 
   /* Reference: http://vallandingham.me/building_a_bubble_cloud.html */
   function click(object) { // object is selected nodes object
+    // Unfix all nodes
+    nodes.forEach((node) => { node.fixed = false; });
     /* iterates over nodes, if callback returns true, class is given */
-    circles.classed('planet--selected', node => object._id === node._id);
+    circles.classed('planet--selected', (node) => {
+      if (object._id === node._id) {
+        node.fixed = true; // fix nodes on click event
+        return true;
+      }
+      return false;
+    });
     labels.selectAll('.planet__header').classed('planet__header--selected', node => object._id === node._id);
   }
 
@@ -195,6 +203,7 @@ export default function Universe(selector) {
   function clear() {
     circles.classed('planet--selected', false);
     labels.selectAll('.planet__header').classed('planet__header--selected', false);
+    nodes.forEach((node) => { node.fixed = false; });
   }
 
   function mouseover(object) {
@@ -208,7 +217,7 @@ export default function Universe(selector) {
   }
 
   function connectEvents(selection) {
-    selection.on('mouseup', click);
+    selection.on('mousedown', click);
     selection.on('mouseover', mouseover);
     selection.on('mouseout', mouseout);
   }

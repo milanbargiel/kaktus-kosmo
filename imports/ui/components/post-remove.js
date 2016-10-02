@@ -7,6 +7,6 @@ import './post-remove.html';
 Template.Post_remove.events({
   'submit .js-post-remove-form'(event, templateInstance) {
     event.preventDefault();
-    Meteor.call('posts.remove', { postId: templateInstance.data.post._id });
+    Meteor.call('posts.remove', { postId: templateInstance.data.postId });
   },
 });

@@ -17,12 +17,9 @@ import '../components/post-create.js';
 import Planet from '../d3/planet.js';
 
 Template.Planet_page.onCreated(function () {
-  // Store temporary UI states in of forms in Session (globally).
-  // A global var is used because the submit handler in the form template
-  // needs to have access to it in order to hide submitted form.
-  Session.set({
-    activeDialogue: false,
-  });
+  // dialogues
+  this.activeDialogue = new ReactiveVar(false);
+
   this.showCreatePost = new ReactiveVar(false);
 
   // Filter
@@ -120,6 +117,16 @@ Template.Planet_page.onCreated(function () {
 });
 
 Template.Planet_page.helpers({
+  dialogueArgs() {
+    const instance = Template.instance();
+    const postId = instance.postId.get();
+    return {
+      // name of remove form or false
+      activeDialogue: instance.activeDialogue.get(),
+      // postId of post to remove
+      postId,
+    };
+  },
   postArgs() {
     // pass document to Post_remove and Post_contentView
     const postId = Template.instance().postId.get();
@@ -200,11 +207,13 @@ Template.Planet_page.events({
   // Remove post
   'click .js-dialogue'(event, templateInstance) {
     const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
-    Session.set('activeDialogue', dialogueTemplate);
+    templateInstance.activeDialogue.set(dialogueTemplate);
   },
-  'click .js-dialogue-cancel'() {
+  // on cancel and on submit
+  'click .js-dialogue-cancel, submit .js-dialogue-form'(event, templateInstance) {
+    event.preventDefault();
     // Hide form
-    Session.set('activeDialogue', false);
+    templateInstance.activeDialogue.set(false);
   },
 
   // Interactions with Filter

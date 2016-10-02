@@ -1,9 +1,11 @@
 <template name="Planet_mobile_page">
-  {{#if Template.subscriptionsReady}}
-    <span class="inject-thought__header">{{projectName}}</span>
-    {{> Post_create projectId=projectId}}
-    <span class="success">Your thought has been injected..</span>
-  {{else}}
-    {{> spinner}}
-  {{/if}}
+  <div class="container">
+    {{#if Template.subscriptionsReady}}
+      <span class="inject-thought__header">{{projectName}}</span>
+      {{> Post_create projectId=projectId}}
+      <span class="success">Your thought has been injected..</span>
+    {{else}}
+      {{> spinner}}
+    {{/if}}
+  </div>
 </template>

@@ -7,9 +7,9 @@ $susy: (
   column-width: 7.2rem,
 	// gutters: gutter-width / column-width
 	gutters: 2 / 3,
-  // debug: (
-  //   image: show,
-  // ),
+  debug: (
+    image: show,
+  ),
 );
 
 .mobile-navigation {

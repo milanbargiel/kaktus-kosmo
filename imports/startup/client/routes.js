@@ -8,7 +8,6 @@ import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 /* Import to load these templates */
 import '../../ui/layouts/app-body.js';
-import '../../ui/layouts/mobile-body.js';
 import '../../ui/pages/planet.js';
 import '../../ui/pages/planet-mobile.js';
 import '../../ui/pages/universe.js';
@@ -31,7 +30,7 @@ FlowRouter.route('/:username/:projectSlug', {
   action() {
     if (Session.get('mobile')) {
       /* render(layout-template, { region: template }) */
-      BlazeLayout.render('Mobile_body', { main: 'Planet_mobile_page' });
+      BlazeLayout.render('App_body', { main: 'Planet_mobile_page' });
     } else {
       BlazeLayout.render('App_body', { main: 'Planet_page' });
     }
@@ -44,7 +43,7 @@ FlowRouter.route('/', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
     if (Session.get('mobile')) {
-      BlazeLayout.render('Mobile_body', { main: 'Universe_mobile_page' });
+      BlazeLayout.render('App_body', { main: 'Universe_mobile_page' });
     } else {
       BlazeLayout.render('App_body', { main: 'Universe_page' });
     }
@@ -56,7 +55,7 @@ FlowRouter.notFound = {
   name: 'notFound',
   action() {
     if (Session.get('mobile')) {
-      BlazeLayout.render('Mobile_body', { main: 'App_notFound' });
+      BlazeLayout.render('App_body', { main: 'App_notFound' });
     } else {
       BlazeLayout.render('App_body', { main: 'App_notFound' });
     }

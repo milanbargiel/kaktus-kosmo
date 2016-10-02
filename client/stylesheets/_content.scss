@@ -4,7 +4,7 @@
   margin-bottom: $base-half;
 
   &__text {
-    background-color: $content-background-color;
+    background-color: $white;
     display: inline;
     padding: 4px $base-half;
 
@@ -13,7 +13,7 @@
   }
 
   &__tag {
-    color: $grey;
+    color: $grey-light;
     cursor: pointer;
 
     &:hover {
@@ -23,7 +23,7 @@
 }
 
 .meta {
-  color: $grey;
+  color: $grey-light;
 
   &__author::after {
     content: "·";

@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { Session } from 'meteor/session';
 
 // import templates
 import './dialogue.html';
@@ -11,18 +10,6 @@ import './post-remove.js';
 
 Template.dialogue.helpers({
   activeDialogue() {
-    return Session.get('activeDialogue');
-  },
-});
-
-Template.dialogue.events({
-  'submit form'() {
-    // Close dialogue on successfull submit
-    Session.set('activeDialogue', false);
-  },
-  'click .js-dialogue-cancel'(event) {
-    event.preventDefault();
-    // Hide form
-    Session.set('activeDialogue', false);
+    return Template.instance().data.activeDialogue;
   },
 });

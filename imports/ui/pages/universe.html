@@ -2,11 +2,11 @@
   <nav class="main-navigation">
     <!-- data-dialogue-template: custom html data attribute -->
     <a class="js-dialogue link u-right-top" data-dialogue-template="Project_create">CREATE A PLANET</a>
-    {{> Nav_main}}
+    {{> Nav_main currentUser}}
   </nav>
   
-  <!-- data of Project is passed to template -->
-  {{> dialogue project=projectArgs}}
+  <!-- name of form to render and data of selected Project is passed to template -->
+  {{> dialogue dialogueArgs}}
   
   <!-- Show spinner as long as we are waiting for subscription to be ready -->
   <div class="visualization"></div>

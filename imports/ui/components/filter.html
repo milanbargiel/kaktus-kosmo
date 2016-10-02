@@ -9,9 +9,13 @@
       </li>
     </ul>
     <ul class="tag-list u-clearfix">
+    {{#if elements}}
       {{#each elements}}
         <li class="tag-list__list-item"><a class="tag-list__tag {{elementIsActive this}}">{{this}}</a></li>
       {{/each}}
+    {{else}}
+      <span>No Tags found. Tag a thought by typing # followed by the tag name in your thought.</span>
+    {{/if}}
     </ul>
   </div>
 </template>

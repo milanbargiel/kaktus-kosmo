@@ -1,10 +1,12 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 // import template
 import './project-share.html';
 
 Template.Project_share.onCreated(function () {
+  // instance.data holds values received from parent smart component
   const project = this.data.project;
   // reactive var store temporary form state
   this.public = new ReactiveVar(project.public);
@@ -18,11 +20,12 @@ Template.Project_share.helpers({
     return Template.instance().public.get();
   },
   urlForProject() {
-    const routeName = 'planet'; // route '/projects/:projectId'
-    // this.project is project document passed to template from Universe_page
-    const projectId = this.project._id;
+    const instance = Template.instance();
+    const routeName = 'planet'; // route '/:username/:projectSlug'
+    const username = instance.data.project.author;
+    const projectSlug = instance.data.project.slug;
     // Generate url
-    const url = FlowRouter.url(routeName, { projectId });
+    const url = FlowRouter.url(routeName, { username, projectSlug });
     return url;
   },
 });
@@ -41,6 +44,5 @@ Template.Project_share.events({
     const projectId = templateInstance.data.project._id;
     const bool = templateInstance.public.get();
     Meteor.call('projects.makePublic', { projectId, bool });
-    Session.set('activeDialogue', false);
   },
 });

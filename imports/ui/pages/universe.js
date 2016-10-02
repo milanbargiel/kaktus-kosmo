@@ -1,6 +1,5 @@
 import { Template } from 'meteor/templating';
-import { Session } from 'meteor/session';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 // Import templates
 import './universe.html';
@@ -14,19 +13,27 @@ import Universe from '../d3/universe.js';
 import Projects from '../../api/projects/projects.js';
 
 Template.Universe_page.onCreated(function () {
-  // Selected project id
-  this.projectId = new ReactiveVar();
-  // Save state of UI (dialogues) globally in Session
-  Session.set('activeDialogue', false);
-  Tracker.autorun(() => {
+  this.dialogue = new ReactiveDict();
+  this.dialogue.set({
+    // projectId instantiates with click event on d3 header element
+    // references currently selected project
+    projectId: '',
+    // Save state of UI (dialogues)
+    // Holds name of form to render
+    // Perform operations (insert, update, remove) on projects collection
+    activeDialogue: false,
+  });
+
+  this.autorun(() => {
     // Whenever dialogue is hidden set referenced projectId to null
-    if (Session.get('activeDialogue') === false) {
-      this.projectId.set(null);
+    if (this.dialogue.get('activeDialogue') === false) {
+      this.dialogue.set('projectId', '');
     }
   });
 });
 
 Template.Universe_page.onRendered(function () {
+  // Subscribe to users projects
   this.subscribe('projects', () => {
     const universe = new Universe('.visualization');
 
@@ -47,22 +54,35 @@ Template.Universe_page.onRendered(function () {
 });
 
 Template.Universe_page.helpers({
-  projectArgs() {
-    // pass document to dialogues
-    const projectId = Template.instance().projectId.get();
+  dialogueArgs() {
+    const instance = Template.instance();
+    const projectId = instance.dialogue.get('projectId');
     const project = Projects.findOne(projectId);
-    return project;
+    return {
+      // name of form to render
+      activeDialogue: instance.dialogue.get('activeDialogue'),
+      // project document to perform operation on
+      project,
+    };
   },
 });
 
 Template.Universe_page.events({
   'click .js-dialogue'(event, templateInstance) {
+    // Operations on existing project (visualised as d3 element)
     // __data__ property only exists on a d3 element
     if (typeof event !== 'undefined' && event.currentTarget && event.currentTarget.__data__) {
+      // set projectId to id of d3 element
       const projectId = event.currentTarget.__data__._id;
-      templateInstance.projectId.set(projectId);
+      templateInstance.dialogue.set('projectId', projectId);
     }
     const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
-    Session.set('activeDialogue', dialogueTemplate);
+    templateInstance.dialogue.set('activeDialogue', dialogueTemplate);
+  },
+  // on cancel and on submit
+  'click .js-dialogue-cancel, submit .js-dialogue-form'(event, templateInstance) {
+    event.preventDefault();
+    // Hide form
+    templateInstance.dialogue.set('activeDialogue', false);
   },
 });

@@ -6,11 +6,11 @@
     {{else}}
       <a class="link u-right-top" href="/login">LOGIN TO INSERT A THOUGHT</a>
     {{/if}}
-    {{> Nav_main}}
+    {{> Nav_main currentUser}}
   </nav>
 
   <!-- data of Post is passed to template (Post_remove) -->
-  {{> dialogue post=postArgs}}
+  {{> dialogue dialogueArgs}}
 
   <div class="container">
   {{> filter filterArgs}}

@@ -20,7 +20,6 @@ Template.Project_rename.events({
     event.preventDefault();
     const newName = templateInstance.find('input[name="name"]').value;
     templateInstance.find('input[name="name"]').value = '';
-    // projectId is passed to this templateInstance from parent template Universe_page
     Meteor.call('projects.rename', { projectId: templateInstance.data.project._id, newName });
   },
 });

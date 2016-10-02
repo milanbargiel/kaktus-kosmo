@@ -53,10 +53,6 @@
 
 /* Modified because of getBoundingClientRect function */
 
-.dropdown a {
-  display: inline-block;
-}
-
 .dropdown > a:hover + .dropdown__content {
   display: block;
 }

@@ -30,8 +30,6 @@ $node-hover-color: rgb(176, 196, 222);
 $node-border-color: rgb(70, 130, 180);
 $node-selected-color: rgb(144, 224, 255);
 $node-selected-border-color: $highlight-color;
-// Content Color
-$content-background-color: rgb(222, 246, 255);
 
 
 // Baseline
@@ -47,8 +45,4 @@ $base-half: $baseline / 2; // used for .dialogue
 // Background-color
 body {
   background-color: $background-color;
-
-  @include breakpoint($bp-tablet) {
-    background-color: $white;
-  }
 }
