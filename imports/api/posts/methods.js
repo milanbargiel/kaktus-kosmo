@@ -38,6 +38,7 @@ export const insert = new ValidatedMethod({
 
     const post = {
       projectId,
+      userId: user._id,
       author: user.username,
       text,
       tags: matches,

@@ -9,15 +9,16 @@
     {{> Nav_main currentUser}}
   </nav>
 
-  <!-- data of Post is passed to template (Post_remove) -->
   {{> dialogue dialogueArgs}}
 
   <div class="container">
-  {{> filter filterArgs}}
+    {{#if Template.subscriptionsReady}}
+      {{> filter filterArgs}}
+    {{/if}}
     
     <div class="visualization visualization--planet">
-      <h1 class="visualization__header">{{projectArgs.name}}</h1>
       {{#if Template.subscriptionsReady}}
+        <h1 class="visualization__header">{{getProjectName}}</h1>
       {{else}}
         {{> spinner}}
       {{/if}}
@@ -26,10 +27,11 @@
     {{#if Template.subscriptionsReady}}
       <div class="content">
         {{#if showCreatePost}}
-          {{> Post_create projectId=projectArgs._id}}
+          {{> Post_create getProjectId}}
         {{else}}
-          {{#if postArgs}}
-            {{> Post_contentView post=postArgs projectUserId=projectArgs.userId}}
+          <!-- when a post is selected show content view -->
+          {{#if contentViewArgs.post}}
+            {{> Post_contentView contentViewArgs}}
           {{/if}}
         {{/if}}
       </div>

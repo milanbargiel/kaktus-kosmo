@@ -1,7 +1,6 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
-// import { ReactiveDict } from 'meteor/reactive-dict';
 import Projects from '../../api/projects/projects.js'; // Posts Collection
 import Posts from '../../api/posts/posts.js'; // Posts Collection
 
@@ -17,14 +16,27 @@ import '../components/post-create.js';
 import Planet from '../d3/planet.js';
 
 Template.Planet_page.onCreated(function () {
-  // dialogues
-  this.activeDialogue = new ReactiveVar(false);
+  /* Thought selection
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  // State of vis is pushed into URL (thought query param)
+  // Selected post id is set when:
+  // -> thought query param changes (click event) or
+  // -> on hover event
+  // It is used for templates Post_contentView and Post_remove
+  this.postId = new ReactiveVar();
+  // When URL contains a valid post id means that a node is selected
+  // Therefore all hover events on other nodes are ignored
+  this.urlContainsPostId = new ReactiveVar();
 
-  this.showCreatePost = new ReactiveVar(false);
-
-  // Filter
-  // Selected filter option (tags or people)
+  /* Filter selection
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  // State of vis is pushed into URL (tags and people query params)
+  // filterCategory is set on
+  // -> explicitly on click event
+  // -> implicitly on page load with specified query param people or tags
   this.filterCategory = new ReactiveVar('tags');
+  // selectedFilter is set on
+  // -> query param changes (click event)
   this.selectedFilter = new ReactiveVar();
 
   // helper function to generate one dimensional distinct array
@@ -33,17 +45,15 @@ Template.Planet_page.onCreated(function () {
     return _.uniq(arr, false);
   };
 
-  // Interaction with d3 force simulation
-  // Selected post id is set when:
-  // -> thought query param changes (click event) or
-  // -> on hover event
-  // It is used for templates Post_contentView and Post_remove
-  this.postId = new ReactiveVar();
-  // State of vis is pushed into URL
-  // When URL contains a valid post id means that a node is selected
-  // Therefore all hover events on other nodes are ignored
-  this.urlContainsPostId = new ReactiveVar();
+  /* Forms
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  // dialogues (remove post, share project)
+  this.activeDialogue = new ReactiveVar(false);
+  // create post form
+  this.showCreatePost = new ReactiveVar(false);
 
+  /* Subscription
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   // Subscribe to posts.inProject publication based on FlowRouter params
   // username and projectSlut (unique combination)
   const author = FlowRouter.getParam('username');
@@ -55,6 +65,8 @@ Template.Planet_page.onCreated(function () {
       FlowRouter.go('/notfound');
     }
 
+    /* D3 force simulation
+    –––––––––––––––––––––––––––––––––––––––––––––––––– */
     const planet = new Planet('.visualization');
 
     // Listen reactively for changes in Collection
@@ -69,6 +81,8 @@ Template.Planet_page.onCreated(function () {
       },
     });
 
+    /* Thought selection Listener
+    –––––––––––––––––––––––––––––––––––––––––––––––––– */
     // Listen for changes in query param 'thought' -> update vis
     this.autorun(() => {
       const postId = FlowRouter.getQueryParam('thought');
@@ -89,6 +103,8 @@ Template.Planet_page.onCreated(function () {
       }
     });
 
+    /* Filter selection Listener
+    –––––––––––––––––––––––––––––––––––––––––––––––––– */
     // Listen for changes in query param 'tags' and 'people' -> update vis
     this.autorun(() => {
       const selectedTag = FlowRouter.getQueryParam('tags');
@@ -116,51 +132,79 @@ Template.Planet_page.onCreated(function () {
   });
 });
 
+/* Helpers
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 Template.Planet_page.helpers({
+  contentViewArgs() {
+    // postId is dynamically set by hover and click event through route listener
+    const postId = Template.instance().postId.get();
+    const post = Posts.findOne(postId);
+    const userId = Meteor.userId();
+    const project = Projects.findOne();
+    return {
+      post,
+      // if project belongs to user or he is owner of post he is allowed to remove post
+      userAllowedToRemovePost: () => {
+        if (project.belongsTo(userId) || post.belongsTo(userId)) {
+          return true;
+        }
+        return false;
+      },
+    };
+  },
+
+  // on change of reactive param filterCategory filterArgs is triggered
+  filterArgs() {
+    const ti = Template.instance();
+    const project = Projects.findOne();
+    const posts = Posts.find().fetch(); // fetch returns array
+    const elements = () => {
+      if (ti.filterCategory.get() === 'tags') {
+        // generate one dimensional distinct array
+        return ti.distinct(posts, 'tags');
+      }
+      return ti.distinct(posts, 'author');
+    };
+
+    return {
+      elements,
+      selectedElement: ti.selectedFilter,
+      filterCategory: ti.filterCategory,
+      userOwnsProject: project.belongsTo(Meteor.userId()),
+    };
+  },
+
   dialogueArgs() {
     const instance = Template.instance();
     const postId = instance.postId.get();
+    const project = Projects.findOne();
     return {
-      // name of remove form or false
+      // name of dialogue or false
       activeDialogue: instance.activeDialogue.get(),
-      // postId of post to remove
+      // postId for Post_remove
       postId,
-    };
-  },
-  postArgs() {
-    // pass document to Post_remove and Post_contentView
-    const postId = Template.instance().postId.get();
-    const post = Posts.findOne(postId);
-    return post;
-  },
-  // projectArgs are static because Template.instance().projectId is static
-  projectArgs() {
-    return Projects.findOne();
-  },
-  filterArgs() {
-    const ti = Template.instance();
-    const posts = Posts.find().fetch(); // fetch returns array
-    if (ti.filterCategory.get() === 'tags') {
-      return {
-        // generate one dimensional distinct array
-        elements: ti.distinct(posts, 'tags'),
-        selectedElement: ti.selectedFilter,
-        filterCategory: ti.filterCategory,
-      };
-    }
-    return {
-      elements: ti.distinct(posts, 'author'),
-      selectedElement: ti.selectedFilter,
-      filterCategory: ti.filterCategory,
+      // project document for Project_share
+      project,
     };
   },
   showCreatePost() {
     return Template.instance().showCreatePost.get();
   },
+  getProjectId() {
+    return { projectId: Projects.findOne()._id };
+  },
+
+  // Header of visualization
+  getProjectName() {
+    return Projects.findOne().name;
+  },
 });
 
 Template.Planet_page.events({
-  // Interactions with d3 force simulation
+
+  /* D3 force simulation interactions
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   'click .node'(event, templateInstance) {
     // Post_create form is open -> close it
     templateInstance.showCreatePost.set(false);
@@ -190,33 +234,8 @@ Template.Planet_page.events({
     }
   },
 
-  // Interactions with Forms
-  'click .js-post-create'(event, templateInstance) {
-    // Clean UI state in URL -> update contentView
-    FlowRouter.setQueryParams({ thought: null });
-    templateInstance.showCreatePost.set(true);
-  },
-  'click .js-post-create-cancel'(event, templateInstance) {
-    event.preventDefault();
-    // Hide form
-    templateInstance.showCreatePost.set(false);
-  },
-  'submit .js-post-create-form'(event, templateInstance) {
-    templateInstance.showCreatePost.set(false);
-  },
-  // Remove post
-  'click .js-dialogue'(event, templateInstance) {
-    const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
-    templateInstance.activeDialogue.set(dialogueTemplate);
-  },
-  // on cancel and on submit
-  'click .js-dialogue-cancel, submit .js-dialogue-form'(event, templateInstance) {
-    event.preventDefault();
-    // Hide form
-    templateInstance.activeDialogue.set(false);
-  },
-
-  // Interactions with Filter
+  /* Filter component interactions
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   'click .horizontal-nav__link'(event, templateInstance) {
     const selectedCategory = templateInstance.$(event.target).data('filter-category');
     // higlight selected filter menu
@@ -230,5 +249,31 @@ Template.Planet_page.events({
     const selectedFilter = templateInstance.$(event.target).text();
     FlowRouter.setQueryParams({ thought: null, tags: null, people: null });
     FlowRouter.setQueryParams({ [filterCategory]: selectedFilter });
+  },
+
+  /* Dialogue (remove post, share project) interactions
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  'click .js-dialogue'(event, templateInstance) {
+    const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
+    templateInstance.activeDialogue.set(dialogueTemplate);
+  },
+  // on cancel and on submit
+  'click .js-dialogue-cancel, submit .js-dialogue-form'(event, templateInstance) {
+    event.preventDefault();
+    // Hide form
+    templateInstance.activeDialogue.set(false);
+  },
+
+  /* Post_create form interactions
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  'click .js-post-create'(event, templateInstance) {
+    // Clean UI state in URL -> update contentView
+    FlowRouter.setQueryParams({ thought: null });
+    templateInstance.showCreatePost.set(true);
+  },
+  'click .js-post-create-cancel, submit .js-post-create-form'(event, templateInstance) {
+    event.preventDefault();
+    // Hide form
+    templateInstance.showCreatePost.set(false);
   },
 });

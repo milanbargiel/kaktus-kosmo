@@ -22,6 +22,10 @@ Posts.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
+  userId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
   author: {
     type: String,
   },
@@ -38,6 +42,14 @@ Posts.schema = new SimpleSchema({
 });
 
 Posts.attachSchema(Posts.schema);
+
+// dburles:collection-helpers
+Posts.helpers({
+  belongsTo(userId) {
+    // if userId of post is equal to userId param
+    return this.userId === userId;
+  },
+});
 
 /* When in development attach variable to window object (debugging) */
 if (Meteor.isDevelopment) {

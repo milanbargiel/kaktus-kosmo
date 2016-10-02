@@ -39,7 +39,6 @@
     padding: 0 $base-third;
     color: $grey;
     font-weight: 300;
-    float: left;
     margin-right: $base-third;
     margin-bottom: $base-third;
 
@@ -52,5 +51,9 @@
   &__tag:hover {
     background-color: $grey;
     color: $white;
+  }
+
+  &__text {
+    margin-bottom: $base-half;
   }
 }
