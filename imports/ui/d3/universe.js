@@ -1,3 +1,4 @@
+/* Helper function to generate path from parameters author and slug for anchor tags */
 import { pathForProject } from '../../lib/common-functions.js';
 
 /* Universe definition
@@ -92,8 +93,7 @@ export default function Universe(selector) {
     labels = labelContainer.selectAll('.planet__label')
       .data(nodes, d => d._id); // uniquely bind data to the node selection
 
-    /* Update Selection */
-    /* Update old elements */
+    /* Update Selection, update old elements */
     labels.select('.planet__header')
       .text(d => d.name)
       .each(setMeasures());
@@ -125,7 +125,7 @@ export default function Universe(selector) {
     dropdown.append('div')
       .attr('class', 'dropdown__divider');
 
-    /* Share project*/
+    /* Share project */
     dropdown.append('a')
       .attr('class', 'js-dialogue dropdown__link')
       .attr('data-dialogue-template', 'Project_share')
@@ -186,7 +186,7 @@ export default function Universe(selector) {
 
   /* Reference: http://vallandingham.me/building_a_bubble_cloud.html */
   function click(object) { // object is selected nodes object
-    // Unfix all nodes
+    /* Unfix all nodes */
     nodes.forEach((node) => { node.fixed = false; });
     /* iterates over nodes, if callback returns true, class is given */
     circles.classed('planet--selected', (node) => {
@@ -222,7 +222,7 @@ export default function Universe(selector) {
     selection.on('mouseout', mouseout);
   }
 
-/* Add, remove, initialize
+/* Add, remove, rename
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
   function findNodeIndex(id) {

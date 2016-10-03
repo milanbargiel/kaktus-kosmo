@@ -1,11 +1,14 @@
+/* Universe_mobile_page
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { pathForProject } from '../../../lib/common-functions.js';
 
-// Import Projects Collection
+/* Import Projects Collection */
 import Projects from '../../../api/projects/projects.js';
 
-// import templates
+/* import templates */
 import './universe-mobile.html';
 import '../../components/navigations/nav-mobile.js';
 
@@ -13,7 +16,7 @@ Template.Universe_mobile_page.onCreated(function () {
   this.showCreateProject = new ReactiveVar(false);
   this.subscribe('projects', () => {
     if (Projects.find().count() === 0) {
-      // When there are not projects show project create form
+      /* When there are not projects show project create form */
       this.showCreateProject.set(true);
     }
   });
@@ -32,7 +35,7 @@ Template.Universe_mobile_page.helpers({
 });
 
 Template.Universe_mobile_page.events({
-  // Project_create form
+  /* Project_create form */
   'click .js-dialogue'(event, templateInstance) {
     templateInstance.showCreateProject.set(true);
   },

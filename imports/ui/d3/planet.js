@@ -1,9 +1,9 @@
 /* Planet function definition
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-/**
-  * Reference: http://stackoverflow.com/questions/9539294/adding-new-nodes-to-force-directed-layout/9544595#9544595
-  * A function is an object.
-  * An object can act as a class, containing a constructor and a set of related methods (this).
+/*
+ * Reference: http://stackoverflow.com/questions/9539294/adding-new-nodes-to-force-directed-layout/9544595#9544595
+ * A function is an object.
+ * An object can act as a class, containing a constructor and a set of related methods (this).
 */
 
 export default function Planet(selector) {
@@ -40,7 +40,7 @@ export default function Planet(selector) {
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
   /* Reference: http://stackoverflow.com/questions/8515900/how-to-constrain-movement-within-the-area-of-a-circle */
-  /* Restrict elements to leave the svg circle planet */
+  /* Elements are bound to area of svg circle planet */
   function bindToCircle() {
     /* Returns a function which works on data of a single node */
     return (d) => {
@@ -102,6 +102,7 @@ export default function Planet(selector) {
   /* Highlight Nodes
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+  /* Methods - accessible from outside planet function */
   this.selectNode = (id) => {
     /* iterates over nodes, if callback returns true, class is given */
     circles.classed('node--selected', node => node._id === id);
@@ -114,19 +115,19 @@ export default function Planet(selector) {
   };
 
   this.clearSelection = () => {
+    /* clearSelection is only possible if circles is defined */
     if (circles.length) {
       circles.classed('node--selected', false);
     }
   };
 
-  /* Add, remove, initialize
+  /* Add, remove
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
   function findNodeIndex(id) {
     return nodes.findIndex(node => node._id === id);
   }
 
-  /* Methods - accessible from outside the function */
   this.addNode = (object) => {
     nodes.push(object);
     update();

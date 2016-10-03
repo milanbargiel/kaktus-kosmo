@@ -1,5 +1,6 @@
 /* Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* Set up all routes in the app */
 
 import { Session } from 'meteor/session';
 import { FlowRouter } from 'meteor/kadira:flow-router';
@@ -15,6 +16,7 @@ import '../../ui/pages/mobile/universe-mobile.js';
 import '../../ui/pages/app-not-found.js';
 import '../../ui/components/navigations/nav-mobile.js';
 import '../../ui/components/navigations/nav-main.js';
+import '../../ui/components/navigations/nav-auth.js';
 
 /* Import to override accounts templates */
 import '../../ui/accounts/accounts-templates.js';
@@ -22,11 +24,18 @@ import '../../ui/accounts/accounts-templates.js';
 /* Import useraccounts-configuration to define AccountsTemplates.configureRoute */
 import '../both/useraccounts-configuration.js';
 
-// Indicate wether we have a mobile viewport
+
+/* Indicate wether we have a mobile viewport
+ * FlowRouter routes.js is not reactive
+ * -> Function to determine viewport will only be executed once on page load
+*/
 const mobile = () => $(window).width() < 450;
 Session.set('mobile', mobile());
 
-/* pathForProject is defined in template Universe with username and projectName */
+/* Every URL with appearance '/something/something' will invoke 'planet' route
+ * In the subscription of Planet_page (Planet_mobile_page) the callback will inform us
+ * if query params are valid. If not we are redirected to App_notFound.
+*/
 FlowRouter.route('/:username/:projectSlug', {
   name: 'planet',
   action() {
@@ -64,6 +73,7 @@ FlowRouter.notFound = {
   },
 };
 
+/* Configuration of useraccounts package routes */
 AccountsTemplates.configureRoute('signIn', {
   name: 'auth', // 'auth' is a group name used in template helper 'isActiveRoute'
   path: '/login',

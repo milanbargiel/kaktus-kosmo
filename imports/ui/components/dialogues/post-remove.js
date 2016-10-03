@@ -1,7 +1,9 @@
+/* Post_remove
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-// import template
 import './post-remove.html';
 
 Template.Post_remove.events({

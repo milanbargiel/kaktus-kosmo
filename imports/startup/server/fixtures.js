@@ -1,12 +1,14 @@
 /* Fixtures
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* If database is empty fill with seed data */
 
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base'; // Import Accounts Collection
+import { Accounts } from 'meteor/accounts-base';
 import { urlifier } from '../../lib/common-functions.js';
 
-import Projects from '../../api/projects/projects.js'; // Import Projects Collection
-import Posts from '../../api/posts/posts.js'; // Import Posts Collection
+/* Import Projects and Posts Collection */
+import Projects from '../../api/projects/projects.js';
+import Posts from '../../api/posts/posts.js';
 
 /* Code inside of Meteor.startup runs after all app files have loaded */
 Meteor.startup(() => {

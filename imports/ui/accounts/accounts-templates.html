@@ -1,8 +1,5 @@
-<template name="Auth_page">
-  <nav class="main-navigation">
-    {{> Nav_auth}}
-  </nav>
-  
+<!-- Main authentication template -->
+<template name="Auth_page">  
   <div class="container">
     <div class="authentication">
       <h1 class="authentication__header">KOSMO</h1>
@@ -12,6 +9,7 @@
   </div>
 </template>
 
+<!-- Templates to override -->
 <template name="override-atPwdFormBtn">
   <button type="submit" class="btn btn--grey btn--auth u-full-width">
     {{buttonText}}

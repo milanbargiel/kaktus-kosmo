@@ -1,33 +1,37 @@
 /* Posts Collection - Methods
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
-import Posts from './posts.js'; // Import posts collection
-import Projects from '../projects/projects.js'; // Import projects collection
+/* Import Posts and Projects Collections */
+import Posts from './posts.js';
+import Projects from '../projects/projects.js';
 
 export const insert = new ValidatedMethod({
-  // ValidatedMethod will use name to register method with Meteor
+  /* ValidatedMethod will use name to register method with Meteor */
   name: 'posts.insert',
-  // pick(): Pull out schema key 'text' and build a new schema out of it
+  /* pick(): Pull out schema keys 'projectId' and 'text' and build a new schema out of it */
   validate: Posts.simpleSchema().pick(['projectId', 'text']).validator(),
+  /* object ({ projectId, text }) is transfer paramer from method call */
   run({ projectId, text }) {
     const project = Projects.findOne(projectId);
     const user = Meteor.user();
 
     if (!project) {
-      // end execution of insert. Meteor.Error could be displayed on client
+      /* end execution of insert. Meteor.Error could be displayed on client */
       throw new Meteor.Error('posts.insert.accessDenied',
         'A post must belong to a project');
     }
+
     if (!user) {
       throw new Meteor.Error('posts.insert.notLoggedIn',
         'Must be logged in to insert a post');
     }
 
-    // Extract hashtags from text
-    // Reference: http://geekcoder.org/js-extract-hashtags-from-text/
+    /* Extract tags (#tag) from text */
+    /* Reference: http://geekcoder.org/js-extract-hashtags-from-text/ */
     const regex = /(?:^|\s)(#[a-zA-Z\d]+)/gm;
     const matches = [];
     let match;
@@ -57,11 +61,11 @@ export const remove = new ValidatedMethod({
   run({ postId }) {
     const post = Posts.findOne(postId);
     const project = Projects.findOne(post.projectId);
-    const user = Meteor.user();
+    const userId = Meteor.userId();
 
-    // if user is not owner of project or author of post
-    // -> dont allow to remove this post
-    if (user._id !== project.userId && user.username !== post.author) {
+    /* if user is not author of post and project does not belongs to him */
+    /* -> dont allow to remove this post */
+    if (!post.belongsTo(userId) && !project.belongsTo(userId)) {
       throw new Meteor.Error('posts.remove.accessDenied',
         'Must be owner of project or author of post to delete it');
     }

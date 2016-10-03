@@ -1,11 +1,13 @@
+/* Post_create
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-// import template
 import './post-create.html';
 
 Template.Post_create.onRendered(() => {
-  // client side validation with jquery validation
+  /* client side validation with themeteorchef:jquery-validation */
   $('.js-post-create-form').validate({
     rules: {
       text: {
@@ -19,11 +21,11 @@ Template.Post_create.onRendered(() => {
 Template.Post_create.events({
   'submit .js-post-create-form'(event, templateInstance) {
     event.preventDefault();
-    // Retrieve value
+    /* Retrieve value */
     const text = templateInstance.find('textarea[name="text"]').value;
-    // Clear input field
+    /* Clear input field */
     templateInstance.find('textarea[name="text"]').value = '';
-    // Insert document into collection
+    /* Insert document into collection */
     Meteor.call('posts.insert', { projectId: templateInstance.data.projectId, text });
   },
 });

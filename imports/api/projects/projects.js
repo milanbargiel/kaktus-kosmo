@@ -8,6 +8,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 /* Tool to export Collections to window -> Makes debugging in Browser possible */
 import { exportClient } from 'export-client';
 
+/* ES6 defaut export */
 const Projects = new Mongo.Collection('projects');
 export default Projects;
 
@@ -43,10 +44,10 @@ Projects.schema = new SimpleSchema({
 
 Projects.attachSchema(Projects.schema);
 
-// dburles:collection-helpers
+/* dburles:collection-helpers */
 Projects.helpers({
   belongsTo(userId) {
-    // if userId of project is equal to userId param
+    /* this refers to project document */
     return this.userId === userId;
   },
   isPrivate() {

@@ -1,5 +1,9 @@
+/* Filter component
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* List tags and people */
+
 import { Template } from 'meteor/templating';
-// import template
+
 import './filter.html';
 
 Template.filter.helpers({
@@ -13,6 +17,7 @@ Template.filter.helpers({
     }
     return '';
   },
+  /* If there are no contributors only one author of posts is listed (owner of project) */
   noContributors() {
     return !(this.elements().length > 1);
   },

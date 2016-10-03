@@ -1,2 +1,4 @@
-/* Import template */
+/* Nav_auth
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 import './nav-auth.html';

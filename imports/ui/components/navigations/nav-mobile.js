@@ -1,12 +1,15 @@
+/* Nav_mobile
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-// import template
 import './nav-mobile.html';
 
 Template.Nav_mobile.onCreated(function () {
+  /* indicates wether logout menu is revealed */
   this.showMenu = new ReactiveVar(false);
 });
 

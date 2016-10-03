@@ -1,3 +1,5 @@
+/* Register methods
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* Register all Methods on the Server */
 
 import '../../api/users/methods.js'; // Meteor.users Collection - Methods

@@ -1,16 +1,18 @@
 /* Publications
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
+/* Publish Collections to client */
 /* Code runs only on server */
+
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import Projects from '../../api/projects/projects.js'; // Projects Collection
-import Posts from '../../api/posts/posts.js'; // Posts Collection
+/* Import Projects and Posts collections */
+import Projects from '../../api/projects/projects.js';
+import Posts from '../../api/posts/posts.js';
 
-/* Publish Collections to client */
 Meteor.publish('projects', function () {
-  // only publish projects from current user
+  /* only publish projects from current user */
+  /* in publications use this.userId instead of Meteor.userId() */
   return Projects.find({ userId: this.userId }, { sort: { createdAt: -1 } });
 });
 
@@ -24,16 +26,16 @@ Meteor.publish('projects.current', function (object) {
   const proj = Projects.findOne(object);
 
   if (!proj) {
+    /* Declare that no data is being published */
     return this.ready();
   }
 
   /* If current user is not owner of private project */
   if (!proj.belongsTo(this.userId) && proj.isPrivate()) {
-    /* Declare that no data is being published */
     return this.ready();
   }
 
-  // return cursor
+  /* return cursor */
   return Projects.find({ _id: proj._id });
 });
 
@@ -48,12 +50,12 @@ Meteor.publishComposite('posts.inProject', function (object) {
   const proj = Projects.findOne(object);
 
   if (!proj) {
+    /* Declare that no data is being published */
     return this.ready();
   }
 
   /* If current user is not owner of private project */
   if (!proj.belongsTo(this.userId) && proj.isPrivate()) {
-    /* Declare that no data is being published */
     return this.ready();
   }
 

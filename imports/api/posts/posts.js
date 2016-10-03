@@ -8,6 +8,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 /* Tool to export Collections to window -> Makes debugging in Browser possible */
 import { exportClient } from 'export-client';
 
+/* ES6 defaut export */
 const Posts = new Mongo.Collection('posts');
 export default Posts;
 
@@ -43,10 +44,10 @@ Posts.schema = new SimpleSchema({
 
 Posts.attachSchema(Posts.schema);
 
-// dburles:collection-helpers
+/* dburles:collection-helpers */
 Posts.helpers({
   belongsTo(userId) {
-    // if userId of post is equal to userId param
+    /* if userId of post is equal to userId param */
     return this.userId === userId;
   },
 });

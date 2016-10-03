@@ -1,14 +1,17 @@
+/* Project_share
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-// import template
 import './project-share.html';
 
 Template.Project_share.onCreated(function () {
-  // instance.data holds values received from parent smart component
+  /* instance.data holds values received from parent smart component */
   const project = this.data.project;
-  // reactive var store temporary form state
+  /* reactive var store temporary form state */
+  /* initial value is projects current public field (true or false) */
   this.public = new ReactiveVar(project.public);
 });
 
@@ -19,18 +22,20 @@ Template.Project_share.helpers({
   isPublic() {
     return Template.instance().public.get();
   },
+  /* Show URL to share when isPublic returns true */
   urlForProject() {
     const instance = Template.instance();
-    const routeName = 'planet'; // route '/:username/:projectSlug'
     const username = instance.data.project.author;
     const projectSlug = instance.data.project.slug;
-    // Generate url
+    const routeName = 'planet'; // route '/:username/:projectSlug'
+    /* Generate url */
     const url = FlowRouter.url(routeName, { username, projectSlug });
     return url;
   },
 });
 
 Template.Project_share.events({
+  /* On change of selected radiobutton change state of form */
   'change .js-project-share-radio'(event, templateInstance) {
     const val = templateInstance.$(event.target).val();
     if (val === 'public') {

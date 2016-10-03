@@ -8,7 +8,9 @@ AccountsTemplates.configure({
   defaultTemplate: 'Auth_page',
   defaultLayout: 'App_body',
   defaultContentRegion: 'main',
-  defaultLayoutRegions: {},
+  defaultLayoutRegions: {
+    navigation: 'Nav_auth',
+  },
   /* Appearance */
   showLabels: false,
   hideSignInLink: true,
@@ -39,10 +41,11 @@ AccountsTemplates.addFields([
     type: 'text',
     required: true,
     minLength: 5,
+    /* function that validates on client and server if username has already been taken */
     func(username) {
       if (Meteor.isClient) {
-        Meteor.call('users.exists', { username }, (err, userExists) => {
-          if (!userExists) {
+        Meteor.call('users.usernameExists', { username }, (err, usernameExists) => {
+          if (!usernameExists) {
             this.setSuccess();
           } else {
             this.setError('Username is already taken.');
@@ -51,8 +54,8 @@ AccountsTemplates.addFields([
         });
         return;
       }
-      // Server
-      return Meteor.call('users.exists', { username });
+      /* Server */
+      return Meteor.call('users.usernameExists', { username });
     },
   },
   pwd,

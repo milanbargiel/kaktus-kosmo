@@ -7,6 +7,7 @@
   <div class="meta">
     <span class="meta__author">by {{post.author}}</span>
     <span class="meta__timestamp">{{date post.createdAt}}</span>
+    <!-- userAllowedToRemovePost function is data context passed from Planet_page parent smart component -->
     {{#if userAllowedToRemovePost}}
       <span class="js-dialogue meta__delete" data-dialogue-template="Post_remove"></span>
     {{/if}}

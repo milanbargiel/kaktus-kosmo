@@ -1,6 +1,6 @@
 /* Server entry point
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-/* only available to the server, imports all server code */
+/* server entry, imports all server code */
 
-import '../imports/startup/server/index.js';
-import '../imports/startup/both/index.js';
+import '../imports/startup/server/index.js'; // fixtures, methods, publications
+import '../imports/startup/both/index.js'; // useraccounts-configuration
