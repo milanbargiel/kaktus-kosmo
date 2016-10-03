@@ -5,3 +5,4 @@
 /* They do necessary configuration for packages and import the rest of apps code */
 
 import './routes.js';
+import './momentum.js';

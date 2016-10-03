@@ -236,8 +236,8 @@ Template.Planet_page.events({
   },
   'mouseover .node'(event, templateInstance) {
     /* visual hover state is defined in css */
-    /* if url contains state of vis do not update contentView */
-    if (!templateInstance.urlContainsPostId.get()) {
+    /* if url contains state of vis or insert thought form is open do not update contentView */
+    if (!templateInstance.urlContainsPostId.get() && !templateInstance.showCreatePost.get()) {
       const postId = event.currentTarget.__data__._id;
       templateInstance.postId.set(postId);
     }

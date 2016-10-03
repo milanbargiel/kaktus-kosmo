@@ -25,13 +25,15 @@
     
     {{#if Template.subscriptionsReady}}
       <div class="content">
-        {{#if showCreatePost}}
-          {{> Post_create getProjectId}}
-        {{else}}
-          <!-- when a post is selected show content view -->
-          {{#if contentViewArgs.post}}
-            {{> Post_contentView contentViewArgs}}
+        {{#momentum plugin="fadeFast"}}
+          {{#if showCreatePost}}
+            {{> Post_create getProjectId}}
           {{/if}}
+        {{/momentum}}
+
+        <!-- when a post is selected show content view -->
+        {{#if contentViewArgs.post}}
+          {{> Post_contentView contentViewArgs}}
         {{/if}}
       </div>
     {{/if}}
