@@ -13,6 +13,8 @@ import '../../ui/pages/desktop/universe.js';
 import '../../ui/pages/mobile/planet-mobile.js';
 import '../../ui/pages/mobile/universe-mobile.js';
 import '../../ui/pages/app-not-found.js';
+import '../../ui/components/navigations/nav-mobile.js';
+import '../../ui/components/navigations/nav-main.js';
 
 /* Import to override accounts templates */
 import '../../ui/accounts/accounts-templates.js';
@@ -30,9 +32,9 @@ FlowRouter.route('/:username/:projectSlug', {
   action() {
     if (Session.get('mobile')) {
       /* render(layout-template, { region: template }) */
-      BlazeLayout.render('App_body', { main: 'Planet_mobile_page' });
+      BlazeLayout.render('App_body', { navigation: 'Nav_mobile', main: 'Planet_mobile_page' });
     } else {
-      BlazeLayout.render('App_body', { main: 'Planet_page' });
+      BlazeLayout.render('App_body', { navigation: 'Nav_main', main: 'Planet_page' });
     }
   },
 });
@@ -43,9 +45,9 @@ FlowRouter.route('/', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
     if (Session.get('mobile')) {
-      BlazeLayout.render('App_body', { main: 'Universe_mobile_page' });
+      BlazeLayout.render('App_body', { navigation: 'Nav_mobile', main: 'Universe_mobile_page' });
     } else {
-      BlazeLayout.render('App_body', { main: 'Universe_page' });
+      BlazeLayout.render('App_body', { navigation: 'Nav_main', main: 'Universe_page' });
     }
   },
 });
@@ -55,9 +57,9 @@ FlowRouter.notFound = {
   name: 'notFound',
   action() {
     if (Session.get('mobile')) {
-      BlazeLayout.render('App_body', { main: 'App_notFound' });
+      BlazeLayout.render('App_body', { navigation: 'Nav_mobile', main: 'App_notFound' });
     } else {
-      BlazeLayout.render('App_body', { main: 'App_notFound' });
+      BlazeLayout.render('App_body', { navigation: 'Nav_main', main: 'App_notFound' });
     }
   },
 };

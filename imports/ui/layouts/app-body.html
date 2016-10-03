@@ -1,4 +1,7 @@
 <template name="App_body">
   <!-- routes.js defines which template to render into areas -->
+  <nav class="main-navigation">
+    {{> Template.dynamic template=navigation}}
+  </nav>
   {{> Template.dynamic template=main}}
 </template>

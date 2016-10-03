@@ -1,10 +1,9 @@
 <template name="Nav_main">
   <a class="link u-left-top" href="/">KOSMO</a>
-  <!-- data is passed from parent smart component Universe_page -->
-  {{#if username}}
+  {{#if currentUser}}
     <div class="u-right-bottom">
       <div class="dropdown">
-        <a class="link link--caret-up">{{username}}</a>
+        <a class="link link--caret-up">{{currentUser.username}}</a>
         <ul class="dropdown__content dropdown__content--up">
           <li>
             <a class="js-logout dropdown__link">Logout</a>

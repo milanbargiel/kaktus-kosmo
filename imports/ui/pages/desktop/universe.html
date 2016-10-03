@@ -1,9 +1,8 @@
 <template name="Universe_page">
-  <nav class="main-navigation">
+  <div class="secondary-navigation">
     <!-- data-dialogue-template: custom html data attribute -->
     <a class="js-dialogue link u-right-top" data-dialogue-template="Project_create">CREATE A PLANET</a>
-    {{> Nav_main currentUser}}
-  </nav>
+  </div>
   
   <!-- name of form to render and data of selected Project is passed to template -->
   {{> dialogue dialogueArgs}}

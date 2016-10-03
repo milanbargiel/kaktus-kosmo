@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // import template
 import './planet-mobile.html';
+import '../../components/navigations/nav-mobile.js';
 import '../../components/planet/post-create.js';
 
 // Import Projects Collection
@@ -20,11 +21,11 @@ Template.Planet_mobile_page.onCreated(function () {
 });
 
 Template.Planet_mobile_page.helpers({
-  'projectName'() {
+  'getProjectName'() {
     return Projects.findOne().name;
   },
-  'projectId'() {
-    return Projects.findOne()._id;
+  'getProjectId'() {
+    return { projectId: Projects.findOne()._id };
   },
 });
 

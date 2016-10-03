@@ -1,6 +1,7 @@
 <template name="Nav_mobile">
   <nav class="mobile-navigation">
     <a class="btn-home" href="/"></a>
+    <!-- when user is logged in show menu button -->
     {{#if currentUser}}
       <a class="js-show-menu btn-menu"></a>
     {{/if}}

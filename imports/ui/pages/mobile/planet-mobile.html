@@ -1,8 +1,8 @@
 <template name="Planet_mobile_page">
   <div class="container">
     {{#if Template.subscriptionsReady}}
-      <span class="inject-thought__header">{{projectName}}</span>
-      {{> Post_create projectId=projectId}}
+      <span class="inject-thought__header">{{getProjectName}}</span>
+      {{> Post_create getProjectId}}
       <span class="success">Your thought has been injected..</span>
     {{else}}
       {{> spinner}}
