@@ -1,5 +1,5 @@
-@import "reset"; // own reset rules
 @import "base"; // Modules and variables
+@import "reset"; // own reset rules
 @import "mixins";
 @import "utility"; // Helper classes
 
@@ -8,7 +8,6 @@
 @import "typography";
 @import "buttons";
 @import "forms";
-@import "dialogues";
 @import "dropdowns";
 @import "menus";
 

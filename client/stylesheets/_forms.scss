@@ -1,85 +1,145 @@
 // Forms
-
-.input {
-  margin-bottom: $base-third;
-
-  &__field {
-    display: block;
-    width: 100%;
-    padding: $base-sixth $base-half;
-    border: 1px solid $grey-light;
-    border-radius: 4px;
-
-    &:focus {
-      outline: none;
-      border: 1px solid $highlight-color;
-    }
-
-    &--text {
-      height: 4rem;
-    }
-
-    &--textarea {
-      resize: none;
-    }
-
-    &--link {
-      color: $grey;
-    }
-
-    &--error {
-      border: 1px solid $crimson;
-    }
-  }
-  
-  &__error {
-    color: $crimson;
-  }
+.form-header {
+  margin-bottom: $baseline;
 }
 
-// Jquery Validation Errors
-label.error {
-  display: block;
-  color: $crimson;
-  margin-bottom: $base-third;
+.form-message {
+  margin-bottom: $base-half;
 }
 
-input.error {
-  border: 1px solid $crimson;
-
-  &:focus {
-    border: 1px solid $crimson;
-  }
+.form-buttons {
+  float: right;
 }
 
-.success {
+// Post_create mobile success message
+.form-success {
   display: none;
   margin-top: $base-half;
 }
 
-.authentication {
-  width: span(12);
-  margin-left: auto;
-  margin-right: auto;
+.input-field {
+  margin-bottom: $base-half;
+  display: block;
+  width: 100%;
+  border: 1px solid $background-color;
 
   @include breakpoint($bp-mobile) {
-    width: span(8);
+    border: 1px solid $grey-light;
+    border-radius: 4px;
   }
 
-  @include breakpoint($bp-tablet) {
-    width: span(4);
+  &:focus {
+    outline: none;
   }
 
-  &__header {
-    padding-top: 2 * $baseline;
-    margin-bottom: $baseline;
+  &--text {
+    height: 4rem;
+    padding: $base-sixth $base-half;
 
-    @include breakpoint($bp-tablet) {
-      padding-top: 4 * $baseline;
+    &:focus {
+      border: 1px solid $highlight-color;
     }
   }
 
-  &__text {
-    margin-bottom: $base-half;
+  &--textarea {
+    resize: none;
+    background-color: $background-color;
+    padding: $base-sixth 0;
+
+    @include breakpoint($bp-mobile) {
+      background-color: $white;
+      padding: $base-sixth $base-half;
+
+      &:focus {
+        border: 1px solid $highlight-color;
+      }
+    }
+  }
+
+  &--link {
+    padding: $base-sixth $base-half;
+    color: $grey;
+    line-height: $font-size;
+  }
+
+  &--error {
+    border: 1px solid $crimson;
+  }
+}
+
+.input-radio {
+  display: inline-block;
+  margin-right: $base-half;
+  margin-bottom: $base-half;
+}
+
+.input-error {
+  display: block;
+  color: $crimson;
+  margin-bottom: $base-half;
+}
+
+// Jquery Validation Errors
+input.error {
+  @extend .input-field--error;
+
+  &:focus {
+    @extend .input-field--error;
+  }
+}
+
+label.error {
+  @extend .input-error;
+}
+
+// authentication
+.authentication__header {
+  margin-bottom: $baseline;
+
+  @include breakpoint($bp-mobile) {
+    margin-bottom: 2 * $baseline;
+  }
+}
+
+.overlay {
+  background-color: $overlay-color;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.dialogue-form {
+  width: 43rem;
+  background-color: $white;
+  padding: $baseline $baseline $base-half;
+  border: 1px solid $grey-light;
+  border-radius: 4px;
+  // Vertically center div
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  // Horizontally center div
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.post-create-btn {
+  position: absolute;
+  bottom: $base-third;
+
+  @include breakpoint($bp-mobile) {
+    position: static;
+  }
+
+  &--left {
+    left: $base-half;
+  }
+
+  &--right {
+    right: $base-half;
   }
 }

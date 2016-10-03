@@ -3,11 +3,12 @@
 svg, 
 circle, 
 rect {
-  pointer: default;
+  cursor: default;
 }
 
 .visualization {
   &__header {
+    margin-top: $base-half;
     margin-bottom: 3 * $baseline;
     text-align: center;
   }
@@ -72,8 +73,9 @@ rect {
   fill: $node-color;
   stroke: $node-border-color;
 
-  &--hover {
+  &--tag-selected {
     fill: $node-hover-color;
+    stroke: #4682B4;
   }
 
   &--selected {

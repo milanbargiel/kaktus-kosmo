@@ -3,7 +3,7 @@
   <div class="container">
     <div class="authentication">
       <h1 class="authentication__header">KOSMO</h1>
-      <p class="authentication__text">A place to lay down your thoughts to discover them later.</p>
+      <p class="form-message">A place to lay down your thoughts to discover them later.</p>
       {{> atForm}}    
     </div>
   </div>
@@ -18,9 +18,9 @@
 
 <template name="override-atTextInput">
   <div class="input {{#if isValidating}}validating{{/if}} {{#if hasError}}has-error{{/if}} {{#if hasSuccess}}has-success{{/if}} {{#if feedback}}has-feedback{{/if}}">
-    <input type="{{type}}" class="input__field input__field--text {{#if hasError}}input__field--error{{/if}}" id="at-field-{{_id}}" name="at-field-{{_id}}" placeholder="{{placeholder}}" autocapitalize="none" autocorrect="off">
+    <input type="{{type}}" class="input-field input-field--text {{#if hasError}}input-field--error{{/if}}" id="at-field-{{_id}}" name="at-field-{{_id}}" placeholder="{{placeholder}}" autocapitalize="none" autocorrect="off">
     {{#if hasError}}
-      <span class="input__error">{{errorText}}</span>
+      <span class="input-error">{{errorText}}</span>
     {{/if}}
   </div>
 </template>
@@ -28,7 +28,7 @@
 <template name="override-atError">
   <div class="at-error input">
     {{#each error}}
-      <p class="input__error">{{errorText}}</p>
+      <p class="input-error">{{errorText}}</p>
     {{/each}}
   </div>
 </template>

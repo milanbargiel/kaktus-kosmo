@@ -1,16 +1,13 @@
 // Mobile
 .planet-select {
+  margin-bottom: $baseline + $base-half;
+  
   &__header {
     margin-bottom: $baseline;
   }
 
   &__btn {
     margin-bottom: $base-half;
-  }
-
-  &__create {
-    display: block;
-    margin-top: $base-half;
   }
 }
 

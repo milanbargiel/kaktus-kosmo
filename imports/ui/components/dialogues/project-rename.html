@@ -1,10 +1,10 @@
 <template name="Project_rename">
   <form class="js-dialogue-form js-project-rename-form">
-    <p class="dialogue__header">Rename planet</p>
-    <p class="dialogue__message">Enter a new name for your planet:</p>
+    <p class="form-header">Rename planet</p>
+    <p class="form-message">Enter a new name for your planet:</p>
     <!-- {{project.name}} is the data context defined in Universe_page template -->
-    <input class="input input__field input__field--text" type="text" name="name" placeholder="{{project.name}}">
-    <div class="u-right">
+    <input class="input-field input-field--text" type="text" name="name" placeholder="{{project.name}}">
+    <div class="form-buttons">
       <a class="js-dialogue-cancel btn btn--white">Cancel</a>
       <input type="submit" class="btn btn--grey" value="RENAME">
     </div>

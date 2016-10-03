@@ -262,6 +262,11 @@ Template.Planet_page.events({
     */
     const filterCategory = templateInstance.filterCategory.get();
     const selectedFilter = templateInstance.$(event.target).text();
+    /* if element is already selected -> clear selection */
+    if (selectedFilter === templateInstance.selectedFilter.get()) {
+      FlowRouter.setQueryParams({ thought: null, tags: null, people: null });
+      return;
+    }
     FlowRouter.setQueryParams({ thought: null, tags: null, people: null });
     FlowRouter.setQueryParams({ [filterCategory]: selectedFilter });
   },

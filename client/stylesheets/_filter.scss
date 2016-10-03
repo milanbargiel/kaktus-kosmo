@@ -10,7 +10,7 @@
   }
 
   &__link {
-    color: $grey-light;
+    color: $grey;
     margin-right: $base-third;
     cursor: pointer;
 
@@ -25,7 +25,7 @@
 }
 
 .tag-list {
-  color: $grey-light;
+  color: $grey;
 
   &__list-item {
     display: inline;
@@ -37,13 +37,12 @@
     background-color: $grey-lighter;
     border-radius: 20px;
     padding: 0 $base-third;
-    color: $grey;
     font-weight: 300;
     margin-right: $base-third;
     margin-bottom: $base-third;
 
     &--active {
-      background-color: $node-selected-color;
+      background-color: $grey;
       color: $white;
     }
   }

@@ -15,20 +15,32 @@
 
 .u-left-top {
   position: absolute;
-  top: $base-sixth;
-  left: $baseline;
+  top: $base-half;
+  left: $base-half;
+
+  @include breakpoint($bp-tablet) {
+    left: $baseline;
+  }
 }
 
 .u-right-top {
   position: absolute;
-  top: $base-sixth;
-  right: $baseline;
+  top: $base-half;
+  right: $base-half;
+
+  @include breakpoint($bp-tablet) {
+    right: $baseline;
+  }
 }
 
 .u-right-bottom {
   position: absolute;
-  bottom: $base-sixth;
-  right: $baseline;
+  bottom: $base-half;
+  right: $base-half;
+
+  @include breakpoint($bp-tablet) {
+    right: $baseline;
+  }
 }
 
 .u-relative {

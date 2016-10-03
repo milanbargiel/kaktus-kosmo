@@ -1,11 +1,11 @@
 // Base
 
 // Load Sass environment
-@import "{francocatena:compass}/compass";
-@import "{francocatena:compass}/compass/reset";
-@import "vendor/boilerplate";
-@import "/{casimcdaniels:breakpoint}/_breakpoint";
-@import "/{meta:susy}/susy";
+@import '{francocatena:compass}/compass';
+@import '{francocatena:compass}/compass/reset';
+@import 'vendor/boilerplate';
+@import '/{casimcdaniels:breakpoint}/_breakpoint';
+@import '/{meta:susy}/susy';
 
 // Breakpoints
 $bp-tablet: 800px;
@@ -13,7 +13,7 @@ $bp-mobile: 450px;
 
 // Colors
 $background-color: rgb(242, 242, 242);
-$overlay-color: rgba(0, 0, 0, 0.5);
+$overlay-color: rgba(0, 0, 0, .5);
 $font-color: rgb(0, 0, 0);
 $highlight-color: rgb(33, 192, 255);
 $grey-lighter: rgb(230, 230, 230); // used for .tag

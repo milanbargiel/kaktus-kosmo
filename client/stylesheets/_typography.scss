@@ -14,8 +14,10 @@ body {
 }
 
 h1 {
+  font-family: 'Josefin Sans', sans-serif;
   font-size: 4rem;
+  // font-weight: 300;
+  letter-spacing: .1rem;
   line-height: 1.2;
-  font-weight: 300;
-  letter-spacing: 0.1rem;
+  text-transform: uppercase;
 }

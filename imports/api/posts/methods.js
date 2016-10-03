@@ -44,7 +44,8 @@ export const insert = new ValidatedMethod({
       projectId,
       userId: user._id,
       author: user.username,
-      text,
+      /* Insert classed span tags arround hashtags */
+      text: text.replace(regex, '<span class="thought__tag">$&</span>'),
       tags: matches,
       createdAt: new Date(),
     };

@@ -12,6 +12,22 @@ $susy: (
   // ),
 );
 
+.authentication {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3 * $baseline;
+  width: span(12);
+
+  @include breakpoint($bp-mobile) {
+    width: span(8);
+  }
+
+  @include breakpoint($bp-tablet) {
+    padding-top: 4 * $baseline;
+    width: span(4);
+  }
+}
+
 .mobile-navigation {
   background-color: $white;
   padding: 6px $base-half 0;
@@ -29,7 +45,7 @@ $susy: (
 }
 
 .filter {
-  padding-top: 6 * $baseline;
+  padding-top: 5 * $baseline + $base-half;
   @include span(2);
 }
 
@@ -47,6 +63,6 @@ $susy: (
 }
 
 .content {
-  padding-top: 12 * $baseline;
+  padding-top: 11 * $baseline + $base-half;
   @include span(3 last);
 }

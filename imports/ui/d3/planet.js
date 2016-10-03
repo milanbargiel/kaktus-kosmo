@@ -111,13 +111,14 @@ export default function Planet(selector) {
   this.selectNodes = (ids) => {
     /* assign class to all elements with specified ids */
     /* iterates over nodes, if callback returns true, class is given */
-    circles.classed('node--selected', node => ids.includes(node._id));
+    circles.classed('node--tag-selected', node => ids.includes(node._id));
   };
 
   this.clearSelection = () => {
     /* clearSelection is only possible if circles is defined */
     if (circles.length) {
       circles.classed('node--selected', false);
+      circles.classed('node--tag-selected', false);
     }
   };
 

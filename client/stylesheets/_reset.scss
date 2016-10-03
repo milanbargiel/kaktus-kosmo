@@ -13,10 +13,27 @@ html {
 
 input,
 textarea,
-select {
+select,
+button, {
   color: inherit;
   font: inherit;
   margin: 0;
+}
+
+::-webkit-input-placeholder {
+   color: $grey-light;
+}
+
+:-moz-placeholder {
+   color: $grey-light;  
+}
+
+::-moz-placeholder {
+   color: $grey-light;  
+}
+
+:-ms-input-placeholder {  
+   color: $grey-light;  
 }
 
 a {

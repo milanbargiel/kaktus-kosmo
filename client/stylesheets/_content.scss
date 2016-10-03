@@ -13,7 +13,7 @@
   }
 
   &__tag {
-    color: $grey-light;
+    color: $grey;
     cursor: pointer;
 
     &:hover {
@@ -23,7 +23,7 @@
 }
 
 .meta {
-  color: $grey-light;
+  color: $grey;
 
   &__author::after {
     content: "·";
