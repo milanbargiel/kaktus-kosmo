@@ -1,4 +1,4 @@
-/* Posts Collection
+/* Notes Collection
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 import { Meteor } from 'meteor/meteor';
@@ -9,11 +9,11 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { exportClient } from 'export-client';
 
 /* ES6 defaut export */
-const Posts = new Mongo.Collection('posts');
-export default Posts;
+const Notes = new Mongo.Collection('notes');
+export default Notes;
 
 /* Validation Schema definition */
-Posts.schema = new SimpleSchema({
+Notes.schema = new SimpleSchema({
   _id: {
     type: String,
      /* Regular Expression must be matched */
@@ -42,17 +42,17 @@ Posts.schema = new SimpleSchema({
   },
 });
 
-Posts.attachSchema(Posts.schema);
+Notes.attachSchema(Notes.schema);
 
 /* dburles:collection-helpers */
-Posts.helpers({
+Notes.helpers({
   belongsTo(userId) {
-    /* if userId of post is equal to userId param */
+    /* if userId of notes is equal to userId param */
     return this.userId === userId;
   },
 });
 
 /* When in development attach variable to window object (debugging) */
 if (Meteor.isDevelopment) {
-  exportClient({ Posts });
+  exportClient({ Notes });
 }

@@ -6,9 +6,9 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { urlifier } from '../../lib/common-functions.js';
 
-/* Import Projects and Posts Collection */
+/* Import Projects and Notes Collection */
 import Projects from '../../api/projects/projects.js';
-import Posts from '../../api/posts/posts.js';
+import Notes from '../../api/notes/notes.js';
 
 /* Code inside of Meteor.startup runs after all app files have loaded */
 Meteor.startup(() => {
@@ -37,7 +37,7 @@ Meteor.startup(() => {
       createdAt: new Date(),
     });
 
-    Posts.insert({
+    Notes.insert({
       userId: Meteor.users.findOne(userOne)._id,
       author: Meteor.users.findOne(userOne).username,
       projectId: publicProject,
@@ -46,7 +46,7 @@ Meteor.startup(() => {
       createdAt: new Date(),
     });
 
-    Posts.insert({
+    Notes.insert({
       userId: Meteor.users.findOne(userTwo)._id,
       author: Meteor.users.findOne(userTwo).username,
       projectId: publicProject,
@@ -55,7 +55,7 @@ Meteor.startup(() => {
       createdAt: new Date(),
     });
 
-    Posts.insert({
+    Notes.insert({
       userId: Meteor.users.findOne(userThree)._id,
       author: Meteor.users.findOne(userThree).username,
       projectId: publicProject,
@@ -64,7 +64,7 @@ Meteor.startup(() => {
       createdAt: new Date(),
     });
 
-    Posts.insert({
+    Notes.insert({
       userId: Meteor.users.findOne(userOne)._id,
       author: Meteor.users.findOne(userOne).username,
       projectId: publicProject,
@@ -82,7 +82,7 @@ Meteor.startup(() => {
       createdAt: new Date(),
     });
 
-    Posts.insert({
+    Notes.insert({
       userId: Meteor.users.findOne(userOne)._id,
       author: Meteor.users.findOne(userOne).username,
       projectId: privateProject,
@@ -91,7 +91,7 @@ Meteor.startup(() => {
       createdAt: new Date(),
     });
 
-    Posts.insert({
+    Notes.insert({
       userId: Meteor.users.findOne(userOne)._id,
       author: Meteor.users.findOne(userOne).username,
       projectId: privateProject,

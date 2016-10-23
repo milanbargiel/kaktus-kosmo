@@ -12,15 +12,15 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 /* Import collections */
 import Projects from '../../../api/projects/projects.js';
-import Posts from '../../../api/posts/posts.js';
+import Notes from '../../../api/notes/notes.js';
 
 /* Import templates */
 import './planet.html';
 import '../../components/navigations/nav-main.js';
 import '../../components/dialogue.js';
 import '../../components/planet/filter.js';
-import '../../components/planet/post-contentview.js';
-import '../../components/planet/post-create.js';
+import '../../components/planet/note-contentview.js';
+import '../../components/planet/note-create.js';
 
 /* Import d3js function Planet */
 import Planet from '../../d3/planet.js';
@@ -29,15 +29,15 @@ Template.Planet_page.onCreated(function () {
   /* Thought selection
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   /* State of vis is pushed into URL (thought query param)
-   * Selected post id is set when:
+   * Selected note id is set when:
    * -> thought query param changes (click event) or
    * -> on hover event
-   * It is used for templates Post_contentView and Post_remove
+   * It is used for templates Note_contentView and Note_remove
   */
-  this.postId = new ReactiveVar();
-  /* When URL contains a valid post id means that a node is selected */
+  this.noteId = new ReactiveVar();
+  /* When URL contains a valid note id means that a node is selected */
   /* Therefore all hover events on other nodes are ignored */
-  this.urlContainsPostId = new ReactiveVar();
+  this.urlContainsNoteId = new ReactiveVar();
 
   /* Filter selection
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -59,19 +59,19 @@ Template.Planet_page.onCreated(function () {
 
   /* Forms
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  /* dialogues (remove post, share project) */
+  /* dialogues (remove note, share project) */
   this.activeDialogue = new ReactiveVar(false);
-  /* create post form */
-  this.showCreatePost = new ReactiveVar(false);
+  /* create note form */
+  this.showCreateNote = new ReactiveVar(false);
 
   /* Subscription
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  /* Subscribe to posts.inProject publication based on FlowRouter params */
+  /* Subscribe to notes.inProject publication based on FlowRouter params */
   /* username and projectSlut (unique combination) */
   const author = FlowRouter.getParam('username');
   const slug = FlowRouter.getParam('projectSlug');
   /* this.subscribe instead of Meteor.subscribe -> enables {{Template.subscriptionsReady}} */
-  this.subscribe('posts.inProject', { author, slug }, () => {
+  this.subscribe('notes.inProject', { author, slug }, () => {
     /* When project does not exists or is private */
     if (Projects.find().count() === 0) {
       FlowRouter.go('/notfound');
@@ -83,7 +83,7 @@ Template.Planet_page.onCreated(function () {
 
     /* Listen reactively for changes in Collection */
     /* Establish a live query that invokes callbacks when the result of the query changes */
-    Posts.find().observe({
+    Notes.find().observe({
       added(newDocument) {
         planet.addNode(newDocument);
       },
@@ -97,21 +97,21 @@ Template.Planet_page.onCreated(function () {
     –––––––––––––––––––––––––––––––––––––––––––––––––– */
     /* Listen for changes in query param 'thought' -> update vis */
     this.autorun(() => {
-      const postId = FlowRouter.getQueryParam('thought');
-      /* if post id is undefined query param 'thought' is undefined */
-      if (postId) {
-        const post = Posts.findOne(postId);
-        /* if post does not exists (wrong url) */
-        if (!post) {
+      const noteId = FlowRouter.getQueryParam('thought');
+      /* if note id is undefined query param 'thought' is undefined */
+      if (noteId) {
+        const note = Notes.findOne(noteId);
+        /* if note does not exists (wrong url) */
+        if (!note) {
           return;
         }
-        planet.selectNode(post._id);
-        this.postId.set(post._id);
-        this.urlContainsPostId.set(true);
+        planet.selectNode(note._id);
+        this.noteId.set(note._id);
+        this.urlContainsNoteId.set(true);
       } else {
         planet.clearSelection();
-        this.postId.set('');
-        this.urlContainsPostId.set(false);
+        this.noteId.set('');
+        this.urlContainsNoteId.set(false);
       }
     });
 
@@ -121,21 +121,21 @@ Template.Planet_page.onCreated(function () {
     this.autorun(() => {
       const selectedTag = FlowRouter.getQueryParam('tags');
       const selectedAuthor = FlowRouter.getQueryParam('people');
-      if (!selectedTag && !selectedAuthor && !this.urlContainsPostId.get()) {
+      if (!selectedTag && !selectedAuthor && !this.urlContainsNoteId.get()) {
         this.selectedFilter.set(null);
         planet.clearSelection();
         return;
       }
-      const posts = Posts.find().fetch();
+      const notes = Notes.find().fetch();
       let ids = [];
       if (selectedTag) {
         /* return array of ids which include tag from url */
-        ids = _.pluck(posts.filter(post => post.tags.includes(selectedTag)), '_id');
+        ids = _.pluck(notes.filter(note => note.tags.includes(selectedTag)), '_id');
         this.filterCategory.set('tags');
         this.selectedFilter.set(selectedTag);
       }
       if (selectedAuthor) {
-        ids = _.pluck(posts.filter(post => post.author === selectedAuthor), '_id');
+        ids = _.pluck(notes.filter(note => note.author === selectedAuthor), '_id');
         this.filterCategory.set('people');
         this.selectedFilter.set(selectedAuthor);
       }
@@ -149,16 +149,16 @@ Template.Planet_page.onCreated(function () {
 
 Template.Planet_page.helpers({
   contentViewArgs() {
-    /* postId is dynamically set by hover and click event through route listener */
-    const postId = Template.instance().postId.get();
-    const post = Posts.findOne(postId);
+    /* noteId is dynamically set by hover and click event through route listener */
+    const noteId = Template.instance().noteId.get();
+    const note = Notes.findOne(noteId);
     const userId = Meteor.userId();
     const project = Projects.findOne();
     return {
-      post,
-      /* if project belongs to user or he is owner of post he is allowed to remove post */
-      userAllowedToRemovePost: () => {
-        if (project.belongsTo(userId) || post.belongsTo(userId)) {
+      note,
+      /* if project belongs to user or he is owner of note he is allowed to remove note */
+      userAllowedToRemoveNote: () => {
+        if (project.belongsTo(userId) || note.belongsTo(userId)) {
           return true;
         }
         return false;
@@ -170,13 +170,13 @@ Template.Planet_page.helpers({
   filterArgs() {
     const ti = Template.instance();
     const project = Projects.findOne();
-    const posts = Posts.find().fetch(); // fetch returns array
+    const notes = Notes.find().fetch(); // fetch returns array
     const elements = () => {
       if (ti.filterCategory.get() === 'tags') {
         /* generate one dimensional distinct array */
-        return ti.distinct(posts, 'tags');
+        return ti.distinct(notes, 'tags');
       }
-      return ti.distinct(posts, 'author');
+      return ti.distinct(notes, 'author');
     };
 
     return {
@@ -189,19 +189,19 @@ Template.Planet_page.helpers({
 
   dialogueArgs() {
     const instance = Template.instance();
-    const postId = instance.postId.get();
+    const noteId = instance.noteId.get();
     const project = Projects.findOne();
     return {
       /* name of dialogue or false */
       activeDialogue: instance.activeDialogue.get(),
-      /* postId for Post_remove */
-      postId,
+      /* noteId for Note_remove */
+      noteId,
       /* project document for Project_share */
       project,
     };
   },
-  showCreatePost() {
-    return Template.instance().showCreatePost.get();
+  showCreateNote() {
+    return Template.instance().showCreateNote.get();
   },
   getProjectId() {
     return { projectId: Projects.findOne()._id };
@@ -220,13 +220,13 @@ Template.Planet_page.events({
   /* D3 force simulation interactions
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   'click .node'(event, templateInstance) {
-    /* Post_create form is open -> close it */
-    templateInstance.showCreatePost.set(false);
-    /* Save state of visualization -> push postId into the url as query parameter */
-    const postId = event.currentTarget.__data__._id;
+    /* Note_create form is open -> close it */
+    templateInstance.showCreateNote.set(false);
+    /* Save state of visualization -> push noteId into the url as query parameter */
+    const noteId = event.currentTarget.__data__._id;
     /* Clear selected filter from url */
     FlowRouter.setQueryParams({ tags: null, people: null });
-    FlowRouter.setQueryParams({ thought: postId });
+    FlowRouter.setQueryParams({ thought: noteId });
   },
   'click .planet'() {
     /* Clean UI state in URL -> update contentView */
@@ -237,14 +237,14 @@ Template.Planet_page.events({
   'mouseover .node'(event, templateInstance) {
     /* visual hover state is defined in css */
     /* if url contains state of vis or insert thought form is open do not update contentView */
-    if (!templateInstance.urlContainsPostId.get() && !templateInstance.showCreatePost.get()) {
-      const postId = event.currentTarget.__data__._id;
-      templateInstance.postId.set(postId);
+    if (!templateInstance.urlContainsNoteId.get() && !templateInstance.showCreateNote.get()) {
+      const noteId = event.currentTarget.__data__._id;
+      templateInstance.noteId.set(noteId);
     }
   },
   'mouseout .node'(event, templateInstance) {
-    if (!templateInstance.urlContainsPostId.get()) {
-      templateInstance.postId.set('');
+    if (!templateInstance.urlContainsNoteId.get()) {
+      templateInstance.noteId.set('');
     }
   },
 
@@ -271,7 +271,7 @@ Template.Planet_page.events({
     FlowRouter.setQueryParams({ [filterCategory]: selectedFilter });
   },
 
-  /* Dialogue (remove post, share project) interactions
+  /* Dialogue (remove note, share project) interactions
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   'click .js-dialogue'(event, templateInstance) {
     const dialogueTemplate = templateInstance.$(event.target).data('dialogue-template');
@@ -284,16 +284,16 @@ Template.Planet_page.events({
     templateInstance.activeDialogue.set(false);
   },
 
-  /* Post_create form interactions
+  /* Note_create form interactions
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  'click .js-post-create'(event, templateInstance) {
+  'click .js-note-create'(event, templateInstance) {
     /* Clean UI state in URL -> update contentView */
     FlowRouter.setQueryParams({ thought: null });
-    templateInstance.showCreatePost.set(true);
+    templateInstance.showCreateNote.set(true);
   },
-  'click .js-post-create-cancel, submit .js-post-create-form'(event, templateInstance) {
+  'click .js-note-create-cancel, submit .js-note-create-form'(event, templateInstance) {
     event.preventDefault();
     /* Hide form */
-    templateInstance.showCreatePost.set(false);
+    templateInstance.showCreateNote.set(false);
   },
 });

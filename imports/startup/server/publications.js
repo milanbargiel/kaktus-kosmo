@@ -6,9 +6,9 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-/* Import Projects and Posts collections */
+/* Import Projects and Notes collections */
 import Projects from '../../api/projects/projects.js';
-import Posts from '../../api/posts/posts.js';
+import Notes from '../../api/notes/notes.js';
 
 Meteor.publish('projects', function () {
   /* only publish projects from current user */
@@ -39,8 +39,8 @@ Meteor.publish('projects.current', function (object) {
   return Projects.find({ _id: proj._id });
 });
 
-/* Publish posts containing projectId */
-Meteor.publishComposite('posts.inProject', function (object) {
+/* Publish notes containing projectId */
+Meteor.publishComposite('notes.inProject', function (object) {
   /* Check if parameters are of type String */
   new SimpleSchema({
     author: { type: String },
@@ -70,7 +70,7 @@ Meteor.publishComposite('posts.inProject', function (object) {
       {
         /* return a cursor of second tier documents */
         find(project) {
-          return Posts.find({ projectId: project._id });
+          return Notes.find({ projectId: project._id });
         },
       },
     ],

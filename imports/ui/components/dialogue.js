@@ -10,7 +10,7 @@ import './dialogues/project-create.js';
 import './dialogues/project-share.js';
 import './dialogues/project-rename.js';
 import './dialogues/project-remove.js';
-import './dialogues/post-remove.js';
+import './dialogues/note-remove.js';
 
 Template.dialogue.helpers({
   activeDialogue() {

@@ -2,7 +2,7 @@
   <div class="secondary-navigation">
     <!-- user needs to login to insert a thought -->
     {{#if currentUser}}
-      <a class="js-post-create link u-right-top">INSERT A <br>THOUGHT</a>
+      <a class="js-note-create link u-right-top">INSERT A <br>THOUGHT</a>
     {{else}}
       <a class="link u-right-top" href="/login">LOGIN TO <br>INSERT A THOUGHT</a>
     {{/if}}
@@ -26,14 +26,14 @@
     {{#if Template.subscriptionsReady}}
       <div class="content">
         {{#momentum plugin="fadeFast"}}
-          {{#if showCreatePost}}
-            {{> Post_create getProjectId}}
+          {{#if showCreateNote}}
+            {{> Note_create getProjectId}}
           {{/if}}
         {{/momentum}}
 
-        <!-- when a post is selected show content view -->
-        {{#if contentViewArgs.post}}
-          {{> Post_contentView contentViewArgs}}
+        <!-- when a note is selected show content view -->
+        {{#if contentViewArgs.note}}
+          {{> Note_contentView contentViewArgs}}
         {{/if}}
       </div>
     {{/if}}

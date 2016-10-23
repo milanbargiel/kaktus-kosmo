@@ -1,14 +1,14 @@
-/* Post_create
+/* Note_create
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import './post-create.html';
+import './note-create.html';
 
-Template.Post_create.onRendered(() => {
+Template.Note_create.onRendered(() => {
   /* client side validation with themeteorchef:jquery-validation */
-  $('.js-post-create-form').validate({
+  $('.js-note-create-form').validate({
     rules: {
       text: {
         required: true,
@@ -18,14 +18,14 @@ Template.Post_create.onRendered(() => {
   });
 });
 
-Template.Post_create.events({
-  'submit .js-post-create-form'(event, templateInstance) {
+Template.Note_create.events({
+  'submit .js-note-create-form'(event, templateInstance) {
     event.preventDefault();
     /* Retrieve value */
     const text = templateInstance.find('textarea[name="text"]').value;
     /* Clear input field */
     templateInstance.find('textarea[name="text"]').value = '';
     /* Insert document into collection */
-    Meteor.call('posts.insert', { projectId: templateInstance.data.projectId, text });
+    Meteor.call('notes.insert', { projectId: templateInstance.data.projectId, text });
   },
 });

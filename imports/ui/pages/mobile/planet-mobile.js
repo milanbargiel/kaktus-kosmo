@@ -7,7 +7,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 /* import templates */
 import './planet-mobile.html';
 import '../../components/navigations/nav-mobile.js';
-import '../../components/planet/post-create.js';
+import '../../components/planet/note-create.js';
 
 /* Import Projects Collection */
 import Projects from '../../../api/projects/projects.js';
@@ -33,7 +33,7 @@ Template.Planet_mobile_page.helpers({
 });
 
 Template.Planet_mobile_page.events({
-  'submit .js-post-create-form'(event, templateInstance) {
+  'submit .js-note-create-form'(event, templateInstance) {
     /* When a project was submitted sucessfully */
     templateInstance.$('.success').css('display', 'block');
     templateInstance.$('.success').fadeOut(1000, () => {

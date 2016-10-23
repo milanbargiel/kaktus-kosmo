@@ -1,14 +1,14 @@
-/* Post_remove
+/* Note_remove
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import './post-remove.html';
+import './note-remove.html';
 
-Template.Post_remove.events({
-  'submit .js-post-remove-form'(event, templateInstance) {
+Template.Note_remove.events({
+  'submit .js-note-remove-form'(event, templateInstance) {
     event.preventDefault();
-    Meteor.call('posts.remove', { postId: templateInstance.data.postId });
+    Meteor.call('notes.remove', { noteId: templateInstance.data.noteId });
   },
 });

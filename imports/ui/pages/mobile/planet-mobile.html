@@ -2,7 +2,7 @@
   <div class="container">
     {{#if Template.subscriptionsReady}}
       <span class="inject-thought__header">{{getProjectName}}</span>
-      {{> Post_create getProjectId}}
+      {{> Note_create getProjectId}}
       <span class="form-success">Your thought has been injected..</span>
     {{else}}
       {{> spinner}}

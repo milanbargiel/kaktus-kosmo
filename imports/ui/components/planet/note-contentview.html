@@ -1,0 +1,16 @@
+<template name="Note_contentView">
+  <div class="thought">
+    <p class="thought__text">
+      <!-- three brackets to return html (tags) -->
+      {{{note.text}}}
+    </p>
+  </div>
+  <div class="meta">
+    <span class="meta__author">by {{note.author}}</span>
+    <span class="meta__timestamp">{{date note.createdAt}}</span>
+    <!-- userAllowedToRemoveNote function is data context passed from Planet_page parent smart component -->
+    {{#if userAllowedToRemoveNote}}
+      <span class="js-dialogue meta__delete" data-dialogue-template="Note_remove"></span>
+    {{/if}}
+  </div>
+</template>

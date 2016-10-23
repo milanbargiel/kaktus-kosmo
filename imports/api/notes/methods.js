@@ -1,19 +1,19 @@
-/* Posts Collection - Methods
+/* Notes Collection - Methods
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
-/* Import Posts and Projects Collections */
-import Posts from './posts.js';
+/* Import Notes and Projects Collections */
+import Notes from './notes.js';
 import Projects from '../projects/projects.js';
 
 export const insert = new ValidatedMethod({
   /* ValidatedMethod will use name to register method with Meteor */
-  name: 'posts.insert',
+  name: 'notes.insert',
   /* pick(): Pull out schema keys 'projectId' and 'text' and build a new schema out of it */
-  validate: Posts.simpleSchema().pick(['projectId', 'text']).validator(),
+  validate: Notes.simpleSchema().pick(['projectId', 'text']).validator(),
   /* object ({ projectId, text }) is transfer paramer from method call */
   run({ projectId, text }) {
     const project = Projects.findOne(projectId);
@@ -21,13 +21,13 @@ export const insert = new ValidatedMethod({
 
     if (!project) {
       /* end execution of insert. Meteor.Error could be displayed on client */
-      throw new Meteor.Error('posts.insert.accessDenied',
-        'A post must belong to a project');
+      throw new Meteor.Error('notes.insert.accessDenied',
+        'A note must belong to a project');
     }
 
     if (!user) {
-      throw new Meteor.Error('posts.insert.notLoggedIn',
-        'Must be logged in to insert a post');
+      throw new Meteor.Error('notes.insert.notLoggedIn',
+        'Must be logged in to insert a note');
     }
 
     /* Extract tags (#tag) from text */
@@ -40,7 +40,7 @@ export const insert = new ValidatedMethod({
       matches.push(match[1]);
     }
 
-    const post = {
+    const note = {
       projectId,
       userId: user._id,
       author: user.username,
@@ -50,27 +50,27 @@ export const insert = new ValidatedMethod({
       createdAt: new Date(),
     };
 
-    Posts.insert(post);
+    Notes.insert(note);
   },
 });
 
 export const remove = new ValidatedMethod({
-  name: 'posts.remove',
+  name: 'notes.remove',
   validate: new SimpleSchema({
-    postId: Posts.simpleSchema().schema('_id'),
+    noteId: Notes.simpleSchema().schema('_id'),
   }).validator(),
-  run({ postId }) {
-    const post = Posts.findOne(postId);
-    const project = Projects.findOne(post.projectId);
+  run({ noteId }) {
+    const note = Notes.findOne(noteId);
+    const project = Projects.findOne(note.projectId);
     const userId = Meteor.userId();
 
-    /* if user is not author of post and project does not belongs to him */
-    /* -> dont allow to remove this post */
-    if (!post.belongsTo(userId) && !project.belongsTo(userId)) {
-      throw new Meteor.Error('posts.remove.accessDenied',
-        'Must be owner of project or author of post to delete it');
+    /* if user is not author of note and project does not belongs to him */
+    /* -> dont allow to remove this note */
+    if (!note.belongsTo(userId) && !project.belongsTo(userId)) {
+      throw new Meteor.Error('notes.remove.accessDenied',
+        'Must be owner of project or author of note to delete it');
     }
 
-    Posts.remove(postId);
+    Notes.remove(noteId);
   },
 });
