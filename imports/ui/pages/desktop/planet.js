@@ -121,7 +121,7 @@ Template.Planet_page.onCreated(function () {
     this.autorun(() => {
       const selectedTag = FlowRouter.getQueryParam('tags');
       const selectedAuthor = FlowRouter.getQueryParam('people');
-      if (!selectedTag && !selectedAuthor) {
+      if (!selectedTag && !selectedAuthor && !this.urlContainsPostId.get()) {
         this.selectedFilter.set(null);
         planet.clearSelection();
         return;
