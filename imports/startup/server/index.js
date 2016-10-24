@@ -7,8 +7,5 @@
 /* If database is empty load seed data */
 import './fixtures.js';
 
-/* Register methods on the server */
-import './methods.js';
-
-/* Publish Collections to the client */
-import './publications.js';
+/* Register methods and publications on the server */
+import './register-api.js';
