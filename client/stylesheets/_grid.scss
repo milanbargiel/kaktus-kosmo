@@ -45,8 +45,13 @@ $susy: (
 }
 
 .filter {
-  padding-top: 5 * $baseline + $base-half;
-  @include span(2);
+  display: none; // show filter only for bigger viewports
+
+  @include breakpoint($bp-tablet) {
+    display: block;
+    padding-top: 5 * $baseline + $base-half;
+    @include span(2);
+  }
 }
 
 .visualization {
@@ -63,6 +68,11 @@ $susy: (
 }
 
 .content {
-  padding-top: 11 * $baseline + $base-half;
-  @include span(3 last);
+  display: none; // show filter only for bigger viewports
+
+  @include breakpoint($bp-tablet) {
+    display: block;
+    padding-top: 11 * $baseline + $base-half;
+    @include span(3 last);
+  }
 }

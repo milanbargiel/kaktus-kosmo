@@ -29,7 +29,7 @@ import '../both/useraccounts-configuration.js';
  * FlowRouter routes.js is not reactive
  * -> Function to determine viewport will only be executed once on page load
 */
-const mobile = () => $(window).width() < 450;
+const mobile = () => $(window).width() < 800;
 Session.set('mobile', mobile());
 
 /* Every URL with appearance '/something/something' will invoke 'planet' route
