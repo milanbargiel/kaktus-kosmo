@@ -7,8 +7,10 @@
 */
 
 export default function Planet(selector) {
-  let w = $(selector).innerWidth();
-  let h = w;
+  // little hack to make visualization adjust to a small window height
+  let m = Math.min($(selector).innerWidth(), ($(window).height() - 150));
+  let w = m;
+  let h = m;
   let center = { x: w / 2, y: h / 2 };
   let planetRadius = w / 2;
   const circleRadius = 15;
@@ -86,8 +88,10 @@ export default function Planet(selector) {
 
   /* Reference: http://bl.ocks.org/mbostock/3355967 */
   function resize() {
-    w = $(selector).innerWidth();
-    h = w;
+    // little hack to make visualization adjust to a small window height
+    m = Math.min($(selector).innerWidth(), $(window).height() - 150);
+    w = m;
+    h = m;
     center = { x: w / 2, y: h / 2 };
     planetRadius = w / 2;
     svg.attr('width', w).attr('height', h);

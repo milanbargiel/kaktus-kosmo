@@ -228,11 +228,13 @@ Template.Planet_page.events({
     FlowRouter.setQueryParams({ tags: null, people: null });
     FlowRouter.setQueryParams({ thought: noteId });
   },
-  'click .planet'() {
+  'click .planet'(event, templateInstance) {
     /* Clean UI state in URL -> update contentView */
     FlowRouter.setQueryParams({ thought: null });
     FlowRouter.setQueryParams({ tags: null });
     FlowRouter.setQueryParams({ people: null });
+    /* Hide form */
+    templateInstance.showCreateNote.set(false);
   },
   'mouseover .node'(event, templateInstance) {
     /* visual hover state is defined in css */

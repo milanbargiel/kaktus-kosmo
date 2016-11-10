@@ -12,6 +12,12 @@ rect {
     margin-bottom: 3 * $baseline;
     text-align: center;
   }
+
+  svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 // Universe
